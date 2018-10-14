@@ -44,6 +44,7 @@ public class addCategory extends AppCompatActivity {
     NavigationView navigationView;
     View headerView;
 // nora
+// almunaif
 
     private FirebaseAuth mAuth;
     private FirebaseDatabase database;
