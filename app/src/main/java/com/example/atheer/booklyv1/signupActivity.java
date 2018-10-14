@@ -171,7 +171,7 @@ public class signupActivity extends AppCompatActivity implements View.OnClickLis
                                                                                                                                 user.sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
                                                                                                                                     @Override
                                                                                                                                     public void onComplete(@NonNull Task<Void> task) {
-                                                                                                                                        Toast.makeText(signupActivity.this,"Verification Email Sent",Toast.LENGTH_LONG).show();
+                                                                                                                                        Toast.makeText(signupActivity.this,"Please check your Email",Toast.LENGTH_LONG).show();
                                                                                                                                     }
                                                                                                                                 });
                                                                                                                             }

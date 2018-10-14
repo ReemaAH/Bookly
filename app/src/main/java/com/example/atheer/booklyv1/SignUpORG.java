@@ -149,7 +149,7 @@ public class SignUpORG extends AppCompatActivity implements View.OnClickListener
                                                                                                                                 user.sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
                                                                                                                                     @Override
                                                                                                                                     public void onComplete(@NonNull Task<Void> task) {
-                                                                                                                                        Toast.makeText(SignUpORG.this,"Verification Email Sent",Toast.LENGTH_LONG).show();
+                                                                                                                                        Toast.makeText(SignUpORG.this,"Please check your Email",Toast.LENGTH_LONG).show();
                                                                                                                                     }
                                                                                                                                 });
                                                                                                                             }

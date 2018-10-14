@@ -13,6 +13,7 @@ package com.example.atheer.booklyv1;
         import android.widget.EditText;
         import android.widget.ProgressBar;
         import android.widget.TextView;
+        import android.widget.Toast;
 
         import com.google.firebase.auth.FirebaseAuth;
         import com.google.firebase.auth.FirebaseUser;
@@ -100,9 +101,21 @@ public class settingsadmin extends AppCompatActivity implements View.OnClickList
 
                             startActivity(new Intent(settingsadmin.this,dashboardAdmin.class));
 
-                        } else if (id == R.id.myservicesId){
+                        } else if (id == R.id.CategoriesId){
 
-                            startActivity(new Intent(settingsadmin.this,myServices.class));
+                            startActivity(new Intent(settingsadmin.this,CatView.class));
+
+                        }else if (id == R.id.OrgId){
+
+                            //         startActivity(new Intent(dashboardAdmin.this,CatView.class));
+
+                        }else if (id == R.id.Services1Id){
+
+                            startActivity(new Intent(settingsadmin.this,BrowseAdmin.class));
+
+                        } else if (id == R.id.ReportsId){
+
+                            //       startActivity(new Intent(dashboardAdmin.this,CatView.class));
 
                         }
 
@@ -281,7 +294,10 @@ public class settingsadmin extends AppCompatActivity implements View.OnClickList
         ref =  database.getReference().child("client").child(userId);
 
         if(!name1.isEmpty()){
-            ref.child("name").setValue(name1);}
+            ref.child("name").setValue(name1);
+
+            Toast.makeText(settingsadmin.this,"Successfully Modified",Toast.LENGTH_SHORT).show();
+        }
        // if(!phoneNum.isEmpty()){
         //    ref.child("phoneNO").setValue(phoneNum);}
 

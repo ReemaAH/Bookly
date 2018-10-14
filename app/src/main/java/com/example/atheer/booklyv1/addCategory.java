@@ -113,7 +113,7 @@ public class addCategory extends AppCompatActivity {
 
                         if (id == R.id.settingsId) {
 
-                            //      startActivity(new Intent(dashboardAdmin.this,settings.class));
+                                startActivity(new Intent(addCategory.this,settingsadmin.class));
 
                         } else if (id == R.id.logoutId){
 
@@ -316,10 +316,6 @@ public class addCategory extends AppCompatActivity {
             case android.R.id.home:
                 mDrawerLayout.openDrawer(GravityCompat.START);
                 return true;
-
-
-
-
 
         }
         return super.onOptionsItemSelected(item);

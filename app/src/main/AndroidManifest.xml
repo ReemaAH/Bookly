@@ -51,6 +51,8 @@
         <activity android:name=".EditPasswordorg" />
         <activity android:name=".BrowseAdmin" />
         <activity android:name=".BrowseOrgAdmin" />
+        <activity android:name=".EditPasswordadmin" />
+        <activity android:name=".settingsadmin" />
         <activity android:name=".ServicesAdmin"></activity>
     </application>
 
