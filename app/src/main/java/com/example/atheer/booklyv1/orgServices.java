@@ -150,7 +150,7 @@ public class orgServices extends AppCompatActivity {
 
 
                     ser = ds.getValue(services.class);
-                    str = ser.getName().toString()+" \n\n "+ ser.getPrice()+ "SR \t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tRating:"+ ser.getRating()+ " " ;
+                    str = ser.getName().toString()+" \n\n "+ ser.getPrice()+ "SR \t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tRating:"+ ser.getRating()+ " " ;
                     list.add(str);}
 
 
@@ -158,7 +158,7 @@ public class orgServices extends AppCompatActivity {
 
             }
 
-
+//
 
 
             @Override

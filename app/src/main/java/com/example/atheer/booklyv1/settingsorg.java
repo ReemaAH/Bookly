@@ -13,6 +13,7 @@ package com.example.atheer.booklyv1;
         import android.widget.EditText;
         import android.widget.ProgressBar;
         import android.widget.TextView;
+        import android.widget.Toast;
 
         import com.google.firebase.auth.FirebaseAuth;
         import com.google.firebase.auth.FirebaseUser;
@@ -282,8 +283,16 @@ public class settingsorg extends AppCompatActivity implements View.OnClickListen
 
         if(!name1.isEmpty()){
             ref.child("name").setValue(name1);}
-        if(!phoneNum.isEmpty()){
-            ref.child("phoneNO").setValue(phoneNum);}
+
+        if(!phoneNum.isEmpty()) {
+            if (phoneNum.length() < 10 || phoneNum.length() > 10) {
+                Toast.makeText(settingsorg.this, "Phone length should be 10 digits", Toast.LENGTH_LONG).show();
+
+            } else {
+                ref.child("phoneNO").setValue(phoneNum);
+                Toast.makeText(settingsorg.this, "Successfully Updated", Toast.LENGTH_LONG).show();
+            }
+        }
 
 
 

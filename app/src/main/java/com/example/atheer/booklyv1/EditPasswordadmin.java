@@ -234,7 +234,7 @@ public class EditPasswordadmin extends AppCompatActivity implements View.OnClick
                                 Toast.makeText(EditPasswordadmin.this,"Something went wrong. Please try again later",Toast.LENGTH_SHORT).show();
 
                             }else {
-                                Toast.makeText(EditPasswordadmin.this,"Password Successfully Modified",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(EditPasswordadmin.this,"Password Successfully updated ",Toast.LENGTH_SHORT).show();
 
                             }
                         }

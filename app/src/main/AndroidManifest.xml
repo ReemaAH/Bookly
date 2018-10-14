@@ -28,7 +28,7 @@
         <activity
             android:name=".settings"
             android:parentActivityName=".Mynavigation" />
-        <activity android:name=".Home" />
+
         <activity android:name=".loginActivity" />
         <activity android:name=".mHomePage" />
         <activity android:name=".signupActivity" />
@@ -46,14 +46,11 @@
         <activity android:name=".mynav2" />
         <activity android:name=".orgServices" />
         <activity android:name=".viewOrgnizations" />
+        <activity android:name=".BrowseOrgAdmin" />
         <activity android:name=".EditPassword" />
         <activity android:name=".settingsorg" />
-        <activity android:name=".EditPasswordorg" />
-        <activity android:name=".BrowseAdmin" />
-        <activity android:name=".BrowseOrgAdmin" />
         <activity android:name=".EditPasswordadmin" />
-        <activity android:name=".settingsadmin" />
-        <activity android:name=".ServicesAdmin"></activity>
+        <activity android:name=".EditPasswordorg"></activity>
     </application>
 
 </manifest>

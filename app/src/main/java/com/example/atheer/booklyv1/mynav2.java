@@ -156,6 +156,10 @@ public class mynav2 extends AppCompatActivity {
         userId = user.getUid();
         ref =  database.getReference().child("client").child(userId);
 
+        super.onStart();
+        if(mAuth.getCurrentUser()==null){
+            finish();
+            startActivity(new Intent(this,loginActivity.class));}
 
 
         ref.addValueEventListener(new ValueEventListener() {
