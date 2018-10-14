@@ -125,7 +125,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="127dp"
+        android:layout_marginBottom="118dp"
         android:background="@drawable/edit_rouded"
         android:fontFamily="sans-serif"
         android:padding="12dp"
