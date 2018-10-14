@@ -77,7 +77,7 @@ public class dashboardAdmin extends AppCompatActivity implements View.OnClickLis
 
                         if (id == R.id.settingsId) {
 
-                      //      startActivity(new Intent(dashboardAdmin.this,settings.class));
+                          startActivity(new Intent(dashboardAdmin.this,settingsadmin.class));
 
                         } else if (id == R.id.logoutId){
 
@@ -135,7 +135,7 @@ public class dashboardAdmin extends AppCompatActivity implements View.OnClickLis
                 startActivity(new Intent(this,Mynavigation.class));
                 break;
             case R.id.report:
-                startActivity(new Intent(this,signupActivity.class));
+               // startActivity(new Intent(this,signupActivity.class));
                 break;
 
         }

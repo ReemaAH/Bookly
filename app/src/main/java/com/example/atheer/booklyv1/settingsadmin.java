@@ -23,7 +23,7 @@ package com.example.atheer.booklyv1;
         import com.google.firebase.database.ValueEventListener;
 
 
-public class settingsorg extends AppCompatActivity implements View.OnClickListener{
+public class settingsadmin extends AppCompatActivity implements View.OnClickListener{
 
     TextView navUsername, navUserponts;
     NavigationView navigationView;
@@ -39,13 +39,14 @@ public class settingsorg extends AppCompatActivity implements View.OnClickListen
 
     private DrawerLayout mDrawerLayout;
 
-    EditText editTextName, editTextEmail,editphone,editbirth;
+    EditText editTextName, editTextEmail,editbirth;
+            //editphone,
 
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_settingsorg);
+        @Override
+        protected void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            setContentView(R.layout.activity_settingsadmin);
 
         setTitle("Profile");
 
@@ -79,30 +80,29 @@ public class settingsorg extends AppCompatActivity implements View.OnClickListen
                         // close drawer when item is tapped
                         mDrawerLayout.closeDrawers();
 
-                        // Add code here to update the UI based on the item selected
-                        // For example, swap UI fragments here
+
 
                         int id = menuItem.getItemId();
 
                         if (id == R.id.settingsId) {
 
-                            startActivity(new Intent(settingsorg.this,settingsorg.class));
+                            startActivity(new Intent(settingsadmin.this,settingsadmin.class));
 
                         } else if (id == R.id.logoutId){
 
                             FirebaseAuth.getInstance().signOut();
                             finish();
-                            Intent signOUT=new Intent(settingsorg.this,loginActivity.class);
+                            Intent signOUT=new Intent(settingsadmin.this,loginActivity.class);
                             startActivity(signOUT);
 
 
                         } else if (id == R.id.homeId){
 
-                            startActivity(new Intent(settingsorg.this,mynav.class));
+                            startActivity(new Intent(settingsadmin.this,dashboardAdmin.class));
 
-                        } else if (id == R.id.servicesId){
+                        } else if (id == R.id.myservicesId){
 
-                            startActivity(new Intent(settingsorg.this,orgServices.class));
+                            startActivity(new Intent(settingsadmin.this,myServices.class));
 
                         }
 
@@ -113,7 +113,7 @@ public class settingsorg extends AppCompatActivity implements View.OnClickListen
 
         editTextEmail =  (EditText) findViewById(R.id.editTextEmail);
         editTextName = (EditText) findViewById(R.id.editTextName);
-        editphone = (EditText) findViewById(R.id.editphone);
+       // editphone = (EditText) findViewById(R.id.editphone);
         editbirth = (EditText) findViewById(R.id.editbirth);
 
         findViewById(R.id.buttonSave).setOnClickListener(this);
@@ -153,18 +153,18 @@ public class settingsorg extends AppCompatActivity implements View.OnClickListen
 
                 String name = "";
                 String email = "";
-                String phoneNO = "";
+              //  String phoneNO = "";
                 //int points = 0;
 
 
                 for(DataSnapshot ds: dataSnapshot.getChildren() ){
                     name = dataSnapshot.child("name").getValue(String.class);
                     email = dataSnapshot.child("email").getValue(String.class);
-                    if (dataSnapshot.hasChild("phoneNO")) {
-                        phoneNO= dataSnapshot.child("phoneNO").getValue(String.class);
-                        editphone.setVisibility(View.VISIBLE);
-                        editphone.setText(phoneNO + "");
-                    }
+                   // if (dataSnapshot.hasChild("phoneNO")) {
+                       // phoneNO= dataSnapshot.child("phoneNO").getValue(String.class);
+                       // editphone.setVisibility(View.VISIBLE);
+                       // editphone.setText(phoneNO + "");
+                   // }
 
 
 
@@ -196,7 +196,7 @@ public class settingsorg extends AppCompatActivity implements View.OnClickListen
                 EditUser();
                 break;
             case R.id.link_EditPass:
-                Intent EditPasswordPage=new Intent(this,EditPasswordorg.class);
+                Intent EditPasswordPage=new Intent(this,EditPasswordadmin.class);
                 startActivity(EditPasswordPage);
                 break;
 
@@ -271,7 +271,7 @@ public class settingsorg extends AppCompatActivity implements View.OnClickListen
     private void EditUser(){
 
         name1=editTextName.getText().toString().trim();
-        phoneNum= editphone.getText().toString().trim();
+       // phoneNum= editphone.getText().toString().trim();
 
 
         mAuth = FirebaseAuth.getInstance();
@@ -282,8 +282,8 @@ public class settingsorg extends AppCompatActivity implements View.OnClickListen
 
         if(!name1.isEmpty()){
             ref.child("name").setValue(name1);}
-        if(!phoneNum.isEmpty()){
-            ref.child("phoneNO").setValue(phoneNum);}
+       // if(!phoneNum.isEmpty()){
+        //    ref.child("phoneNO").setValue(phoneNum);}
 
 
 

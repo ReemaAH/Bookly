@@ -1,19 +1,21 @@
 package com.example.atheer.booklyv1;
 
-        import android.app.ActionBar;
-        import android.content.Intent;
+import android.content.Intent;
+        import android.support.annotation.NonNull;
         import android.support.design.widget.NavigationView;
         import android.support.v4.view.GravityCompat;
         import android.support.v4.widget.DrawerLayout;
+        import android.support.v7.app.ActionBar;
+        import android.support.v7.app.ActionBarDrawerToggle;
         import android.support.v7.app.AppCompatActivity;
         import android.os.Bundle;
         import android.support.v7.widget.Toolbar;
+        import android.util.Log;
         import android.view.MenuItem;
         import android.view.View;
-        import android.widget.EditText;
-        import android.widget.ProgressBar;
+        import android.widget.AdapterView;
+        import android.widget.ListView;
         import android.widget.TextView;
-
         import com.google.firebase.auth.FirebaseAuth;
         import com.google.firebase.auth.FirebaseUser;
         import com.google.firebase.database.DataSnapshot;
@@ -21,14 +23,34 @@ package com.example.atheer.booklyv1;
         import com.google.firebase.database.DatabaseReference;
         import com.google.firebase.database.FirebaseDatabase;
         import com.google.firebase.database.ValueEventListener;
+        import android.support.annotation.NonNull;
+        import android.support.design.widget.Snackbar;
+        import android.support.v7.app.AppCompatActivity;
+        import android.os.Bundle;
+        import android.view.View;
+        import android.widget.EditText;
+        import android.widget.Toast;
+
+        import com.google.android.gms.tasks.OnCompleteListener;
+        import com.google.android.gms.tasks.Task;
+        import com.google.firebase.auth.AuthCredential;
+        import com.google.firebase.auth.EmailAuthProvider;
+        import com.google.firebase.auth.FirebaseAuth;
+        import com.google.firebase.auth.FirebaseUser;
 
 
-public class settingsorg extends AppCompatActivity implements View.OnClickListener{
+        import java.util.ArrayList;
+// client homepage (contains categories)
+
+
+public class EditPasswordadmin extends AppCompatActivity implements View.OnClickListener{
+    EditText currentpass , newpass , conEdit;
+
+
 
     TextView navUsername, navUserponts;
     NavigationView navigationView;
     View headerView;
-    private String name1, phoneNum;
 
     private FirebaseAuth mAuth;
     private FirebaseDatabase database;
@@ -39,15 +61,20 @@ public class settingsorg extends AppCompatActivity implements View.OnClickListen
 
     private DrawerLayout mDrawerLayout;
 
-    EditText editTextName, editTextEmail,editphone,editbirth;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_settingsorg);
+        setContentView(R.layout.activity_edit_passwordadmin);
 
-        setTitle("Profile");
+        currentpass = (EditText) findViewById(R.id.currentpass);
+        newpass= (EditText) findViewById(R.id.newpass);
+        conEdit= (EditText) findViewById(R.id.con);
+
+        findViewById(R.id.UpdateButton).setOnClickListener(this);
+
+        setTitle("Chenge password");
 
 
 
@@ -64,7 +91,7 @@ public class settingsorg extends AppCompatActivity implements View.OnClickListen
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        android.support.v7.app.ActionBar actionbar = getSupportActionBar();
+        ActionBar actionbar = getSupportActionBar();
         actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.setHomeAsUpIndicator(R.drawable.ic_menu_black_24dp);
 
@@ -86,122 +113,118 @@ public class settingsorg extends AppCompatActivity implements View.OnClickListen
 
                         if (id == R.id.settingsId) {
 
-                            startActivity(new Intent(settingsorg.this,settingsorg.class));
+                            startActivity(new Intent(EditPasswordadmin.this,settings.class));
 
                         } else if (id == R.id.logoutId){
 
                             FirebaseAuth.getInstance().signOut();
                             finish();
-                            Intent signOUT=new Intent(settingsorg.this,loginActivity.class);
+                            Intent signOUT=new Intent(EditPasswordadmin.this,loginActivity.class);
                             startActivity(signOUT);
 
 
                         } else if (id == R.id.homeId){
 
-                            startActivity(new Intent(settingsorg.this,mynav.class));
-
-                        } else if (id == R.id.servicesId){
-
-                            startActivity(new Intent(settingsorg.this,orgServices.class));
+                            startActivity(new Intent(EditPasswordadmin.this,dashboardAdmin.class));
 
                         }
-
 
                         return true;
                     }
                 });
 
-        editTextEmail =  (EditText) findViewById(R.id.editTextEmail);
-        editTextName = (EditText) findViewById(R.id.editTextName);
-        editphone = (EditText) findViewById(R.id.editphone);
-        editbirth = (EditText) findViewById(R.id.editbirth);
-
-        findViewById(R.id.buttonSave).setOnClickListener(this);
-        findViewById(R.id.link_EditPass).setOnClickListener(this);
-
-        loaduserprofile();
-
-
-
-        super.onStart();
-        if(mAuth.getCurrentUser()==null){
-
-            finish();
-            startActivity(new Intent(this,loginActivity.class));
-
-        }
 
 
     }
 
 
-
-    private void loaduserprofile() {
-
-
-        mAuth = FirebaseAuth.getInstance();
-        database =  FirebaseDatabase.getInstance();
-        user =  mAuth.getCurrentUser();
-        userId = user.getUid();
-        ref =  database.getReference().child("client").child(userId);
-
-
-
-        ref.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
-                String name = "";
-                String email = "";
-                String phoneNO = "";
-                //int points = 0;
-
-
-                for(DataSnapshot ds: dataSnapshot.getChildren() ){
-                    name = dataSnapshot.child("name").getValue(String.class);
-                    email = dataSnapshot.child("email").getValue(String.class);
-                    if (dataSnapshot.hasChild("phoneNO")) {
-                        phoneNO= dataSnapshot.child("phoneNO").getValue(String.class);
-                        editphone.setVisibility(View.VISIBLE);
-                        editphone.setText(phoneNO + "");
-                    }
-
-
-
-                    editTextName.setText(name);
-                    editTextEmail.setText(email + "");
-
-
-                }
-
-
-
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-
-
-
-    }
 
     @Override
-    public void onClick(View view) {
-        switch (view.getId()){
-            case R.id.buttonSave:
-                EditUser();
-                break;
-            case R.id.link_EditPass:
-                Intent EditPasswordPage=new Intent(this,EditPasswordorg.class);
-                startActivity(EditPasswordPage);
-                break;
+    public void onClick(View v) {
+        switch (v.getId()) {
+
+            case R.id.UpdateButton:{
+
+                updatePassword();
+            }
 
         }
     }
+
+    private void updatePassword() {
+
+
+        String current = currentpass.getText().toString().trim();
+        String newp = newpass.getText().toString().trim();
+        final String conpass = conEdit.getText().toString().trim();
+
+
+/////////--------- checking part ---------------------////
+
+        if (current.isEmpty()) {
+            currentpass.setError("Current Password is required");
+            currentpass.requestFocus();
+            return;
+        }
+
+
+        if (newp.length() < 6) {
+            newpass.setError("Minimum length of password shoud be 6");
+            newpass.requestFocus();
+            return;
+        }
+
+        if (newp.isEmpty()) {
+            newpass.setError("new password required");
+            newpass.requestFocus();
+            return;
+        }
+
+        if (conpass.isEmpty()) {
+            conEdit.setError("Password confirmation required");
+            conEdit.requestFocus();
+            return;
+        }
+
+
+        if (newp.equals(conpass) == false) {
+            conEdit.setError("Password Not matching");
+            conEdit.requestFocus();
+            return;
+        }
+
+        /////////--------- checking part ---------------------////
+
+
+        user = FirebaseAuth.getInstance().getCurrentUser();
+        final String email = user.getEmail();
+        AuthCredential credential = EmailAuthProvider.getCredential(email,current);
+
+        user.reauthenticate(credential).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if(task.isSuccessful()){
+                    user.updatePassword(conpass).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if(!task.isSuccessful()){
+                                Toast.makeText(EditPasswordadmin.this,"Something went wrong. Please try again later",Toast.LENGTH_SHORT);
+
+                            }else {
+                                Toast.makeText(EditPasswordadmin.this,"Password Successfully Modified",Toast.LENGTH_SHORT);
+
+                            }
+                        }
+                    });
+                }else {
+                    Toast.makeText(EditPasswordadmin.this,"Authentication Failed",Toast.LENGTH_SHORT);
+
+                }
+            }
+        });
+    }
+
+
 
     private void loaduserinfo() {
 
@@ -210,6 +233,8 @@ public class settingsorg extends AppCompatActivity implements View.OnClickListen
         user =  mAuth.getCurrentUser();
         userId = user.getUid();
         ref =  database.getReference().child("client").child(userId);
+
+
 
         ref.addValueEventListener(new ValueEventListener() {
             @Override
@@ -248,6 +273,13 @@ public class settingsorg extends AppCompatActivity implements View.OnClickListen
 
 
 
+        super.onStart();
+        if(mAuth.getCurrentUser()==null){
+
+            finish();
+            startActivity(new Intent(this,loginActivity.class));
+
+        }
 
     }
 
@@ -268,33 +300,10 @@ public class settingsorg extends AppCompatActivity implements View.OnClickListen
         return super.onOptionsItemSelected(item);
     }
 
-    private void EditUser(){
-
-        name1=editTextName.getText().toString().trim();
-        phoneNum= editphone.getText().toString().trim();
-
-
-        mAuth = FirebaseAuth.getInstance();
-        database =  FirebaseDatabase.getInstance();
-        user =  mAuth.getCurrentUser();
-        userId = user.getUid();
-        ref =  database.getReference().child("client").child(userId);
-
-        if(!name1.isEmpty()){
-            ref.child("name").setValue(name1);}
-        if(!phoneNum.isEmpty()){
-            ref.child("phoneNO").setValue(phoneNum);}
-
-
-
-
-
-
-
-    }
-
-
-
-
 
 }
+
+
+
+
+

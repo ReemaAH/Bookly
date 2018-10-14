@@ -15,12 +15,14 @@
         android:text="Name"
         android:textColor="#39374D"
         android:textSize="28sp"
-        android:drawableRight="@drawable/favorite"
-        android:drawablePadding="130dp"
         tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="0dp" />
+<!--
+ android:drawableRight="@drawable/favorite"
+  android:drawablePadding="130dp"
 
+-->
 
     <!--<ImageView
             android:id="@+id/star11"

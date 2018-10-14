@@ -50,6 +50,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:clipToPadding="false"
+                android:background="@color/darker_gray"
                 android:gravity="center"
                 android:orientation="horizontal">
 
@@ -66,7 +67,7 @@
 
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:background="@color/darker_gray"
+                        android:background="@color/white"
                         android:gravity="center"
                         android:orientation="vertical">
 
@@ -104,7 +105,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:background="@color/darker_gray"
+                        android:background="@color/white"
                         android:gravity="center"
                         android:orientation="vertical">
 
@@ -151,7 +152,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:background="@color/darker_gray"
+                        android:background="@color/white"
                         android:gravity="center"
                         android:orientation="vertical">
 
@@ -188,7 +189,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:background="@color/darker_gray"
+                        android:background="@color/white"
                         android:gravity="center"
                         android:orientation="vertical">
 
@@ -211,13 +212,7 @@
                             android:layout_margin="10dp"
                             android:background="@color/lightgray" />
 
-                        <!-- <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:padding="5dp"
-                            android:text="Genrate Report"
-                            android:textColor="@android:color/darker_gray" /> -->
+
 
                     </LinearLayout>
                 </android.support.v7.widget.CardView>
@@ -258,7 +253,7 @@
         app:itemTextColor="#26243C"
         android:layout_gravity="start"
         app:menu='@menu/nav_menu_layout2'
-        app:headerLayout="@layout/nav_header"
+        app:headerLayout="@layout/nav_header_org"
         >
 
 
