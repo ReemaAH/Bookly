@@ -1,8 +1,9 @@
 package com.example.atheer.booklyv1;
 
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.support.design.widget.NavigationView;
-import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -10,11 +11,17 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.TimePicker;
 
+import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -24,8 +31,25 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
-public class orgServices extends AppCompatActivity {
+public class ServicesAdmin extends AppCompatActivity implements View.OnClickListener{
+
+
+    TextView navUsername, navUserponts;
+    NavigationView navigationView;
+    View headerView;
+
+
+    TextView listdata;
+    private FirebaseAuth mAuth;
+    private FirebaseDatabase database;
+    private FirebaseAuth.AuthStateListener mAuthStateListener;
+    private DatabaseReference ref;
+    private String userId;
+    private FirebaseUser user;
+
+    private DrawerLayout mDrawerLayout;
 
     ImageView imagev;
     android.widget.ListView ListView;
@@ -36,25 +60,32 @@ public class orgServices extends AppCompatActivity {
     services ser;
 
 
-    TextView navUsername, navUserponts;
-    NavigationView navigationView;
-    View headerView;
-    //TextView serviceO;
-    private FirebaseAuth mAuth;
-    private FirebaseDatabase database;
-    private FirebaseAuth.AuthStateListener mAuthStateListener;
-    private DatabaseReference ref;
-    private String userId;
-    private FirebaseUser user;
+    Spinner sp;
+    ArrayList<String> data;
+    String service = "";
+    ElegantNumberButton numRes;
+    EditText date;
+    DatePickerDialog datePickerDialog;
+    String dateval = "";
+    EditText time;
+    String timeval = "";
+    TimePickerDialog timePickerDialog;
+    int hour;
+    int minute;
 
-    private DrawerLayout mDrawerLayout;
+    int year;
+    int month;
+    int day;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_org_services);
-        setTitle("Services");
+        setContentView(R.layout.activity_services_admin);
+
+
+
+
 
 
         navigationView = (NavigationView) findViewById(R.id.nav_view);
@@ -77,8 +108,6 @@ public class orgServices extends AppCompatActivity {
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.bringToFront();
         navigationView.setNavigationItemSelectedListener(
-
-
                 new NavigationView.OnNavigationItemSelectedListener() {
                     @Override
                     public boolean onNavigationItemSelected(MenuItem menuItem) {
@@ -87,37 +116,42 @@ public class orgServices extends AppCompatActivity {
                         // close drawer when item is tapped
                         mDrawerLayout.closeDrawers();
 
-                        // Add code here to update the UI based on the item selected
-                        // For example, swap UI fragments here
+                        // Add code here to update the UI based on t he item selected
+                        // For example, swap UI fragments here  BrowseAdmin
 
                         int id = menuItem.getItemId();
 
                         if (id == R.id.settingsId) {
 
-                            startActivity(new Intent(orgServices.this,settingsorg.class));
+                            //      startActivity(new Intent(dashboardAdmin.this,settings.class));
+
                         } else if (id == R.id.logoutId){
 
                             FirebaseAuth.getInstance().signOut();
                             finish();
-                            Intent signOUT=new Intent(orgServices.this,loginActivity.class);
+                            Intent signOUT=new Intent(ServicesAdmin.this,loginActivity.class);
                             startActivity(signOUT);
 
 
                         } else if (id == R.id.homeId){
 
-                            startActivity(new Intent(orgServices.this,mynav.class));
+                            startActivity(new Intent(ServicesAdmin.this,dashboardAdmin.class));
 
-                        } else if (id == R.id.servicesId){
+                        } else if (id == R.id.CategoriesId){
 
-                            startActivity(new Intent(orgServices.this,orgServices.class));
+                            startActivity(new Intent(ServicesAdmin.this,CatView.class));
 
-                        } else if (id == R.id.ReservationsId){
+                        }else if (id == R.id.OrgId){
 
-                            //    startActivity(new Intent(mynav.this,orgServices.class));
+                            //         startActivity(new Intent(dashboardAdmin.this,CatView.class));
+
+                        }else if (id == R.id.Services1Id){
+
+                            startActivity(new Intent(ServicesAdmin.this,BrowseAdmin.class));
 
                         } else if (id == R.id.ReportsId){
 
-                            //    startActivity(new Intent(mynav.this,orgServices.class));
+                            //       startActivity(new Intent(dashboardAdmin.this,CatView.class));
 
                         }
 
@@ -126,16 +160,21 @@ public class orgServices extends AppCompatActivity {
                     }
                 });
 
+      /*  listdata = (TextView) findViewById(R.id.textlist);
         ser = new services();
         ListView = (ListView) findViewById(R.id.ListView);
         database = FirebaseDatabase.getInstance();
         //ref =database.getReference().child("client");
-        mAuth = FirebaseAuth.getInstance();
-        user =  mAuth.getCurrentUser();
-        userId = user.getUid();
-        ref =  database.getReference().child("client").child(userId).child("services");
+      //  mAuth = FirebaseAuth.getInstance();
+     //   user =  mAuth.getCurrentUser();
+     //   userId = user.getUid();
+        Intent intent = getIntent();
+        listdata.setText(intent.getStringExtra("name"));
+        setTitle(intent.getStringExtra("name"));
+
+        ref =  database.getReference().child("client").child(intent.getStringExtra("name")).child("services");
         list = new ArrayList<>();
-        adapter = new ArrayAdapter<String>(this, R.layout.service_info,R.id.serviceInfo,list);
+        adapter = new ArrayAdapter<>(this, R.layout.service_info,R.id.serviceInfo,list);
         ref.addValueEventListener(new ValueEventListener() {
 
 
@@ -150,7 +189,7 @@ public class orgServices extends AppCompatActivity {
 
 
                     ser = ds.getValue(services.class);
-                    str = ser.getName().toString()+" \n\n "+ ser.getPrice()+ "SR \t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tRating:"+ ser.getRating()+ " " ;
+                    str = ser.getName().toString()+" \n "+ ser.getPrice()+ "SR \t"+ ser.getRating()+ " " ;
                     list.add(str);}
 
 
@@ -171,22 +210,21 @@ public class orgServices extends AppCompatActivity {
 
 
 
-       // imagev=(ImageView) findViewById(R.id.addbutton);
+        imagev=(ImageView) findViewById(R.id.addbutton);
         // imagev.setOnClickListener(new View.OnClickListener() {
         // @Override
         // //   startActivity(new Intent(CatView.this,addCategory.class));
         // }
 
         // });
-       // imagev.setY(1300);
-        //imagev.setX(500);
-
-
+        imagev.setY(1300);
+        imagev.setX(500);*/
     }
 
 
-
-
+//    public void dispalyResult(View view){
+//        displaytxt.setText(Service);
+//    }
 
     private void loaduserinfo() {
 
@@ -195,7 +233,6 @@ public class orgServices extends AppCompatActivity {
         user =  mAuth.getCurrentUser();
         userId = user.getUid();
         ref =  database.getReference().child("client").child(userId);
-
 
 
 
@@ -236,36 +273,16 @@ public class orgServices extends AppCompatActivity {
 
 
 
-        super.onStart();
-        if(mAuth.getCurrentUser()==null){
-
-            finish();
-            startActivity(new Intent(this,loginActivity.class));
-
-        }
 
     }
 
-
-
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                mDrawerLayout.openDrawer(GravityCompat.START);
-                return true;
+    public void onClick(View view) {
+      /*  switch (view.getId()){
+            case R.id.buttonBook:
+                startActivity(new Intent(this,Booked.class));
+                break;
 
-
-
-
-
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-
-    @Override
-    public void onPointerCaptureChanged(boolean hasCapture) {
-
+        }*/
     }
 }

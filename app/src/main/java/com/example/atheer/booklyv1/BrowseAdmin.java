@@ -1,17 +1,17 @@
 package com.example.atheer.booklyv1;
 
+
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.ImageView;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -25,21 +25,13 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class orgServices extends AppCompatActivity {
-
-    ImageView imagev;
-    android.widget.ListView ListView;
-    //FirebaseDatabase database;
-    //DatabaseReference ref;
-    ArrayList<String> list;
-    ArrayAdapter<String> adapter;
-    services ser;
-
-
+public class BrowseAdmin extends AppCompatActivity {
     TextView navUsername, navUserponts;
     NavigationView navigationView;
     View headerView;
-    //TextView serviceO;
+    ArrayList<Category_pic> createLists;
+    ListView listView;
+
     private FirebaseAuth mAuth;
     private FirebaseDatabase database;
     private FirebaseAuth.AuthStateListener mAuthStateListener;
@@ -48,13 +40,12 @@ public class orgServices extends AppCompatActivity {
     private FirebaseUser user;
 
     private DrawerLayout mDrawerLayout;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_org_services);
-        setTitle("Services");
+        setContentView(R.layout.activity_browse_admin);
+        setTitle("Home");
+
 
 
         navigationView = (NavigationView) findViewById(R.id.nav_view);
@@ -77,8 +68,6 @@ public class orgServices extends AppCompatActivity {
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.bringToFront();
         navigationView.setNavigationItemSelectedListener(
-
-
                 new NavigationView.OnNavigationItemSelectedListener() {
                     @Override
                     public boolean onNavigationItemSelected(MenuItem menuItem) {
@@ -87,37 +76,42 @@ public class orgServices extends AppCompatActivity {
                         // close drawer when item is tapped
                         mDrawerLayout.closeDrawers();
 
-                        // Add code here to update the UI based on the item selected
-                        // For example, swap UI fragments here
+                        // Add code here to update the UI based on t he item selected
+                        // For example, swap UI fragments here  BrowseAdmin
 
                         int id = menuItem.getItemId();
 
                         if (id == R.id.settingsId) {
 
-                            startActivity(new Intent(orgServices.this,settingsorg.class));
+                            //      startActivity(new Intent(dashboardAdmin.this,settings.class));
+
                         } else if (id == R.id.logoutId){
 
                             FirebaseAuth.getInstance().signOut();
                             finish();
-                            Intent signOUT=new Intent(orgServices.this,loginActivity.class);
+                            Intent signOUT=new Intent(BrowseAdmin.this,loginActivity.class);
                             startActivity(signOUT);
 
 
                         } else if (id == R.id.homeId){
 
-                            startActivity(new Intent(orgServices.this,mynav.class));
+                            startActivity(new Intent(BrowseAdmin.this,dashboardAdmin.class));
 
-                        } else if (id == R.id.servicesId){
+                        } else if (id == R.id.CategoriesId){
 
-                            startActivity(new Intent(orgServices.this,orgServices.class));
+                            startActivity(new Intent(BrowseAdmin.this,CatView.class));
 
-                        } else if (id == R.id.ReservationsId){
+                        }else if (id == R.id.OrgId){
 
-                            //    startActivity(new Intent(mynav.this,orgServices.class));
+                            //         startActivity(new Intent(dashboardAdmin.this,CatView.class));
+
+                        }else if (id == R.id.Services1Id){
+
+                            startActivity(new Intent(BrowseAdmin.this,BrowseAdmin.class));
 
                         } else if (id == R.id.ReportsId){
 
-                            //    startActivity(new Intent(mynav.this,orgServices.class));
+                            //       startActivity(new Intent(dashboardAdmin.this,CatView.class));
 
                         }
 
@@ -126,67 +120,54 @@ public class orgServices extends AppCompatActivity {
                     }
                 });
 
-        ser = new services();
-        ListView = (ListView) findViewById(R.id.ListView);
-        database = FirebaseDatabase.getInstance();
-        //ref =database.getReference().child("client");
-        mAuth = FirebaseAuth.getInstance();
-        user =  mAuth.getCurrentUser();
-        userId = user.getUid();
-        ref =  database.getReference().child("client").child(userId).child("services");
-        list = new ArrayList<>();
-        adapter = new ArrayAdapter<String>(this, R.layout.service_info,R.id.serviceInfo,list);
-        ref.addValueEventListener(new ValueEventListener() {
+
+        createLists = new ArrayList<>();
+        Category_pic restaurant = new Category_pic("Restaurant", R.drawable.restaurant);
+        Category_pic clinic = new Category_pic("Clinic", R.drawable.clinic);
+        Category_pic salon = new Category_pic("Salon", R.drawable.salon);
+        Category_pic cinema = new Category_pic("Cinema", R.drawable.cinema);
+        Category_pic event = new Category_pic("Events", R.drawable.event);
+        Category_pic meeting = new Category_pic("Meeting rooms", R.drawable.meeting);
+
+//
+        createLists.add(restaurant);
+        createLists.add(clinic);
+        createLists.add(salon);
+        createLists.add(cinema);
+        createLists.add(event);
+        createLists.add(meeting);
+
+        CategoryAdapter adapter = new CategoryAdapter(getApplicationContext(), createLists);
+        listView = (ListView) findViewById(R.id.list);
+
+        listView.setAdapter(adapter);
 
 
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
-
-
-                for (DataSnapshot ds : dataSnapshot.getChildren()) {
-
-                    String str;
+            public void onItemClick(AdapterView<?> adapter, View v, int position, long id) {
 
 
-                    ser = ds.getValue(services.class);
-                    str = ser.getName().toString()+" \n\n "+ ser.getPrice()+ "SR \t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tRating:"+ ser.getRating()+ " " ;
-                    list.add(str);}
+                Category_pic value = ( Category_pic )adapter.getItemAtPosition(position);  ;//getter method
+                String title=value.getImage_title();
+                Intent intent = new Intent(BrowseAdmin.this,BrowseOrgAdmin.class);
+                intent.putExtra("name",title  );
+                startActivity(intent);
 
 
-                ListView.setAdapter(adapter);
+                // Toast.makeText(Home.this, title, Toast.LENGTH_LONG).show();
+//                 Intent it = new Intent(Mynavigation.this,BrowseServices.class);
+//                   it.putExtra("name", value.getImage_title());
+//                startActivity(it);
 
             }
 
 
-
-
-            @Override
-            public void onCancelled(DatabaseError databaseError){
-
-
-            }
         });
 
 
 
-
-       // imagev=(ImageView) findViewById(R.id.addbutton);
-        // imagev.setOnClickListener(new View.OnClickListener() {
-        // @Override
-        // //   startActivity(new Intent(CatView.this,addCategory.class));
-        // }
-
-        // });
-       // imagev.setY(1300);
-        //imagev.setX(500);
-
-
     }
-
-
-
-
 
     private void loaduserinfo() {
 
@@ -195,7 +176,6 @@ public class orgServices extends AppCompatActivity {
         user =  mAuth.getCurrentUser();
         userId = user.getUid();
         ref =  database.getReference().child("client").child(userId);
-
 
 
 
@@ -262,10 +242,5 @@ public class orgServices extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
-
-    @Override
-    public void onPointerCaptureChanged(boolean hasCapture) {
-
     }
-}
+

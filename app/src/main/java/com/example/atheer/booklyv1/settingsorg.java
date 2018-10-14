@@ -98,11 +98,11 @@ public class settingsorg extends AppCompatActivity implements View.OnClickListen
 
                         } else if (id == R.id.homeId){
 
-                            startActivity(new Intent(settingsorg.this,mynav.class));
+                            startActivity(new Intent(settingsorg.this,Mynavigation.class));
 
-                        } else if (id == R.id.servicesId){
+                        } else if (id == R.id.myservicesId){
 
-                            startActivity(new Intent(settingsorg.this,orgServices.class));
+                            startActivity(new Intent(settingsorg.this,myServices.class));
 
                         }
 

@@ -113,8 +113,7 @@ public class EditPasswordorg extends AppCompatActivity implements View.OnClickLi
 
                         if (id == R.id.settingsId) {
 
-                            startActivity(new Intent(EditPasswordorg.this,settings.class));
-
+                            startActivity(new Intent(EditPasswordorg.this,settingsorg.class));
                         } else if (id == R.id.logoutId){
 
                             FirebaseAuth.getInstance().signOut();
@@ -125,11 +124,19 @@ public class EditPasswordorg extends AppCompatActivity implements View.OnClickLi
 
                         } else if (id == R.id.homeId){
 
-                            startActivity(new Intent(EditPasswordorg.this,Mynavigation.class));
+                            startActivity(new Intent(EditPasswordorg.this,mynav.class));
 
-                        } else if (id == R.id.myservicesId){
+                        } else if (id == R.id.servicesId){
 
-                            startActivity(new Intent(EditPasswordorg.this,myServices.class));
+                            startActivity(new Intent(EditPasswordorg.this,orgServices.class));
+
+                        } else if (id == R.id.ReservationsId){
+
+                            //    startActivity(new Intent(mynav.this,orgServices.class));
+
+                        } else if (id == R.id.ReportsId){
+
+                            //    startActivity(new Intent(mynav.this,orgServices.class));
 
                         }
 
@@ -212,17 +219,14 @@ public class EditPasswordorg extends AppCompatActivity implements View.OnClickLi
                     user.updatePassword(conpass).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
-                            if(!task.isSuccessful()){
-                                Toast.makeText(EditPasswordorg.this,"Something went wrong. Please try again later",Toast.LENGTH_SHORT);
 
-                            }else {
-                                Toast.makeText(EditPasswordorg.this,"Password Successfully Modified",Toast.LENGTH_SHORT);
+                                Toast.makeText(EditPasswordorg.this,"Password Successfully Modified",Toast.LENGTH_LONG).show();
 
-                            }
+                           // startActivity(new Intent(EditPasswordorg.this,EditPasswordorg.class));
                         }
                     });
                 }else {
-                    Toast.makeText(EditPasswordorg.this,"Authentication Failed",Toast.LENGTH_SHORT);
+                    Toast.makeText(EditPasswordorg.this,"Authentication Failed",Toast.LENGTH_LONG).show();;
 
                 }
             }
@@ -237,6 +241,7 @@ public class EditPasswordorg extends AppCompatActivity implements View.OnClickLi
         database =  FirebaseDatabase.getInstance();
         user =  mAuth.getCurrentUser();
         userId = user.getUid();
+        if(userId!=null){
         ref =  database.getReference().child("client").child(userId);
 
 
@@ -274,7 +279,7 @@ public class EditPasswordorg extends AppCompatActivity implements View.OnClickLi
             public void onCancelled(DatabaseError databaseError) {
 
             }
-        });
+        });}
 
 
 

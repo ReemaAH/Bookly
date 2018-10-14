@@ -2,16 +2,16 @@ package com.example.atheer.booklyv1;
 
 import android.content.Intent;
 import android.support.design.widget.NavigationView;
-import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -25,21 +25,21 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class orgServices extends AppCompatActivity {
+public class BrowseOrgAdmin extends AppCompatActivity {
 
-    ImageView imagev;
-    android.widget.ListView ListView;
-    //FirebaseDatabase database;
-    //DatabaseReference ref;
+
+
+    private static final String TAG = "viewOrgnization";
     ArrayList<String> list;
+    android.widget.ListView ListView;
     ArrayAdapter<String> adapter;
-    services ser;
-
+    Orgz org;
+    String cat;
 
     TextView navUsername, navUserponts;
     NavigationView navigationView;
     View headerView;
-    //TextView serviceO;
+
     private FirebaseAuth mAuth;
     private FirebaseDatabase database;
     private FirebaseAuth.AuthStateListener mAuthStateListener;
@@ -51,10 +51,11 @@ public class orgServices extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_org_services);
-        setTitle("Services");
+        setContentView(R.layout.activity_browse_org_admin);
+
+
+
 
 
         navigationView = (NavigationView) findViewById(R.id.nav_view);
@@ -77,8 +78,6 @@ public class orgServices extends AppCompatActivity {
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.bringToFront();
         navigationView.setNavigationItemSelectedListener(
-
-
                 new NavigationView.OnNavigationItemSelectedListener() {
                     @Override
                     public boolean onNavigationItemSelected(MenuItem menuItem) {
@@ -87,37 +86,42 @@ public class orgServices extends AppCompatActivity {
                         // close drawer when item is tapped
                         mDrawerLayout.closeDrawers();
 
-                        // Add code here to update the UI based on the item selected
-                        // For example, swap UI fragments here
+                        // Add code here to update the UI based on t he item selected
+                        // For example, swap UI fragments here  BrowseAdmin
 
                         int id = menuItem.getItemId();
 
                         if (id == R.id.settingsId) {
 
-                            startActivity(new Intent(orgServices.this,settingsorg.class));
+                            //      startActivity(new Intent(dashboardAdmin.this,settings.class));
+
                         } else if (id == R.id.logoutId){
 
                             FirebaseAuth.getInstance().signOut();
                             finish();
-                            Intent signOUT=new Intent(orgServices.this,loginActivity.class);
+                            Intent signOUT=new Intent(BrowseOrgAdmin.this,loginActivity.class);
                             startActivity(signOUT);
 
 
                         } else if (id == R.id.homeId){
 
-                            startActivity(new Intent(orgServices.this,mynav.class));
+                            startActivity(new Intent(BrowseOrgAdmin.this,dashboardAdmin.class));
 
-                        } else if (id == R.id.servicesId){
+                        } else if (id == R.id.CategoriesId){
 
-                            startActivity(new Intent(orgServices.this,orgServices.class));
+                            startActivity(new Intent(BrowseOrgAdmin.this,CatView.class));
 
-                        } else if (id == R.id.ReservationsId){
+                        }else if (id == R.id.OrgId){
 
-                            //    startActivity(new Intent(mynav.this,orgServices.class));
+                            //         startActivity(new Intent(dashboardAdmin.this,CatView.class));
+
+                        }else if (id == R.id.Services1Id){
+
+                            startActivity(new Intent(BrowseOrgAdmin.this,BrowseAdmin.class));
 
                         } else if (id == R.id.ReportsId){
 
-                            //    startActivity(new Intent(mynav.this,orgServices.class));
+                            //       startActivity(new Intent(dashboardAdmin.this,CatView.class));
 
                         }
 
@@ -126,43 +130,55 @@ public class orgServices extends AppCompatActivity {
                     }
                 });
 
-        ser = new services();
-        ListView = (ListView) findViewById(R.id.ListView);
-        database = FirebaseDatabase.getInstance();
-        //ref =database.getReference().child("client");
-        mAuth = FirebaseAuth.getInstance();
-        user =  mAuth.getCurrentUser();
-        userId = user.getUid();
-        ref =  database.getReference().child("client").child(userId).child("services");
+
+
+        Intent intent = getIntent();
+        cat = intent.getStringExtra("name");
+        setTitle(cat);
+
+        ListView = (android.widget.ListView) findViewById(R.id.ListView);
+
+        Log.d(TAG, "onCreate: Started");
+
         list = new ArrayList<>();
-        adapter = new ArrayAdapter<String>(this, R.layout.service_info,R.id.serviceInfo,list);
-        ref.addValueEventListener(new ValueEventListener() {
+        adapter = new ArrayAdapter<String>(this, R.layout.org_layout,R.id.serviceInfo,list);
+        org = new Orgz("Apple Pie", "4.4", "7", "Restaurant");
+        Orgz org2 = new Orgz("Urth", "4.4", "7", "Restaurant");
+        Orgz org3 = new Orgz("Five Guys", "4.4", "7","Restaurant");
+        Orgz org4 = new Orgz("Apple Pie", "4.4", "7","Restaurant");
+        Orgz org5 = new Orgz("The Cinema", "4.4", "7", "Cinema");
+        Orgz org6 = new Orgz("VOX", "4.4", "7","Cinema");
+        Orgz org7 = new Orgz("AMC", "4.4", "7","Cinema");
 
 
+        orgBasedonCat(org2);
+        orgBasedonCat(org3);
+        orgBasedonCat(org4);
+        orgBasedonCat(org5);
+        orgBasedonCat(org6);
+        orgBasedonCat(org7);
 
-            public void onDataChange(DataSnapshot dataSnapshot) {
+        list.add("org1");
+        list.add("org2");
+        list.add("org2");
+        list.add("org3");
+//        ArrayList<String> orgs = new ArrayList<>();
+//        orgs.add("Urth");
+//        orgs.add("Five Guys");
+//        orgs.add("Nozomi");
+//        orgs.add("Lusin");
+//        orgs.add("Red Chilli");
 
+        // adapter= new OrgzAdapter(dataModels,getApplicationContext());
 
-
-                for (DataSnapshot ds : dataSnapshot.getChildren()) {
-
-                    String str;
-
-
-                    ser = ds.getValue(services.class);
-                    str = ser.getName().toString()+" \n\n "+ ser.getPrice()+ "SR \t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tRating:"+ ser.getRating()+ " " ;
-                    list.add(str);}
-
-
-                ListView.setAdapter(adapter);
-
-            }
-
-
-
-
+        ListView.setAdapter(adapter);
+        ListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onCancelled(DatabaseError databaseError){
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                Intent intent = new Intent(BrowseOrgAdmin.this,ServicesAdmin.class);
+                intent.putExtra("name",list.get(position)  );
+                startActivity(intent);
 
 
             }
@@ -170,23 +186,14 @@ public class orgServices extends AppCompatActivity {
 
 
 
-
-       // imagev=(ImageView) findViewById(R.id.addbutton);
-        // imagev.setOnClickListener(new View.OnClickListener() {
-        // @Override
-        // //   startActivity(new Intent(CatView.this,addCategory.class));
-        // }
-
-        // });
-       // imagev.setY(1300);
-        //imagev.setX(500);
-
-
     }
 
-
-
-
+    public void orgBasedonCat( Orgz o ){
+        String  s =   o.getCatg();
+        if(s.equals(cat)){
+            list.add(o.getName());
+        }
+    }
 
     private void loaduserinfo() {
 
@@ -195,7 +202,6 @@ public class orgServices extends AppCompatActivity {
         user =  mAuth.getCurrentUser();
         userId = user.getUid();
         ref =  database.getReference().child("client").child(userId);
-
 
 
 
@@ -236,36 +242,6 @@ public class orgServices extends AppCompatActivity {
 
 
 
-        super.onStart();
-        if(mAuth.getCurrentUser()==null){
-
-            finish();
-            startActivity(new Intent(this,loginActivity.class));
-
-        }
-
-    }
-
-
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                mDrawerLayout.openDrawer(GravityCompat.START);
-                return true;
-
-
-
-
-
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-
-    @Override
-    public void onPointerCaptureChanged(boolean hasCapture) {
 
     }
 }
