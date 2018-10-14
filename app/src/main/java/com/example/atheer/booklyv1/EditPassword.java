@@ -215,13 +215,13 @@ public class EditPassword extends AppCompatActivity implements View.OnClickListe
                                 Toast.makeText(EditPassword.this,"Something went wrong. Please try again later",Toast.LENGTH_LONG).show();
 
                             }else {
-                                Toast.makeText(EditPassword.this,"Password Successfully Modified",Toast.LENGTH_LONG).show();
+                                Toast.makeText(EditPassword.this,"Password Successfully updated",Toast.LENGTH_LONG).show();
 
                             }
                         }
                     });
                 }else {
-                    Toast.makeText(EditPassword.this,"Authentication Failed",Toast.LENGTH_LONG).show();
+                  //  Toast.makeText(EditPassword.this,"Authentication Failed",Toast.LENGTH_LONG).show();
 
                 }
             }
