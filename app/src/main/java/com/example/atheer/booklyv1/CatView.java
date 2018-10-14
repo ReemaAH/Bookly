@@ -64,6 +64,13 @@ public class CatView extends AppCompatActivity implements View.OnClickListener  
 
         loaduserinfo();
 
+        super.onStart();
+        if(mAuth.getCurrentUser()==null){
+
+            finish();
+            startActivity(new Intent(this,loginActivity.class));
+
+        }
 
         mDrawerLayout = findViewById(R.id.drawerId);
 

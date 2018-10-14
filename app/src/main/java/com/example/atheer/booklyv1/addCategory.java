@@ -95,6 +95,13 @@ public class addCategory extends AppCompatActivity {
         actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.setHomeAsUpIndicator(R.drawable.ic_menu_black_24dp);
 
+        super.onStart();
+        if(mAuth.getCurrentUser()==null){
+            finish();
+            startActivity(new Intent(this,loginActivity.class));
+        }
+
+
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.bringToFront();
         navigationView.setNavigationItemSelectedListener(

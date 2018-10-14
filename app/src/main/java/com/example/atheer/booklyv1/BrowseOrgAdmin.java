@@ -66,6 +66,13 @@ public class BrowseOrgAdmin extends AppCompatActivity {
 
         loaduserinfo();
 
+        super.onStart();
+        if(mAuth.getCurrentUser()==null){
+
+            finish();
+            startActivity(new Intent(this,loginActivity.class));
+
+        }
 
         mDrawerLayout = findViewById(R.id.drawerId);
 

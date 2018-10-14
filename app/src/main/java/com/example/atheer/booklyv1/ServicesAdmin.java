@@ -96,6 +96,13 @@ public class ServicesAdmin extends AppCompatActivity implements View.OnClickList
 
         loaduserinfo();
 
+        super.onStart();
+        if(mAuth.getCurrentUser()==null){
+
+            finish();
+            startActivity(new Intent(this,loginActivity.class));
+
+        }
 
         mDrawerLayout = findViewById(R.id.drawerId);
 

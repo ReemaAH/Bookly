@@ -50,6 +50,13 @@ public class dashboardAdmin extends AppCompatActivity implements View.OnClickLis
 
         loaduserinfo();
 
+        super.onStart();
+        if(mAuth.getCurrentUser()==null){
+
+            finish();
+            startActivity(new Intent(this,loginActivity.class));
+
+        }
 
         mDrawerLayout = findViewById(R.id.drawerId);
 

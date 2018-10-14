@@ -86,6 +86,13 @@ public class EditPasswordadmin extends AppCompatActivity implements View.OnClick
 
         loaduserinfo();
 
+        super.onStart();
+        if(mAuth.getCurrentUser()==null){
+
+            finish();
+            startActivity(new Intent(this,loginActivity.class));
+
+        }
 
         mDrawerLayout = findViewById(R.id.drawerId);
 
@@ -291,10 +298,8 @@ public class EditPasswordadmin extends AppCompatActivity implements View.OnClick
 
         super.onStart();
         if(mAuth.getCurrentUser()==null){
-
             finish();
             startActivity(new Intent(this,loginActivity.class));
-
         }
 
     }

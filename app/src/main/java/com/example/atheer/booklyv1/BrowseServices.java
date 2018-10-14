@@ -65,6 +65,14 @@ public class BrowseServices extends AppCompatActivity {
 
         mDrawerLayout = findViewById(R.id.drawerId);
 
+        super.onStart();
+        if(mAuth.getCurrentUser()==null){
+
+            finish();
+            startActivity(new Intent(this,loginActivity.class));
+
+        }
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         android.support.v7.app.ActionBar actionbar = getSupportActionBar();
