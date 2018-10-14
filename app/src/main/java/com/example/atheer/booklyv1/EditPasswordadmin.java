@@ -113,7 +113,7 @@ public class EditPasswordadmin extends AppCompatActivity implements View.OnClick
 
                         if (id == R.id.settingsId) {
 
-                            startActivity(new Intent(EditPasswordadmin.this,settings.class));
+                            startActivity(new Intent(EditPasswordadmin.this,settingsadmin.class));
 
                         } else if (id == R.id.logoutId){
 
@@ -126,6 +126,22 @@ public class EditPasswordadmin extends AppCompatActivity implements View.OnClick
                         } else if (id == R.id.homeId){
 
                             startActivity(new Intent(EditPasswordadmin.this,dashboardAdmin.class));
+
+                        } else if (id == R.id.CategoriesId){
+
+                            startActivity(new Intent(EditPasswordadmin.this,CatView.class));
+
+                        }else if (id == R.id.OrgId){
+
+                            //         startActivity(new Intent(dashboardAdmin.this,CatView.class));
+
+                        }else if (id == R.id.Services1Id){
+
+                            startActivity(new Intent(EditPasswordadmin.this,BrowseAdmin.class));
+
+                        } else if (id == R.id.ReportsId){
+
+                            //       startActivity(new Intent(dashboardAdmin.this,CatView.class));
 
                         }
 
@@ -208,16 +224,16 @@ public class EditPasswordadmin extends AppCompatActivity implements View.OnClick
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             if(!task.isSuccessful()){
-                                Toast.makeText(EditPasswordadmin.this,"Something went wrong. Please try again later",Toast.LENGTH_SHORT);
+                                Toast.makeText(EditPasswordadmin.this,"Something went wrong. Please try again later",Toast.LENGTH_SHORT).show();
 
                             }else {
-                                Toast.makeText(EditPasswordadmin.this,"Password Successfully Modified",Toast.LENGTH_SHORT);
+                                Toast.makeText(EditPasswordadmin.this,"Password Successfully Modified",Toast.LENGTH_SHORT).show();
 
                             }
                         }
                     });
                 }else {
-                    Toast.makeText(EditPasswordadmin.this,"Authentication Failed",Toast.LENGTH_SHORT);
+                    Toast.makeText(EditPasswordadmin.this,"Authentication Failed",Toast.LENGTH_SHORT).show();
 
                 }
             }

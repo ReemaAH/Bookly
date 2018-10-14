@@ -123,7 +123,7 @@ public class ServicesAdmin extends AppCompatActivity implements View.OnClickList
 
                         if (id == R.id.settingsId) {
 
-                            //      startActivity(new Intent(dashboardAdmin.this,settings.class));
+                                startActivity(new Intent(ServicesAdmin.this,settingsadmin.class));
 
                         } else if (id == R.id.logoutId){
 

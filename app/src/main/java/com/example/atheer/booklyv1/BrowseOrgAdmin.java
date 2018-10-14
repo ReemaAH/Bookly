@@ -93,7 +93,7 @@ public class BrowseOrgAdmin extends AppCompatActivity {
 
                         if (id == R.id.settingsId) {
 
-                            //      startActivity(new Intent(dashboardAdmin.this,settings.class));
+                                 startActivity(new Intent(BrowseOrgAdmin.this,settingsadmin.class));
 
                         } else if (id == R.id.logoutId){
 
