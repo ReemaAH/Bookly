@@ -28,7 +28,7 @@
         <activity
             android:name=".settings"
             android:parentActivityName=".Mynavigation" />
-        <activity android:name=".Home" />
+
         <activity android:name=".loginActivity" />
         <activity android:name=".mHomePage" />
         <activity android:name=".signupActivity" />

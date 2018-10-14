@@ -230,7 +230,7 @@ public class settings extends AppCompatActivity implements View.OnClickListener{
 
 
                     navUsername.setText(name);
-                    Toast.makeText(settings.this,"Successfully Modified",Toast.LENGTH_LONG).show();
+
 
 
                 }
@@ -285,7 +285,7 @@ public class settings extends AppCompatActivity implements View.OnClickListener{
                      if(!phoneNum.isEmpty()){
                     ref.child("phoneNO").setValue(phoneNum);}
 
-
+        Toast.makeText(settings.this,"Successfully Updated",Toast.LENGTH_LONG).show();
 
 
 
