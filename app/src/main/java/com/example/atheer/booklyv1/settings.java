@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -229,7 +230,7 @@ public class settings extends AppCompatActivity implements View.OnClickListener{
 
 
                     navUsername.setText(name);
-
+                    Toast.makeText(settings.this,"Successfully Modified",Toast.LENGTH_LONG).show();
 
 
                 }

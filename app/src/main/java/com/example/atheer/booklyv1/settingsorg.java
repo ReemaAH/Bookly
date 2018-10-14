@@ -13,6 +13,7 @@ package com.example.atheer.booklyv1;
         import android.widget.EditText;
         import android.widget.ProgressBar;
         import android.widget.TextView;
+        import android.widget.Toast;
 
         import com.google.firebase.auth.FirebaseAuth;
         import com.google.firebase.auth.FirebaseUser;
@@ -87,7 +88,6 @@ public class settingsorg extends AppCompatActivity implements View.OnClickListen
                         if (id == R.id.settingsId) {
 
                             startActivity(new Intent(settingsorg.this,settingsorg.class));
-
                         } else if (id == R.id.logoutId){
 
                             FirebaseAuth.getInstance().signOut();
@@ -98,11 +98,19 @@ public class settingsorg extends AppCompatActivity implements View.OnClickListen
 
                         } else if (id == R.id.homeId){
 
-                            startActivity(new Intent(settingsorg.this,Mynavigation.class));
+                            startActivity(new Intent(settingsorg.this,mynav.class));
 
-                        } else if (id == R.id.myservicesId){
+                        } else if (id == R.id.servicesId){
 
-                            startActivity(new Intent(settingsorg.this,myServices.class));
+                            startActivity(new Intent(settingsorg.this,orgServices.class));
+
+                        } else if (id == R.id.ReservationsId){
+
+                            //    startActivity(new Intent(mynav.this,orgServices.class));
+
+                        } else if (id == R.id.ReportsId){
+
+                            //    startActivity(new Intent(mynav.this,orgServices.class));
 
                         }
 
@@ -230,6 +238,7 @@ public class settingsorg extends AppCompatActivity implements View.OnClickListen
 
 
                     navUsername.setText(name);
+                    Toast.makeText(settingsorg.this,"Successfully Modified",Toast.LENGTH_LONG).show();
 
 
 

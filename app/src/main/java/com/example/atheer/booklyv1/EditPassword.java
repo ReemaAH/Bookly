@@ -212,16 +212,16 @@ public class EditPassword extends AppCompatActivity implements View.OnClickListe
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             if(!task.isSuccessful()){
-                                Toast.makeText(EditPassword.this,"Something went wrong. Please try again later",Toast.LENGTH_SHORT);
+                                Toast.makeText(EditPassword.this,"Something went wrong. Please try again later",Toast.LENGTH_LONG).show();
 
                             }else {
-                                Toast.makeText(EditPassword.this,"Password Successfully Modified",Toast.LENGTH_SHORT);
+                                Toast.makeText(EditPassword.this,"Password Successfully Modified",Toast.LENGTH_LONG).show();
 
                             }
                         }
                     });
                 }else {
-                    Toast.makeText(EditPassword.this,"Authentication Failed",Toast.LENGTH_SHORT);
+                    Toast.makeText(EditPassword.this,"Authentication Failed",Toast.LENGTH_LONG).show();
 
                 }
             }

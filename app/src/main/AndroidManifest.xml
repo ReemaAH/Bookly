@@ -48,7 +48,10 @@
         <activity android:name=".viewOrgnizations" />
         <activity android:name=".EditPassword" />
         <activity android:name=".settingsorg" />
-        <activity android:name=".EditPasswordorg"></activity>
+        <activity android:name=".EditPasswordorg" />
+        <activity android:name=".BrowseAdmin" />
+        <activity android:name=".BrowseOrgAdmin" />
+        <activity android:name=".ServicesAdmin"></activity>
     </application>
 
 </manifest>

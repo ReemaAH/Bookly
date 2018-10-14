@@ -115,7 +115,7 @@ public class CatView extends AppCompatActivity implements View.OnClickListener  
 
                         }else if (id == R.id.Services1Id){
 
-                            //        startActivity(new Intent(dashboardAdmin.this,CatView.class));
+                                   startActivity(new Intent(CatView.this,BrowseAdmin.class));
 
                         } else if (id == R.id.ReportsId){
 

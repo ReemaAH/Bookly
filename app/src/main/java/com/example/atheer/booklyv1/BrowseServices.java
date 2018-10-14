@@ -169,7 +169,6 @@ public class BrowseServices extends AppCompatActivity {
         });
 
 
-
     }
 
     public void orgBasedonCat( Orgz o ){

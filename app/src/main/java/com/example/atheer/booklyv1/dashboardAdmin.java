@@ -101,7 +101,7 @@ public class dashboardAdmin extends AppCompatActivity implements View.OnClickLis
 
                         }else if (id == R.id.Services1Id){
 
-                    //        startActivity(new Intent(dashboardAdmin.this,CatView.class));
+                           startActivity(new Intent(dashboardAdmin.this,BrowseAdmin.class));
 
                         } else if (id == R.id.ReportsId){
 
@@ -132,10 +132,10 @@ public class dashboardAdmin extends AppCompatActivity implements View.OnClickLis
                 //startActivity(new Intent(this,approvedAdmin.class));
                 break;
             case R.id.browse:
-                startActivity(new Intent(this,Mynavigation.class));
+                startActivity(new Intent(this,BrowseAdmin.class));
                 break;
             case R.id.report:
-                startActivity(new Intent(this,SignUp.class));
+           //     startActivity(new Intent(this,signupActivity.class));
                 break;
 
         }

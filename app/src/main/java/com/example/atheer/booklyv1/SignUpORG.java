@@ -20,7 +20,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class SignUpORG extends AppCompatActivity implements View.OnClickListener {
-    EditText editTextUsername , editTextPassword, editTextEmail,EditTextphone,EditTextpasswordCon, EditTextphoneNo ;
+    EditText editTextUsername , editTextPassword, editTextEmail,EditTextphone,EditTextpasswordCon, EditTextphoneNo , EditTextrecordNO;
     ProgressBar Newprogressbar;
     private FirebaseAuth mAuth;
     final FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -52,7 +52,7 @@ public class SignUpORG extends AppCompatActivity implements View.OnClickListener
         editTextEmail=(EditText)findViewById(R.id.input_email);
         editTextPassword=(EditText)findViewById(R.id.input_password);
         editTextUsername=(EditText)findViewById(R.id.input_name);
-        EditTextphone=(EditText)findViewById(R.id.recordNO);
+        EditTextrecordNO=(EditText)findViewById(R.id.recordNO);
         EditTextpasswordCon=(EditText)findViewById(R.id.input_password2);
         EditTextphoneNo=(EditText)findViewById(R.id.Phone);
         mAuth = FirebaseAuth.getInstance();
@@ -66,7 +66,7 @@ public class SignUpORG extends AppCompatActivity implements View.OnClickListener
         password=editTextPassword.getText().toString().trim();
         email=editTextEmail.getText().toString().trim();
         password2=EditTextpasswordCon.getText().toString().trim();
-        recordNO=EditTextphone.getText().toString().trim();
+        recordNO=EditTextrecordNO.getText().toString().trim();
         phoneNo=EditTextphoneNo.getText().toString().trim();
 
         if (phoneNo.length()<10 || phoneNo.length()>10){
@@ -77,14 +77,14 @@ public class SignUpORG extends AppCompatActivity implements View.OnClickListener
 
         }
         if(recordNO.isEmpty()){
-            EditTextphone.setError("Record number is required");
-            EditTextphone.requestFocus();
+            EditTextrecordNO.setError("Record number is required");
+            EditTextrecordNO.requestFocus();
             return;}
 
-        if (recordNO.length()<10 || recordNO.length()>10){
+        if (recordNO.length()!=10){
 
-            EditTextphone.setError("Record Number Minimum length is 10");
-            EditTextphone.requestFocus();
+            EditTextrecordNO.setError("invalid Record Number");
+            EditTextrecordNO.requestFocus();
             return;
 
         }

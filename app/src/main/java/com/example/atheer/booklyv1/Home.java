@@ -14,7 +14,7 @@ public class Home extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
+    //    setContentView(R.layout.activity_home);
 
         ArrayList<Category_pic> createLists = new ArrayList<>();
         Category_pic restaurant = new Category_pic("Restaurant", R.drawable.restaurant);

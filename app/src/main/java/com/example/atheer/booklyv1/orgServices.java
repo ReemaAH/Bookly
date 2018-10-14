@@ -95,7 +95,6 @@ public class orgServices extends AppCompatActivity {
                         if (id == R.id.settingsId) {
 
                             startActivity(new Intent(orgServices.this,settingsorg.class));
-
                         } else if (id == R.id.logoutId){
 
                             FirebaseAuth.getInstance().signOut();
@@ -117,10 +116,6 @@ public class orgServices extends AppCompatActivity {
                             //    startActivity(new Intent(mynav.this,orgServices.class));
 
                         } else if (id == R.id.ReportsId){
-
-                            //    startActivity(new Intent(mynav.this,orgServices.class));
-
-                        } else if (id == R.id.OffersId){
 
                             //    startActivity(new Intent(mynav.this,orgServices.class));
 

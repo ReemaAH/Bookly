@@ -43,6 +43,7 @@ public class addCategory extends AppCompatActivity {
     TextView navUsername, navUserponts;
     NavigationView navigationView;
     View headerView;
+// nora
 
     private FirebaseAuth mAuth;
     private FirebaseDatabase database;
@@ -135,7 +136,7 @@ public class addCategory extends AppCompatActivity {
 
                         }else if (id == R.id.Services1Id){
 
-                            //        startActivity(new Intent(dashboardAdmin.this,CatView.class));
+                                  startActivity(new Intent(addCategory.this,BrowseAdmin.class));
 
                         } else if (id == R.id.ReportsId){
 
