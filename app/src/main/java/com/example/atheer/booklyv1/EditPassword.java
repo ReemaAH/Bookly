@@ -220,8 +220,10 @@ public class EditPassword extends AppCompatActivity implements View.OnClickListe
                             }
                         }
                     });
-                }else {
-                  //  Toast.makeText(EditPassword.this,"Authentication Failed",Toast.LENGTH_LONG).show();
+                }
+
+                else {
+                  Toast.makeText(EditPassword.this,"Authentication Failed",Toast.LENGTH_LONG).show();
 
                 }
             }
