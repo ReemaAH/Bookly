@@ -135,7 +135,7 @@ public class dashboardAdmin extends AppCompatActivity implements View.OnClickLis
                 startActivity(new Intent(this,Mynavigation.class));
                 break;
             case R.id.report:
-                startActivity(new Intent(this,SignUp.class));
+                startActivity(new Intent(this,signupActivity.class));
                 break;
 
         }
