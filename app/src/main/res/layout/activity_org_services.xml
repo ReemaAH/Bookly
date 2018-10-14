@@ -36,7 +36,7 @@
             </ListView>
 
 
-            <ImageView
+          <!--  <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/plus"
@@ -44,8 +44,8 @@
                 android:paddingTop="585dp"
                 android:paddingLeft="327dp"
 
-                />
-            <ImageView
+                />-->
+           <!-- <ImageView
                 android:id="@+id/addbutton"
                 android:layout_width="100dp"
                 android:layout_height="120dp"
@@ -57,7 +57,7 @@
                 android:src="@drawable/plus"
                 tools:ignore="MissingConstraints,OnClick"
                 android:paddingLeft="100dp"
-                />
+                />-->
         </android.support.constraint.ConstraintLayout>
 
 

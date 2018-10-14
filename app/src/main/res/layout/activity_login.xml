@@ -58,12 +58,11 @@
         android:layout_height="42dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
-        android:layout_marginBottom="133dp"
+        android:layout_marginBottom="138dp"
         android:gravity="center"
         android:text="New member? Sign up now"
         android:textColor="#6F73FF"
-        android:textSize="16dip"
-        android:layout_alignParentLeft="true" />
+        android:textSize="16dip" />
 
     <ProgressBar
         android:id="@+id/progressbar"
@@ -93,8 +92,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
-        android:layout_marginBottom="278dp"
-        android:layout_marginStart="14dp"
+        android:layout_marginBottom="283dp"
         android:layout_weight="1"
         android:gravity="center"
         android:text="Forgot password?"
@@ -119,6 +117,6 @@
         android:layout_height="123dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="51dp"
+        android:layout_marginTop="45dp"
         android:src="@drawable/logohome" />
 </RelativeLayout>

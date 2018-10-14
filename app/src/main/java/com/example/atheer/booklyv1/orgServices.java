@@ -150,7 +150,7 @@ public class orgServices extends AppCompatActivity {
 
 
                     ser = ds.getValue(services.class);
-                    str = ser.getName().toString()+" \n "+ ser.getPrice()+ "SR \t"+ ser.getRating()+ " " ;
+                    str = ser.getName().toString()+" \n\n "+ ser.getPrice()+ "SR \t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tRating:"+ ser.getRating()+ " " ;
                     list.add(str);}
 
 
@@ -171,15 +171,15 @@ public class orgServices extends AppCompatActivity {
 
 
 
-        imagev=(ImageView) findViewById(R.id.addbutton);
+       // imagev=(ImageView) findViewById(R.id.addbutton);
         // imagev.setOnClickListener(new View.OnClickListener() {
         // @Override
         // //   startActivity(new Intent(CatView.this,addCategory.class));
         // }
 
         // });
-        imagev.setY(1300);
-        imagev.setX(500);
+       // imagev.setY(1300);
+        //imagev.setX(500);
 
 
     }

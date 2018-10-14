@@ -42,6 +42,7 @@ public class mynav extends AppCompatActivity implements View.OnClickListener  {
         setContentView(R.layout.activity_mynav);
 
 
+        setTitle("Home");
 
 
 
