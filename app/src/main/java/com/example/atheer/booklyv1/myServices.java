@@ -38,13 +38,16 @@ public class myServices extends AppCompatActivity implements View.OnClickListene
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+
+
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_services);
 
         findViewById(R.id.buttonServices).setOnClickListener(this);
 
         setTitle("My Services");
-
 
 
         navigationView = (NavigationView) findViewById(R.id.nav_view);
@@ -82,23 +85,23 @@ public class myServices extends AppCompatActivity implements View.OnClickListene
 
                         if (id == R.id.settingsId) {
 
-                            startActivity(new Intent(myServices.this,settings.class));
+                            startActivity(new Intent(myServices.this, settings.class));
 
-                        } else if (id == R.id.logoutId){
+                        } else if (id == R.id.logoutId) {
 
                             FirebaseAuth.getInstance().signOut();
                             finish();
-                            Intent signOUT=new Intent(myServices.this,loginActivity.class);
+                            Intent signOUT = new Intent(myServices.this, loginActivity.class);
                             startActivity(signOUT);
 
 
-                        } else if (id == R.id.homeId){
+                        } else if (id == R.id.homeId) {
 
-                            startActivity(new Intent(myServices.this,Mynavigation.class));
+                            startActivity(new Intent(myServices.this, Mynavigation.class));
 
-                        } else if (id == R.id.myservicesId){
+                        } else if (id == R.id.myservicesId) {
 
-                            startActivity(new Intent(myServices.this,myServices.class));
+                            startActivity(new Intent(myServices.this, myServices.class));
 
                         }
 
@@ -107,7 +110,10 @@ public class myServices extends AppCompatActivity implements View.OnClickListene
                     }
                 });
 
+
     }
+
+
 
 
 
@@ -143,6 +149,10 @@ public class myServices extends AppCompatActivity implements View.OnClickListene
         userId = user.getUid();
         ref =  database.getReference().child("client").child(userId);
 
+        super.onStart();
+        if(mAuth.getCurrentUser()==null){
+            finish();
+            startActivity(new Intent(this,loginActivity.class));}
 
 
         ref.addValueEventListener(new ValueEventListener() {

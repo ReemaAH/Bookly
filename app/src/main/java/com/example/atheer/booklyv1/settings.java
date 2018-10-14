@@ -282,10 +282,17 @@ public class settings extends AppCompatActivity implements View.OnClickListener{
 
                     if(!name1.isEmpty()){
                         ref.child("name").setValue(name1);}
-                     if(!phoneNum.isEmpty()){
-                    ref.child("phoneNO").setValue(phoneNum);}
 
-        Toast.makeText(settings.this,"Successfully Updated",Toast.LENGTH_LONG).show();
+                     if(!phoneNum.isEmpty()) {
+                         if (phoneNum.length() < 10 || phoneNum.length() > 10) {
+                             Toast.makeText(settings.this, "Phone length should be 10 digits", Toast.LENGTH_LONG).show();
+
+                         } else {
+                             ref.child("phoneNO").setValue(phoneNum);
+                             Toast.makeText(settings.this, "Successfully Updated", Toast.LENGTH_LONG).show();
+                         }
+                     }
+
 
 
 

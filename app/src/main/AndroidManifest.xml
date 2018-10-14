@@ -46,8 +46,10 @@
         <activity android:name=".mynav2" />
         <activity android:name=".orgServices" />
         <activity android:name=".viewOrgnizations" />
+        <activity android:name=".BrowseOrgAdmin" />
         <activity android:name=".EditPassword" />
         <activity android:name=".settingsorg" />
+        <activity android:name=".EditPasswordadmin" />
         <activity android:name=".EditPasswordorg"></activity>
     </application>
 
