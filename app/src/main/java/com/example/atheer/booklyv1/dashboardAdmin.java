@@ -139,7 +139,7 @@ public class dashboardAdmin extends AppCompatActivity implements View.OnClickLis
                 //startActivity(new Intent(this,approvedAdmin.class));
                 break;
             case R.id.browse:
-                startActivity(new Intent(this,Mynavigation.class));
+                startActivity(new Intent(this,BrowseAdmin.class));
                 break;
             case R.id.report:
               //  startActivity(new Intent(this,SignUp.class));

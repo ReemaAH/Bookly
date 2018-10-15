@@ -201,6 +201,7 @@ public class EditPassword extends AppCompatActivity implements View.OnClickListe
 
 
         user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user!=null){
         final String email = user.getEmail();
         AuthCredential credential = EmailAuthProvider.getCredential(email,current);
 
@@ -227,7 +228,7 @@ public class EditPassword extends AppCompatActivity implements View.OnClickListe
 
                 }
             }
-        });
+        });}
     }
 
 

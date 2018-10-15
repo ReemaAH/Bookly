@@ -254,54 +254,50 @@ public class EditPasswordadmin extends AppCompatActivity implements View.OnClick
         mAuth = FirebaseAuth.getInstance();
         database =  FirebaseDatabase.getInstance();
         user =  mAuth.getCurrentUser();
-        userId = user.getUid();
-        ref =  database.getReference().child("client").child(userId);
+        if(user!=null) {
+            userId = user.getUid();
+            ref = database.getReference().child("client").child(userId);
 
 
+            ref.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    String name = "";
+                    int points = 0;
 
-        ref.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                String name = "";
-                int points = 0;
+
+                    for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                        name = dataSnapshot.child("name").getValue(String.class);
+
+                        if (dataSnapshot.hasChild("totalPoint")) {
+                            points = dataSnapshot.child("totalPoint").getValue(int.class);
+                            navUserponts.setVisibility(View.VISIBLE);
+                            navUserponts.setText(points + "");
+                        }
 
 
-                for(DataSnapshot ds: dataSnapshot.getChildren() ){
-                    name = dataSnapshot.child("name").getValue(String.class);
+                        navUsername.setText(name);
 
-                    if (dataSnapshot.hasChild("totalPoint")) {
-                        points = dataSnapshot.child("totalPoint").getValue(int.class);
-                        navUserponts.setVisibility(View.VISIBLE);
-                        navUserponts.setText(points + "");
+
                     }
-
-
-
-                    navUsername.setText(name);
-
 
 
                 }
 
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
 
 
-
+        } else {
+            super.onStart();
+            if (mAuth.getCurrentUser() == null) {
+                finish();
+                startActivity(new Intent(this, loginActivity.class));
             }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-
-
-
-        super.onStart();
-        if(mAuth.getCurrentUser()==null){
-            finish();
-            startActivity(new Intent(this,loginActivity.class));
         }
-
     }
 
 

@@ -84,11 +84,9 @@ public class settingsorg extends AppCompatActivity implements View.OnClickListen
                         // For example, swap UI fragments here
 
                         int id = menuItem.getItemId();
-
                         if (id == R.id.settingsId) {
 
                             startActivity(new Intent(settingsorg.this,settingsorg.class));
-
                         } else if (id == R.id.logoutId){
 
                             FirebaseAuth.getInstance().signOut();
@@ -99,14 +97,21 @@ public class settingsorg extends AppCompatActivity implements View.OnClickListen
 
                         } else if (id == R.id.homeId){
 
-                            startActivity(new Intent(settingsorg.this,Mynavigation.class));
+                            startActivity(new Intent(settingsorg.this,mynav.class));
 
-                        } else if (id == R.id.myservicesId){
+                        } else if (id == R.id.servicesId){
 
-                            startActivity(new Intent(settingsorg.this,myServices.class));
+                            startActivity(new Intent(settingsorg.this,orgServices.class));
+
+                        } else if (id == R.id.ReservationsId){
+
+                            //    startActivity(new Intent(mynav.this,orgServices.class));
+
+                        } else if (id == R.id.ReportsId){
+
+                            //    startActivity(new Intent(mynav.this,orgServices.class));
 
                         }
-
 
                         return true;
                     }

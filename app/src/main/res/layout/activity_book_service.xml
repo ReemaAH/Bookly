@@ -161,6 +161,7 @@
                         android:textColorHint="#A9A9A9"
                         android:clickable="true"
                         android:layout_gravity="center"
+                        android:inputType="date"
                         />
 
 
@@ -177,7 +178,9 @@
                         android:textColorHint="#A9A9A9"
                         android:clickable="true"
                         android:layout_gravity="center"
-                        android:layout_marginTop="10dp"/>
+                        android:layout_marginTop="10dp"
+                        android:inputType="time"
+                        />
 
 
                     <RelativeLayout

@@ -18,7 +18,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
-import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton;
+//mport com.cepheuen.elegantnumberbutton.view.ElegantNumberButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -27,8 +27,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.Random;
 
 public class bookService extends AppCompatActivity implements View.OnClickListener {
 
@@ -42,7 +45,9 @@ public class bookService extends AppCompatActivity implements View.OnClickListen
     private DatabaseReference ref;
     private String userId;
     private FirebaseUser user;
-
+    Intent intent;
+    int n=0;
+    // String counter;
     private DrawerLayout mDrawerLayout;
 
     TextView listdata;
@@ -50,7 +55,7 @@ public class bookService extends AppCompatActivity implements View.OnClickListen
     Spinner sp;
     ArrayList<String> data;
     String service = "";
-    ElegantNumberButton numRes;
+    // ElegantNumberButton numRes;
     EditText date;
     DatePickerDialog datePickerDialog;
     String dateval = "";
@@ -63,6 +68,11 @@ public class bookService extends AppCompatActivity implements View.OnClickListen
     int year;
     int month;
     int day;
+
+    String service1;
+    String date1;
+    String time1;
+    int num;
 
 
     @Override
@@ -145,12 +155,13 @@ public class bookService extends AppCompatActivity implements View.OnClickListen
         listdata = (TextView) findViewById(R.id.textlist);
 
         sp = (Spinner) findViewById(R.id.spinner1);
-        numRes = (ElegantNumberButton) findViewById(R.id.numberRes);
+        // numRes = (ElegantNumberButton) findViewById(R.id.numberRes);
         date = (EditText) findViewById(R.id.SerDate);
         time = (EditText) findViewById(R.id.SerTime);
 
 
-        Intent intent = getIntent();
+
+        intent = getIntent();
         listdata.setText(intent.getStringExtra("name"));
         setTitle(intent.getStringExtra("name"));
 
@@ -184,17 +195,17 @@ public class bookService extends AppCompatActivity implements View.OnClickListen
         });
 
 
-
-        numRes.setOnValueChangeListener(new ElegantNumberButton.OnValueChangeListener() {
-            @Override
-            public void onValueChange(ElegantNumberButton view, int oldValue, int newValue) {
-
-                String counter = numRes.getNumber();
-
-
-
-            }
-        });
+//
+//          numRes.setOnValueChangeListener(new ElegantNumberButton.OnValueChangeListener() {
+//                @Override
+//                public void onValueChange(ElegantNumberButton view, int oldValue, int newValue) {
+//
+//                    counter = numRes.getNumber();
+//
+//
+//
+//                }
+//            });
 
         date.setOnClickListener(new View.OnClickListener(){
 
@@ -222,6 +233,7 @@ public class bookService extends AppCompatActivity implements View.OnClickListen
 
         });
 
+        //  datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
 
         time.setOnClickListener(new View.OnClickListener(){
 
@@ -330,10 +342,54 @@ public class bookService extends AppCompatActivity implements View.OnClickListen
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.buttonBook:
-                startActivity(new Intent(this,Booked.class));
+
+                book();
                 break;
 
         }
+    }
+
+    private void book() {
+
+        date1= date.getText().toString().trim();;
+        time1= time.getText().toString().trim();
+        service1= service;
+        num = 1;
+        if(date1.isEmpty()){
+            date.setError("Date is required");
+            date.requestFocus();
+            return;}
+
+        if(time1.isEmpty())  {
+            time.setError("Time is required");
+            date.requestFocus();
+            return;
+        } if(!date1.matches("\\d{2}-\\d{2}-\\d{4}")){
+            date.setError("Date should be in the following format DD-MM-YYYY");
+            date.requestFocus();
+            return;
+        } if(!time1.matches("^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$")){
+            time.setError("Time should be in the following format HH:MM");
+            time.requestFocus();
+            return;
+        }
+
+        FirebaseDatabase database =  FirebaseDatabase.getInstance();
+        FirebaseUser user =  mAuth.getCurrentUser();
+        String userId = user.getUid();
+        Random rand = new Random();
+        int  n = rand.nextInt(50) + 1;
+        DatabaseReference mRef =  database.getReference().child("reservaiton").child(n+"");
+        mRef.child("date").setValue(date1);
+        mRef.child("time").setValue(time1);
+        mRef.child("service").setValue(service1);
+        mRef.child("num").setValue(num);
+        mRef.child("org").setValue(intent.getStringExtra("name"));
+        mRef.child("user").setValue(userId);
+        mRef.child("approved").setValue(0);
+
+        startActivity(new Intent(bookService.this,Booked.class));
+
     }
 
 
