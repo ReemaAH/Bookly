@@ -71,6 +71,8 @@ public class addCategory extends AppCompatActivity {
     private StorageReference mStorageRef;
     private DatabaseReference mDatabaseRef;
 
+    String catName;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -168,6 +170,7 @@ public class addCategory extends AppCompatActivity {
 
 
 
+
         mStorageRef= FirebaseStorage.getInstance().getReference("category");
         mDatabaseRef= FirebaseDatabase.getInstance().getReference("category");
         mButtonChooseImage.setOnClickListener(new View.OnClickListener() {
@@ -180,9 +183,15 @@ public class addCategory extends AppCompatActivity {
         mButtonUpload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mUploadTask != null && mUploadTask.isInProgress()) {
+                catName=mEditTextFileName.getText().toString().trim();
+                if (catName.isEmpty()){
+                    mEditTextFileName.setError("Category name is required");
+                    mEditTextFileName.requestFocus();
+                    return;}
+                else if (mUploadTask != null && mUploadTask.isInProgress()) {
                     Toast.makeText(addCategory.this, "Upload in progress", Toast.LENGTH_SHORT).show();
-                } else {
+                }
+                else {
                     UploadFile();
                 }
             }
