@@ -126,7 +126,6 @@ public class settingsadmin extends AppCompatActivity implements View.OnClickList
 
         editTextEmail =  (EditText) findViewById(R.id.editTextEmail);
         editTextName = (EditText) findViewById(R.id.editTextName);
-       // editphone = (EditText) findViewById(R.id.editphone);
         editbirth = (EditText) findViewById(R.id.editbirth);
 
         findViewById(R.id.buttonSave).setOnClickListener(this);
@@ -166,19 +165,12 @@ public class settingsadmin extends AppCompatActivity implements View.OnClickList
 
                 String name = "";
                 String email = "";
-              //  String phoneNO = "";
-                //int points = 0;
+
 
 
                 for(DataSnapshot ds: dataSnapshot.getChildren() ){
                     name = dataSnapshot.child("name").getValue(String.class);
                     email = dataSnapshot.child("email").getValue(String.class);
-                   // if (dataSnapshot.hasChild("phoneNO")) {
-                       // phoneNO= dataSnapshot.child("phoneNO").getValue(String.class);
-                       // editphone.setVisibility(View.VISIBLE);
-                       // editphone.setText(phoneNO + "");
-                   // }
-
 
 
                     editTextName.setText(name);
@@ -275,8 +267,6 @@ public class settingsadmin extends AppCompatActivity implements View.OnClickList
 
 
 
-
-
         }
         return super.onOptionsItemSelected(item);
     }
@@ -284,8 +274,6 @@ public class settingsadmin extends AppCompatActivity implements View.OnClickList
     private void EditUser(){
 
         name1=editTextName.getText().toString().trim();
-       // phoneNum= editphone.getText().toString().trim();
-
 
         mAuth = FirebaseAuth.getInstance();
         database =  FirebaseDatabase.getInstance();
@@ -297,9 +285,10 @@ public class settingsadmin extends AppCompatActivity implements View.OnClickList
             ref.child("name").setValue(name1);
 
             Toast.makeText(settingsadmin.this,"Successfully Modified",Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(settingsadmin.this, "name shouldn't be empty", Toast.LENGTH_LONG).show();
         }
-       // if(!phoneNum.isEmpty()){
-        //    ref.child("phoneNO").setValue(phoneNum);}
+
 
 
 
