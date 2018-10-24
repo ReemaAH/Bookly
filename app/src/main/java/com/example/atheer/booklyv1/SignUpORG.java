@@ -6,8 +6,10 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Patterns;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -16,8 +18,13 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
 
 public class SignUpORG extends AppCompatActivity implements View.OnClickListener {
     EditText editTextUsername , editTextPassword, editTextEmail,EditTextphone,EditTextpasswordCon, EditTextphoneNo , EditTextrecordNO;
@@ -32,7 +39,13 @@ public class SignUpORG extends AppCompatActivity implements View.OnClickListener
     String password2;
     String phoneNo;
     String recordNO;
+   String Category;
+    int position=0;
+    cat cate;
+    ArrayList<String> list;
+    ArrayAdapter<String> adapter;
 
+    Spinner dropdown;
     public SignUpORG(){
         name=null;
         email=null;
@@ -48,7 +61,13 @@ public class SignUpORG extends AppCompatActivity implements View.OnClickListener
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sign_up_org);
+
+        setContentView(R.layout.activity_sign_up_org );
+
+
+        dropdown = (Spinner) findViewById(R.id.spinner1);
+        loadDropDown();
+
         editTextEmail=(EditText)findViewById(R.id.input_email);
         editTextPassword=(EditText)findViewById(R.id.input_password);
         editTextUsername=(EditText)findViewById(R.id.input_name);
@@ -59,15 +78,64 @@ public class SignUpORG extends AppCompatActivity implements View.OnClickListener
         findViewById(R.id.link_login).setOnClickListener(this);
         findViewById(R.id.btn_signup).setOnClickListener(this);
         Newprogressbar = (ProgressBar) findViewById(R.id.progressbar);
+
+
+
+
+    }
+    private void loadDropDown(){
+
+
+        cate= new cat();
+        DatabaseReference ref1 = database.getReference("category");
+        list = new ArrayList<>();
+        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item,list);
+        ref1.addValueEventListener(new ValueEventListener() {
+
+
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+
+                    String str;
+                    cate = ds.getValue(cat.class);
+
+
+                    str = cate.getName().toString() + " ";
+                    list.add(str);
+
+                }
+
+
+                dropdown.setAdapter(adapter);
+
+            }
+
+
+
+
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
     }
 
-    private void regsterUser(){
+
+
+
+
+            private void regsterUser(){
         name=editTextUsername.getText().toString().trim();
         password=editTextPassword.getText().toString().trim();
         email=editTextEmail.getText().toString().trim();
         password2=EditTextpasswordCon.getText().toString().trim();
         recordNO=EditTextrecordNO.getText().toString().trim();
         phoneNo=EditTextphoneNo.getText().toString().trim();
+        Category = dropdown.getSelectedItem().toString();
 
         if (phoneNo.length()<10 || phoneNo.length()>10){
 
@@ -135,7 +203,7 @@ public class SignUpORG extends AppCompatActivity implements View.OnClickListener
                                                                                                                         public void onComplete(@NonNull Task<AuthResult> task) {
                                                                                                                             Newprogressbar.setVisibility(View.GONE);
                                                                                                                             if(task.isSuccessful()){
-                                                                                                                                // Toast.makeText(getApplicationContext(),"User Registered Successful", Toast.LENGTH_SHORT).show();
+
                                                                                                                                 FirebaseDatabase database =  FirebaseDatabase.getInstance();
                                                                                                                                 FirebaseUser user =  mAuth.getCurrentUser();
                                                                                                                                 String userId = user.getUid();
@@ -146,10 +214,13 @@ public class SignUpORG extends AppCompatActivity implements View.OnClickListener
                                                                                                                                 mRef.child("groupID").setValue(2);
                                                                                                                                 mRef.child("phoneNO").setValue(phoneNo);
                                                                                                                                 mRef.child("Status").setValue("Not approved");
+                                                                                                                                mRef.child("cat").setValue(Category);
                                                                                                                                 user.sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
                                                                                                                                     @Override
                                                                                                                                     public void onComplete(@NonNull Task<Void> task) {
                                                                                                                                         Toast.makeText(SignUpORG.this,"Please check your Email",Toast.LENGTH_LONG).show();
+                                                                                                                                        Intent homepage = new Intent(SignUpORG.this, orgmessage.class);
+                                                                                                                                        startActivity(homepage);
                                                                                                                                     }
                                                                                                                                 });
                                                                                                                             }

@@ -25,7 +25,7 @@
 
             <ListView
                 android:background="#cdcbe1"
-                android:id="@+id/ListView"
+                android:id="@+id/ListView1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 tools:layout_editor_absoluteX="0dp"
@@ -36,28 +36,6 @@
             </ListView>
 
 
-          <!--  <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/plus"
-                tools:ignore="MissingConstraints"
-                android:paddingTop="585dp"
-                android:paddingLeft="327dp"
-
-                />-->
-           <!-- <ImageView
-                android:id="@+id/addbutton"
-                android:layout_width="100dp"
-                android:layout_height="120dp"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentTop="true"
-                android:clickable="true"
-                android:onClick="ADD"
-                android:layout_marginTop="500dp"
-                android:src="@drawable/plus"
-                tools:ignore="MissingConstraints,OnClick"
-                android:paddingLeft="100dp"
-                />-->
         </android.support.constraint.ConstraintLayout>
 
 

@@ -56,8 +56,11 @@ public class signupActivity extends AppCompatActivity implements View.OnClickLis
         EditTextphone=(EditText)findViewById(R.id.phoneNO);
         EditTextpasswordCon=(EditText)findViewById(R.id.input_password2);
         mAuth = FirebaseAuth.getInstance();
+
         findViewById(R.id.link_login).setOnClickListener(this);
+
         findViewById(R.id.btn_signup).setOnClickListener(this);
+
         Newprogressbar = (ProgressBar) findViewById(R.id.progressbar);
     }
 

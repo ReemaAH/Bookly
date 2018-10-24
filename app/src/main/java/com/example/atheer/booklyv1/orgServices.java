@@ -29,8 +29,6 @@ public class orgServices extends AppCompatActivity {
 
     ImageView imagev;
     android.widget.ListView ListView;
-    //FirebaseDatabase database;
-    //DatabaseReference ref;
     ArrayList<String> list;
     ArrayAdapter<String> adapter;
     services ser;
@@ -39,7 +37,6 @@ public class orgServices extends AppCompatActivity {
     TextView navUsername, navUserponts;
     NavigationView navigationView;
     View headerView;
-    //TextView serviceO;
     private FirebaseAuth mAuth;
     private FirebaseDatabase database;
     private FirebaseAuth.AuthStateListener mAuthStateListener;
@@ -87,8 +84,7 @@ public class orgServices extends AppCompatActivity {
                         // close drawer when item is tapped
                         mDrawerLayout.closeDrawers();
 
-                        // Add code here to update the UI based on the item selected
-                        // For example, swap UI fragments here
+
 
                         int id = menuItem.getItemId();
 
@@ -158,7 +154,7 @@ public class orgServices extends AppCompatActivity {
 
             }
 
-//
+
 
 
             @Override
@@ -169,17 +165,6 @@ public class orgServices extends AppCompatActivity {
         });
 
 
-
-
-       // imagev=(ImageView) findViewById(R.id.addbutton);
-        // imagev.setOnClickListener(new View.OnClickListener() {
-        // @Override
-        // //   startActivity(new Intent(CatView.this,addCategory.class));
-        // }
-
-        // });
-       // imagev.setY(1300);
-        //imagev.setX(500);
 
 
     }

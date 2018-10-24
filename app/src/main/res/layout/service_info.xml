@@ -18,21 +18,7 @@
         tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="0dp" />
-<!--
- android:drawableRight="@drawable/favorite"
-  android:drawablePadding="130dp"
 
--->
-
-    <!--<ImageView
-            android:id="@+id/star11"
-            android:layout_width="37dp"
-            android:layout_height="34dp"
-            android:src="@drawable/favorite"
-            tools:ignore="MissingConstraints"
-            android:layout_marginLeft="100dp"
-            tools:layout_editor_absoluteX="374dp"
-            tools:layout_editor_absoluteY="72dp" />-->
 
 
 

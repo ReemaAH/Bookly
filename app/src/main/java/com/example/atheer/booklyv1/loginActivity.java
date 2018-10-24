@@ -94,10 +94,21 @@ public class loginActivity extends AppCompatActivity implements View.OnClickList
                                                                                                @Override
                                                                                                public void onDataChange(DataSnapshot dataSnapshot) {
                                                                                                    int groupID=dataSnapshot.child("groupID").getValue(int.class);
+
                                                                                                   if(groupID==2) {
-                                                                                                       Intent homepage = new Intent(loginActivity.this, mynav.class);
-                                                                                                       startActivity(homepage);
-                                                                                                   }
+                                                                                                      String status= dataSnapshot.child("Status").getValue(String.class);
+                                                                                                    if (status.equals("Not approved"))
+                                                                                                    {
+                                                                                                       Intent homepage = new Intent(loginActivity.this, orgmessage.class);
+                                                                                                       startActivity(homepage);}
+                                                                                                       else if (status.equals("approved"))
+                                                                                                      {
+                                                                                                        Intent homepage = new Intent(loginActivity.this, mynav.class);
+                                                                                                        startActivity(homepage);
+
+                                                                                                    }
+
+                                                                                                  }
                                                                                                    else if(groupID==3){
                                                                                                        Intent homepage = new Intent(loginActivity.this, Mynavigation.class);
                                                                                                        startActivity(homepage);
@@ -115,13 +126,14 @@ public class loginActivity extends AppCompatActivity implements View.OnClickList
 
                                                                                                    @Override
                                                                                                    public void onDataChange(DataSnapshot dataSnapshot) {
+                                                                                                       if(dataSnapshot.hasChild("groupID")){
                                                                                                        int groupID=dataSnapshot.child("groupID").getValue(int.class);
                                                                                                        if(groupID==1){
                                                                                                            Intent homepage = new Intent(loginActivity.this, dashboardAdmin.class);
                                                                                                            startActivity(homepage);
                                                                                                        }
                                                                                                        else Toast.makeText(getApplicationContext(), "Email not verified", Toast.LENGTH_LONG).show();
-                                                                                                   }
+                                                                                                   }}
 
                                                                                                    @Override
                                                                                                    public void onCancelled(DatabaseError error) {

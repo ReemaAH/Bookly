@@ -233,7 +233,7 @@ public class bookService extends AppCompatActivity implements View.OnClickListen
 
         });
 
-        //  datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
+
 
         time.setOnClickListener(new View.OnClickListener(){
 

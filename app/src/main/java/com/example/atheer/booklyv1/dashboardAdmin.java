@@ -94,7 +94,16 @@ public class dashboardAdmin extends AppCompatActivity implements View.OnClickLis
                             startActivity(signOUT);
 
 
-                        } else if (id == R.id.homeId){
+                        }
+
+                    else if (id == R.id.OrgId){
+
+                        startActivity(new Intent(dashboardAdmin.this,approveOrgByadmin.class));}
+
+
+
+
+                        else if (id == R.id.homeId){
 
                             startActivity(new Intent(dashboardAdmin.this,dashboardAdmin.class));
 
@@ -117,6 +126,8 @@ public class dashboardAdmin extends AppCompatActivity implements View.OnClickLis
                         }
 
 
+
+
                         return true;
                     }
                 });
@@ -136,7 +147,7 @@ public class dashboardAdmin extends AppCompatActivity implements View.OnClickLis
                 startActivity(new Intent(this,CatView.class));
                 break;
             case R.id.Organization:
-                //startActivity(new Intent(this,approvedAdmin.class));
+                startActivity(new Intent(dashboardAdmin.this,approveOrgByadmin.class));
                 break;
             case R.id.browse:
                 startActivity(new Intent(this,BrowseAdmin.class));

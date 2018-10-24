@@ -1,5 +1,4 @@
 package com.example.atheer.booklyv1;
-
 import android.content.Intent;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;

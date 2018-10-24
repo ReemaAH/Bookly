@@ -14,7 +14,7 @@
         android:layout_height="41dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="181dp"
+        android:layout_marginTop="178dp"
         android:backgroundTint="#D3D3D3"
         android:fontFamily="sans-serif"
         android:hint="Name"
@@ -29,7 +29,7 @@
         android:layout_height="41dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="236dp"
+        android:layout_marginTop="232dp"
         android:backgroundTint="#D3D3D3"
         android:fontFamily="sans-serif"
         android:hint="Email"
@@ -44,7 +44,7 @@
         android:layout_height="41dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="219dp"
+        android:layout_marginBottom="227dp"
         android:backgroundTint="#D3D3D3"
         android:fontFamily="sans-serif"
         android:hint="Password"
@@ -60,7 +60,7 @@
         android:layout_height="41dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="163dp"
+        android:layout_marginBottom="171dp"
         android:backgroundTint="#D3D3D3"
         android:fontFamily="sans-serif"
         android:hint="Confirm Password"
@@ -68,12 +68,14 @@
         android:textColor="#7c7a7a"
         android:textColorHint="#A9A9A9" />
 
-
-
-
-    <!-- to be deleted -->
-
-
+    <Spinner
+        android:id="@+id/spinner1"
+        android:layout_width="250dp"
+        android:layout_height="41dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="129dp"
+        android:visibility="visible" />
 
     <ProgressBar
         android:id="@+id/progressbar"
@@ -123,24 +125,34 @@
 
 
     <ImageView
-        android:id="@+id/imageView"
+    android:id="@+id/imageView"
+    android:layout_width="30dp"
+    android:layout_height="38dp"
+    android:layout_alignBottom="@+id/input_password"
+    android:layout_marginStart="20dp"
+    android:adjustViewBounds="false"
+    android:src="@drawable/ic_lock_black_24dp"
+    tools:layout_editor_absoluteX="20dp"
+    tools:layout_editor_absoluteY="267dp"
+    android:layout_marginLeft="20dp" />
+    <ImageView
+        android:id="@+id/imageView44"
         android:layout_width="30dp"
         android:layout_height="38dp"
-        android:layout_alignBottom="@+id/input_password"
+        android:layout_alignBottom="@+id/spinner1"
         android:layout_marginStart="20dp"
         android:adjustViewBounds="false"
-        android:src="@drawable/ic_lock_black_24dp"
+        android:src="@drawable/ic_filter_list_black_24dp"
         tools:layout_editor_absoluteX="20dp"
         tools:layout_editor_absoluteY="267dp"
         android:layout_marginLeft="20dp" />
-
     <EditText
         android:id="@+id/Phone"
         android:layout_width="250dp"
         android:layout_height="41dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="271dp"
+        android:layout_marginBottom="280dp"
         android:backgroundTint="#D3D3D3"
         android:ems="10"
         android:hint="phone"
@@ -178,7 +190,7 @@
         android:layout_height="41dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="294dp"
+        android:layout_marginTop="287dp"
         android:backgroundTint="#D3D3D3"
         android:ems="10"
         android:hint="  Commercial number"
@@ -204,7 +216,7 @@
         android:layout_height="55dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="92dp"
+        android:layout_marginBottom="52dp"
         android:background="@drawable/edit_rouded"
         android:fontFamily="sans-serif"
         android:padding="12dp"
@@ -218,12 +230,13 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
-        android:layout_marginBottom="58dp"
+        android:layout_marginBottom="20dp"
         android:layout_weight="1"
         android:gravity="center"
         android:text="Already a member? SignIn"
         android:textColor="#6F73FF"
-        android:textSize="16dip" />
+        android:textSize="16dip"
+        android:layout_alignParentLeft="true" />
 
 
 
