@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/drawerId"
+    tools:openDrawer="start"
+    tools:context=".Mynavigation">
+
+    <FrameLayout
+        android:id="@+id/content_frame"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?android:attr/actionBarSize"
+            android:background="#FFFFFF"
+            android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+
+            />
+
+        <LinearLayout
+            android:layout_marginTop="50dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            >
+
+
+
+        </LinearLayout>
+
+    </FrameLayout>
+
+
+  <android.support.design.widget.NavigationView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:id="@+id/nav_view"
+        android:background="#FFFFFF"
+        app:itemTextColor="#26243C"
+        android:layout_gravity="start"
+        app:menu='@menu/nav_menu_layout2'
+        app:headerLayout="@layout/nav_header"
+        >
+
+
+    </android.support.design.widget.NavigationView>
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="16dp"
+        tools:context=".addCategory">
+
+        <Button
+            android:id="@+id/button_choose_image"
+            android:layout_width="210dp"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/progress_bar"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/edit_rouded2"
+            android:text="Choose file"
+            android:textColor="@color/white" />
+
+
+        <EditText
+            android:id="@+id/edit_text_file_name"
+            android:layout_width="259dp"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/edit_text_file_percentage"
+            android:layout_centerHorizontal="true"
+            android:hint="Enter Service name" />
+
+        <EditText
+            android:id="@+id/edit_text_file_percentage"
+            android:layout_width="259dp"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/edit_text_file_sdate"
+            android:layout_centerHorizontal="true"
+            android:clickable="true"
+            android:hint="Enter percentage of discount"
+            android:inputType="number" />
+
+        <EditText
+            android:id="@+id/edit_text_file_sdate"
+            android:layout_width="259dp"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/edit_text_file_edate"
+            android:layout_centerHorizontal="true"
+            android:clickable="true"
+            android:hint="Start date"
+            android:inputType="date" />
+
+        <EditText
+            android:id="@+id/edit_text_file_edate"
+            android:layout_width="259dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="171dp"
+            android:clickable="true"
+            android:hint="End date"
+            android:inputType="date" />
+
+        <ImageView
+            android:id="@+id/image_view"
+            android:layout_width="236dp"
+            android:layout_height="129dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="58dp" />
+
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/button_upload"
+            android:layout_centerHorizontal="true" />
+
+        <Button
+            android:id="@+id/button_upload"
+            android:layout_width="210dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="36dp"
+            android:background="@drawable/edit_rouded"
+            android:text="Upload"
+            android:textColor="@color/white" />
+
+
+
+
+    </RelativeLayout>
+</android.support.v4.widget.DrawerLayout>

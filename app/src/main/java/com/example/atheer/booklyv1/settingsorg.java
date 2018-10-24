@@ -291,17 +291,19 @@ public class settingsorg extends AppCompatActivity implements View.OnClickListen
                 Toast.makeText(settingsorg.this, "Phone length should be 10 digits", Toast.LENGTH_LONG).show();
 
             } else {
-            ref.child("name").setValue(name1);
-            ref.child("phoneNO").setValue(phoneNum);
-            Toast.makeText(settingsorg.this, "Successfully Updated", Toast.LENGTH_LONG).show();}}
+                ref.child("name").setValue(name1);
+                ref.child("phoneNO").setValue(phoneNum);
+                Toast.makeText(settingsorg.this, "Successfully Updated", Toast.LENGTH_LONG).show();}}
 
-            if(name1.isEmpty()){
+        if(name1.isEmpty()){
             Toast.makeText(settingsorg.this, "name shouldn't be empty", Toast.LENGTH_LONG).show();
         }
 
         if(phoneNum.isEmpty()) {
             Toast.makeText(settingsorg.this, "phone number shouldn't be empty", Toast.LENGTH_LONG).show();
         }
+
+
 
 
 

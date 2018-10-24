@@ -351,7 +351,7 @@ public class bookService extends AppCompatActivity implements View.OnClickListen
 
     private void book() {
 
-        date1= date.getText().toString().trim();;
+        date1= date.getText().toString().trim();
         time1= time.getText().toString().trim();
         service1= service;
         num = 1;

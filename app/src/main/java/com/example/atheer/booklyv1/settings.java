@@ -302,8 +302,6 @@ public class settings extends AppCompatActivity implements View.OnClickListener{
 
 
 
-
-
     }
 
 
