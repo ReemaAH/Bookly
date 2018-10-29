@@ -1,6 +1,7 @@
 package com.example.atheer.booklyv1;
 
 import android.content.Intent;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -46,6 +47,8 @@ private ValueEventListener mDBListener;
 private FirebaseStorage mStorge;
 private DatabaseReference mDatabaseRef;
 private List<uloadOffers> mUpload;
+FloatingActionButton mFloatingActionButton;
+ //
 
 private ProgressBar mProgressBar;
 
@@ -143,7 +146,8 @@ private ProgressBar mProgressBar;
         mRecyclerView=findViewById(R.id.recycler_view);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-
+        mFloatingActionButton =findViewById(R.id.newbutton);
+        mFloatingActionButton.setImageResource(R.drawable.addicon2);
         imagev=(ImageView) findViewById(R.id.newbutton);
         imagev.setOnClickListener(new View.OnClickListener() {
             @Override

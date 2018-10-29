@@ -53,10 +53,8 @@
         <activity android:name=".ServicesAdmin" />
         <activity android:name=".EditPasswordadmin" />
         <activity android:name=".EditPasswordorg" />
-        <activity android:name=".orgmessage" />
-        <activity android:name=".approveOrgByadmin" />
-        <activity android:name=".orginforequest" />
-        <activity android:name=".orgdes"></activity>
+        <activity android:name=".addOffer" />
+        <activity android:name=".OffersImages" />
     </application>
 
 </manifest>

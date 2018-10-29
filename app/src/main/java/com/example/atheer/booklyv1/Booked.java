@@ -104,7 +104,13 @@ public class Booked extends AppCompatActivity implements View.OnClickListener{
                 });
 
 
+        super.onStart();
+        if(mAuth.getCurrentUser()==null){
 
+            finish();
+            startActivity(new Intent(this,loginActivity.class));
+
+        }
     }
 
 

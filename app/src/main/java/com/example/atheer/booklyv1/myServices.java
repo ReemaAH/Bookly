@@ -8,8 +8,14 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -20,13 +26,20 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class myServices extends AppCompatActivity implements View.OnClickListener {
+
+    private static final String TAG = "viewOrgnization";
 
     private DrawerLayout mDrawerLayout;
 
     TextView navUsername, navUserponts;
     NavigationView navigationView;
     View headerView;
+    private DatabaseReference ref2;
+    LinearLayout myLinearLayout;
 
     private FirebaseAuth mAuth;
     private FirebaseDatabase database;
@@ -35,13 +48,17 @@ public class myServices extends AppCompatActivity implements View.OnClickListene
     private String userId;
     private FirebaseUser user;
 
+    ArrayList<String> list;
+    private ListView ListView;
+    ArrayAdapter<String> adapter;
+    private ResAdapter resAdapter;
+    private List<Res> reserv;
+    Orgz org;
+    String cat;
+    Res res;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-
-
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_services);
 
@@ -50,11 +67,13 @@ public class myServices extends AppCompatActivity implements View.OnClickListene
         setTitle("My Services");
 
 
+
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.bringToFront();
         headerView = navigationView.getHeaderView(0);
         navUsername = (TextView) headerView.findViewById(R.id.useremail);
         navUserponts = (TextView) headerView.findViewById(R.id.userpoints);
+        myLinearLayout = (LinearLayout) findViewById(R.id.viewme);
 
         loaduserinfo();
 
@@ -85,23 +104,23 @@ public class myServices extends AppCompatActivity implements View.OnClickListene
 
                         if (id == R.id.settingsId) {
 
-                            startActivity(new Intent(myServices.this, settings.class));
+                            startActivity(new Intent(myServices.this,settings.class));
 
-                        } else if (id == R.id.logoutId) {
+                        } else if (id == R.id.logoutId){
 
                             FirebaseAuth.getInstance().signOut();
                             finish();
-                            Intent signOUT = new Intent(myServices.this, loginActivity.class);
+                            Intent signOUT=new Intent(myServices.this,loginActivity.class);
                             startActivity(signOUT);
 
 
-                        } else if (id == R.id.homeId) {
+                        } else if (id == R.id.homeId){
 
-                            startActivity(new Intent(myServices.this, Mynavigation.class));
+                            startActivity(new Intent(myServices.this,Mynavigation.class));
 
-                        } else if (id == R.id.myservicesId) {
+                        } else if (id == R.id.myservicesId){
 
-                            startActivity(new Intent(myServices.this, myServices.class));
+                            startActivity(new Intent(myServices.this,myServices.class));
 
                         }
 
@@ -111,9 +130,80 @@ public class myServices extends AppCompatActivity implements View.OnClickListene
                 });
 
 
+
+        ListView = (ListView) findViewById(R.id.ListView);
+        reserv = new ArrayList<>();
+       // reserv.add(new Res("22/12/1417","02:00","book table",3,"Urth","33",true));
+
+        Log.d(TAG, "onCreate: Started");
+
+
+        list = new ArrayList<String>();
+      res = new Res();
+        FirebaseUser user =  mAuth.getCurrentUser();
+        String userId = user.getUid();
+      ref2 =  database.getReference().child("reservaiton").child(userId).child("Services");
+
+        ref2.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                   // String key = (String) ds.getKey();
+
+                    res = ds.getValue(Res.class);
+
+
+                        reserv.add(res);
+
+
+
+                }  resAdapter = new ResAdapter(getApplicationContext(),reserv);
+                ListView.setAdapter(resAdapter);
+            }
+
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+
+
+
+
+
+//        org = new Orgz("Apple Pie", "4.4", "7", "Restaurant");
+//        Orgz org2 = new Orgz("Urth", "4.4", "7", "Restaurant");
+//        Orgz org3 = new Orgz("Five Guys", "4.4", "7","Restaurant");
+//        Orgz org4 = new Orgz("Apple Pie", "4.4", "7","Restaurant");
+//        Orgz org5 = new Orgz("The Cinema", "4.4", "7", "Cinema");
+//        Orgz org6 = new Orgz("VOX", "4.4", "7","Cinema");
+//        Orgz org7 = new Orgz("AMC", "4.4", "7","Cinema");
+//
+//
+//
+
+       // list.add("Urth | 2:00");
+
+////        ArrayList<String> orgs = new ArrayList<>();
+////        orgs.add("Urth");
+////        orgs.add("Five Guys");
+////        orgs.add("Nozomi");
+////        orgs.add("Lusin");
+////        orgs.add("Red Chilli");
+//
+//        // adapter= new OrgzAdapter(dataModels,getApplicationContext());
+
+
+
+
+
+
+
+
     }
-
-
 
 
 
@@ -149,10 +239,6 @@ public class myServices extends AppCompatActivity implements View.OnClickListene
         userId = user.getUid();
         ref =  database.getReference().child("client").child(userId);
 
-        super.onStart();
-        if(mAuth.getCurrentUser()==null){
-            finish();
-            startActivity(new Intent(this,loginActivity.class));}
 
 
         ref.addValueEventListener(new ValueEventListener() {

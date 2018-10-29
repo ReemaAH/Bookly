@@ -46,8 +46,8 @@ public class bookService extends AppCompatActivity implements View.OnClickListen
     private String userId;
     private FirebaseUser user;
     Intent intent;
-    int n=0;
-    // String counter;
+int n=0;
+   // String counter;
     private DrawerLayout mDrawerLayout;
 
     TextView listdata;
@@ -55,7 +55,7 @@ public class bookService extends AppCompatActivity implements View.OnClickListen
     Spinner sp;
     ArrayList<String> data;
     String service = "";
-    // ElegantNumberButton numRes;
+  // ElegantNumberButton numRes;
     EditText date;
     DatePickerDialog datePickerDialog;
     String dateval = "";
@@ -152,47 +152,47 @@ public class bookService extends AppCompatActivity implements View.OnClickListen
 
 
 
-        listdata = (TextView) findViewById(R.id.textlist);
+            listdata = (TextView) findViewById(R.id.textlist);
 
-        sp = (Spinner) findViewById(R.id.spinner1);
-        // numRes = (ElegantNumberButton) findViewById(R.id.numberRes);
-        date = (EditText) findViewById(R.id.SerDate);
-        time = (EditText) findViewById(R.id.SerTime);
-
-
-
-        intent = getIntent();
-        listdata.setText(intent.getStringExtra("name"));
-        setTitle(intent.getStringExtra("name"));
+            sp = (Spinner) findViewById(R.id.spinner1);
+          // numRes = (ElegantNumberButton) findViewById(R.id.numberRes);
+            date = (EditText) findViewById(R.id.SerDate);
+            time = (EditText) findViewById(R.id.SerTime);
 
 
 
-
-
-        data = new ArrayList<>();
-        data.add("Book a table");
-        data.add("Book a table2");
-
-
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, data); //Create the Adapter to set the data
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item); //Set the layout resource to create the drop down views.
-        sp.setAdapter(adapter); //Set the data to your spinner
+            intent = getIntent();
+            listdata.setText(intent.getStringExtra("name"));
+            setTitle(intent.getStringExtra("name"));
 
 
 
-        sp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                service=sp.getSelectedItem().toString();
-                // displaytxt.setText(service);
-            }
 
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
 
-            }
-        });
+            data = new ArrayList<>();
+            data.add("Book a table");
+            data.add("Book a table2");
+
+
+
+            ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, data); //Create the Adapter to set the data
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item); //Set the layout resource to create the drop down views.
+            sp.setAdapter(adapter); //Set the data to your spinner
+
+
+
+            sp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    service=sp.getSelectedItem().toString();
+                    // displaytxt.setText(service);
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
+
+                }
+            });
 
 
 //
@@ -207,47 +207,47 @@ public class bookService extends AppCompatActivity implements View.OnClickListen
 //                }
 //            });
 
-        date.setOnClickListener(new View.OnClickListener(){
+            date.setOnClickListener(new View.OnClickListener(){
 
-            @Override
-            public void onClick(View view){
+                @Override
+                public void onClick(View view){
 
-                Calendar calander = Calendar.getInstance();
-                year = calander.get(Calendar.YEAR);
-                month = calander.get(Calendar.MONTH);
-                day = calander.get(Calendar.DAY_OF_MONTH);
+                    Calendar calander = Calendar.getInstance();
+                    year = calander.get(Calendar.YEAR);
+                    month = calander.get(Calendar.MONTH);
+                    day = calander.get(Calendar.DAY_OF_MONTH);
 
-                datePickerDialog = new DatePickerDialog(bookService.this, new DatePickerDialog.OnDateSetListener() {
-                    @Override
-                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                    datePickerDialog = new DatePickerDialog(bookService.this, new DatePickerDialog.OnDateSetListener() {
+                        @Override
+                        public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
 
-                        dateval = day+"-"+(month+1)+"-"+year;
+                            dateval = day+"-"+(month+1)+"-"+year;
 
-                        date.setText(dateval);
-                    }
-                },year,month,day);
+                            date.setText(dateval);
+                        }
+                    },year,month,day);
 
-                datePickerDialog.show();
+                    datePickerDialog.show();
 
-            }
+                }
 
-        });
+            });
+
+      //  datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
+
+            time.setOnClickListener(new View.OnClickListener(){
+
+                @Override
+                public void onClick(View view){
+
+                    Calendar calander = Calendar.getInstance();
+                    hour = calander.get(Calendar.HOUR);
+                    minute = calander.get(Calendar.MINUTE);
 
 
-
-        time.setOnClickListener(new View.OnClickListener(){
-
-            @Override
-            public void onClick(View view){
-
-                Calendar calander = Calendar.getInstance();
-                hour = calander.get(Calendar.HOUR);
-                minute = calander.get(Calendar.MINUTE);
-
-
-                timePickerDialog = new TimePickerDialog(bookService.this, new TimePickerDialog.OnTimeSetListener() {
-                    @Override
-                    public void onTimeSet(TimePicker timePicker, int i, int i1) {
+                    timePickerDialog = new TimePickerDialog(bookService.this, new TimePickerDialog.OnTimeSetListener() {
+                        @Override
+                        public void onTimeSet(TimePicker timePicker, int i, int i1) {
 
 //                        String am_pm;
 //                        if(i<12){
@@ -262,26 +262,32 @@ public class bookService extends AppCompatActivity implements View.OnClickListen
 //                            am_pm="PM";
 //                        }
 
-                        timeval = i + ":" + i1 + " ";
+                            timeval = i + ":" + i1 + " ";
 
-                        time.setText(timeval);
-
-
-                    }
-                },hour,minute,false);
-
-                timePickerDialog.show();
-
-            }
-
-        });
+                            time.setText(timeval);
 
 
+                        }
+                    },hour,minute,false);
+
+                    timePickerDialog.show();
+
+                }
+
+            });
 
 
 
+        super.onStart();
+        if(mAuth.getCurrentUser()==null){
 
-    }
+            finish();
+            startActivity(new Intent(this,loginActivity.class));
+
+        }
+
+
+        }
 
 
 //    public void dispalyResult(View view){
@@ -351,9 +357,9 @@ public class bookService extends AppCompatActivity implements View.OnClickListen
 
     private void book() {
 
-        date1= date.getText().toString().trim();
+        date1= date.getText().toString().trim();;
         time1= time.getText().toString().trim();
-        service1= service;
+        service1= service.toString();
         num = 1;
         if(date1.isEmpty()){
             date.setError("Date is required");
@@ -378,15 +384,14 @@ public class bookService extends AppCompatActivity implements View.OnClickListen
         FirebaseUser user =  mAuth.getCurrentUser();
         String userId = user.getUid();
         Random rand = new Random();
-        int  n = rand.nextInt(50) + 1;
-        DatabaseReference mRef =  database.getReference().child("reservaiton").child(n+"");
+        int  n = rand.nextInt(2000) + 1;
+        DatabaseReference mRef =  database.getReference().child("reservaiton").child(userId).child("Services").child(n+"");
         mRef.child("date").setValue(date1);
         mRef.child("time").setValue(time1);
         mRef.child("service").setValue(service1);
         mRef.child("num").setValue(num);
         mRef.child("org").setValue(intent.getStringExtra("name"));
-        mRef.child("user").setValue(userId);
-        mRef.child("approved").setValue(0);
+        mRef.child("approved").setValue(false);
 
         startActivity(new Intent(bookService.this,Booked.class));
 
