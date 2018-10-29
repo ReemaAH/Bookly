@@ -57,11 +57,11 @@
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycler_view"
             android:layout_width="match_parent"
-            android:layout_height="536dp"
+            android:layout_height="523dp"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:layout_marginTop="31dp" />
+            android:layout_marginTop="44dp" />
 
         <ProgressBar
             android:id="@+id/progress_circle"
@@ -80,7 +80,8 @@
             android:layout_marginRight="@dimen/fab_margin"
             android:layout_marginStart="@dimen/fab_margin"
             android:layout_marginTop="@dimen/fab_margin"
-            app:srcCompat="@drawable/addicon2" />
+            android:src="@drawable/addicon2"
+        app:backgroundTint="#5bb17e" />
 
         <!--    <ImageView
               android:id="@+id/newbutton"

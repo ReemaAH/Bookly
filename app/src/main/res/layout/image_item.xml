@@ -34,7 +34,8 @@
             android:textColor="#39374D"
             android:textSize="15sp"
             android:textStyle="bold"
-            android:typeface="normal" />
+            android:typeface="normal"
+            android:layout_alignLeft="@+id/text_view_sDate" />
 
         <TextView
             android:id="@+id/text_view_percentage"
