@@ -3,41 +3,41 @@ package com.example.atheer.booklyv1;
 import java.io.Serializable;
 
 public class orguser implements Serializable {
-    String Uid;
-   String Status;
-    String cat;
-   String email;
-   int groupID;
-   String name;
-   String phoneNO;
-   String recordNO;
+    private  String Uid;
+    private  String Status;
+    private  String cat;
+    private  String email;
+    private  int groupID;
+    private   String name;
+    private   String phoneNO;
+    private   String recordNO;
 
-   public orguser(){
+    public orguser(){
 
-   }
+    }
 
 
-   public orguser(String name){
-       this.name=name;
+    public orguser(String name){
+        this.name=name;
 
-   }
+    }
 
-   public orguser(String Status, String email, int groupID,String name ,String phoneNO, String recocrdNO){
-       this.name=name;
-       this.Status=Status;
-       this.email=email;
-       this.groupID=groupID;
-       this.phoneNO=phoneNO;
+    public orguser(String Status, String email, int groupID,String name ,String phoneNO, String recocrdNO){
+        this.name=name;
+        this.Status=Status;
+        this.email=email;
+        this.groupID=groupID;
+        this.phoneNO=phoneNO;
 
-       this.recordNO=recocrdNO;
-   }
+        this.recordNO=recocrdNO;
+    }
 
     public String getStatus() {
         return Status;
     }
 
     public void setStatus(String status) {
-        Status = status;
+        this.Status = status;
     }
 
     public String getEmail() {

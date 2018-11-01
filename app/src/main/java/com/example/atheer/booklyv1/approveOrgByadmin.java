@@ -77,8 +77,6 @@ String status;
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.bringToFront();
         navigationView.setNavigationItemSelectedListener(
-
-
                 new NavigationView.OnNavigationItemSelectedListener() {
                     @Override
                     public boolean onNavigationItemSelected(MenuItem menuItem) {
@@ -87,13 +85,15 @@ String status;
                         // close drawer when item is tapped
                         mDrawerLayout.closeDrawers();
 
-
+                        // Add code here to update the UI based on the item selected
+                        // For example, swap UI fragments here
 
                         int id = menuItem.getItemId();
 
                         if (id == R.id.settingsId) {
 
-                            startActivity(new Intent(approveOrgByadmin.this,settingsorg.class));
+                            startActivity(new Intent(approveOrgByadmin.this,settingsadmin.class));
+
                         } else if (id == R.id.logoutId){
 
                             FirebaseAuth.getInstance().signOut();
@@ -104,19 +104,23 @@ String status;
 
                         } else if (id == R.id.homeId){
 
-                            startActivity(new Intent(approveOrgByadmin.this,mynav.class));
+                            startActivity(new Intent(approveOrgByadmin.this,dashboardAdmin.class));
 
-                        } else if (id == R.id.servicesId){
+                        } else if (id == R.id.CategoriesId){
 
-                            startActivity(new Intent(approveOrgByadmin.this,orgServices.class));
+                            startActivity(new Intent(approveOrgByadmin.this,CatView.class));
 
-                        } else if (id == R.id.ReservationsId){
+                        }else if (id == R.id.OrgId){
 
-                            //    startActivity(new Intent(mynav.this,orgServices.class));
+                            //         startActivity(new Intent(dashboardAdmin.this,CatView.class));
+
+                        }else if (id == R.id.Services1Id){
+
+                            startActivity(new Intent(approveOrgByadmin.this,BrowseAdmin.class));
 
                         } else if (id == R.id.ReportsId){
 
-                            //    startActivity(new Intent(mynav.this,orgServices.class));
+                            //       startActivity(new Intent(dashboardAdmin.this,CatView.class));
 
                         }
 
@@ -124,6 +128,7 @@ String status;
                         return true;
                     }
                 });
+
 
         org= new orguser();
         ListView = (android.widget.ListView) findViewById(R.id.ListView);
@@ -154,7 +159,6 @@ String status;
                         }
                     }
                 }
-
 
                 ListView.setAdapter(adapter);
                 ListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

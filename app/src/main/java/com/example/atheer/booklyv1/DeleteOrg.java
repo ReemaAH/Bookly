@@ -11,8 +11,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -25,21 +23,19 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class orgServices extends AppCompatActivity {
+public class DeleteOrg extends AppCompatActivity {
 
-    ImageView imagev;
     android.widget.ListView ListView;
-    //FirebaseDatabase database;
-    //DatabaseReference ref;
     ArrayList<String> list;
+    ArrayList<orguser> list1;
     ArrayAdapter<String> adapter;
-    services ser;
-
+    orguser org;
+    String name1;
+    String status;
 
     TextView navUsername, navUserponts;
     NavigationView navigationView;
     View headerView;
-    //TextView serviceO;
     private FirebaseAuth mAuth;
     private FirebaseDatabase database;
     private FirebaseAuth.AuthStateListener mAuthStateListener;
@@ -51,10 +47,10 @@ public class orgServices extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_org_services);
-        setTitle("Services");
+        setContentView(R.layout.activity_delete_org);
+
+        setTitle("Delete Organizations");
 
 
         navigationView = (NavigationView) findViewById(R.id.nav_view);
@@ -87,29 +83,28 @@ public class orgServices extends AppCompatActivity {
                         // close drawer when item is tapped
                         mDrawerLayout.closeDrawers();
 
-                        // Add code here to update the UI based on the item selected
-                        // For example, swap UI fragments here
+
 
                         int id = menuItem.getItemId();
 
                         if (id == R.id.settingsId) {
 
-                            startActivity(new Intent(orgServices.this,settingsorg.class));
+                            startActivity(new Intent(DeleteOrg.this,settingsorg.class));
                         } else if (id == R.id.logoutId){
 
                             FirebaseAuth.getInstance().signOut();
                             finish();
-                            Intent signOUT=new Intent(orgServices.this,loginActivity.class);
+                            Intent signOUT=new Intent(DeleteOrg.this,loginActivity.class);
                             startActivity(signOUT);
 
 
                         } else if (id == R.id.homeId){
 
-                            startActivity(new Intent(orgServices.this,mynav.class));
+                            startActivity(new Intent(DeleteOrg.this,mynav.class));
 
                         } else if (id == R.id.servicesId){
 
-                            startActivity(new Intent(orgServices.this,orgServices.class));
+                            startActivity(new Intent(DeleteOrg.this,orgServices.class));
 
                         } else if (id == R.id.ReservationsId){
 
@@ -126,65 +121,9 @@ public class orgServices extends AppCompatActivity {
                     }
                 });
 
-        ser = new services();
-        ListView = (ListView) findViewById(R.id.ListView);
-        database = FirebaseDatabase.getInstance();
-        //ref =database.getReference().child("client");
-        mAuth = FirebaseAuth.getInstance();
-        user =  mAuth.getCurrentUser();
-        userId = user.getUid();
-        ref =  database.getReference().child("client").child(userId).child("services");
-        list = new ArrayList<>();
-        adapter = new ArrayAdapter<String>(this, R.layout.service_info,R.id.serviceInfo,list);
-        ref.addValueEventListener(new ValueEventListener() {
-
-
-
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
-
-
-                for (DataSnapshot ds : dataSnapshot.getChildren()) {
-
-                    String str;
-
-
-                    ser = ds.getValue(services.class);
-                    str = ser.getName().toString()+" \n\n "+ ser.getPrice()+ "SR \t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tRating:"+ ser.getRating()+ " " ;
-                    list.add(str);}
-
-
-                ListView.setAdapter(adapter);
-
-            }
-
-//
-
-
-            @Override
-            public void onCancelled(DatabaseError databaseError){
-
-
-            }
-        });
-
-
-
-
-        // imagev=(ImageView) findViewById(R.id.addbutton);
-        // imagev.setOnClickListener(new View.OnClickListener() {
-        // @Override
-        // //   startActivity(new Intent(CatView.this,addCategory.class));
-        // }
-
-        // });
-        // imagev.setY(1300);
-        //imagev.setX(500);
 
 
     }
-
-
 
 
 
@@ -246,8 +185,6 @@ public class orgServices extends AppCompatActivity {
 
     }
 
-
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -268,4 +205,6 @@ public class orgServices extends AppCompatActivity {
     public void onPointerCaptureChanged(boolean hasCapture) {
 
     }
+
+
 }
