@@ -249,18 +249,7 @@ int n=0;
                         @Override
                         public void onTimeSet(TimePicker timePicker, int i, int i1) {
 
-//                        String am_pm;
-//                        if(i<12){
-//                            am_pm="AM";
-//                        }
-//
-//                        else  if (i==12){
-//                            am_pm="PM";
-//                        }
-//
-//                            else {
-//                            am_pm="PM";
-//                        }
+//                    ]
 
                             timeval = i + ":" + i1 + " ";
 

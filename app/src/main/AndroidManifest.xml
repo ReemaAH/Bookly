@@ -53,12 +53,14 @@
         <activity android:name=".ServicesAdmin" />
         <activity android:name=".EditPasswordadmin" />
         <activity android:name=".EditPasswordorg" />
-        <activity android:name=".addOffer" />
-        <activity android:name=".OffersImages" />
-        <activity android:name=".approveOrgByadmin" />
         <activity android:name=".orgmessage" />
+        <activity android:name=".approveOrgByadmin" />
         <activity android:name=".orginforequest" />
-        <activity android:name=".DeleteOrg"></activity>
+      <!--  <activity android:name=".orgdes" />-->
+        <activity
+            android:name=".ApproveClientByOrg"
+            android:label="@string/title_activity_approve_client_by_org"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
     </application>
 
 </manifest>

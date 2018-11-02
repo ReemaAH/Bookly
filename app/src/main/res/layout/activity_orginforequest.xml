@@ -30,7 +30,7 @@
         android:layout_marginTop="46dp"
         android:textSize="18sp" /> -->
     <RelativeLayout
-        android:layout_width="357dp"
+        android:layout_width="366dp"
         android:layout_height="254dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
@@ -184,12 +184,12 @@
 
     <TextView
         android:id="@+id/orgemail"
-        android:layout_width="250dp"
+        android:layout_width="269dp"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_marginBottom="187dp"
-        android:layout_marginEnd="50dp"
+        android:layout_marginEnd="30dp"
         android:textSize="18sp" />
 
 

@@ -1,7 +1,14 @@
 package com.example.atheer.booklyv1;
 
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Intent;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -35,6 +42,13 @@ public class dashboardAdmin extends AppCompatActivity implements View.OnClickLis
 
     private DrawerLayout mDrawerLayout;
 
+
+
+    public dashboardAdmin(){
+
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -138,6 +152,12 @@ public class dashboardAdmin extends AppCompatActivity implements View.OnClickLis
         findViewById(R.id.Organization).setOnClickListener(this);
         findViewById(R.id.browse).setOnClickListener(this);
         findViewById(R.id.report).setOnClickListener(this);
+
+
+
+       // Intent i = getIntent();
+      // String name=  i.getStringExtra("org");
+        //showNotification("Bookly", name );
     }
 
     @Override
@@ -216,6 +236,37 @@ public class dashboardAdmin extends AppCompatActivity implements View.OnClickLis
 
     }
 
+    /*@RequiresApi(api = Build.VERSION_CODES.O)
+    public void showNotification(String title, String content) {
+
+
+        NotificationChannel channel = new NotificationChannel("channel01", "name",
+                NotificationManager.IMPORTANCE_HIGH);   // for heads-up notifications
+        channel.setDescription("description");
+
+// Register channel with system
+
+        NotificationManager notificationManager = getSystemService(NotificationManager.class);
+
+        notificationManager.createNotificationChannel(channel);
+
+        Notification notification = new NotificationCompat.Builder(this, "channel01")
+                .setSmallIcon(android.R.drawable.ic_dialog_info)
+                .setContentTitle(title)
+                .setContentText(content)
+                .setDefaults(Notification.DEFAULT_ALL)
+                .setPriority(NotificationCompat.PRIORITY_HIGH)   // heads-up
+                .build();
+
+        NotificationManagerCompat no = NotificationManagerCompat.from(this);
+        no.notify(0, notification);
+
+
+
+
+
+    }    */
+
 
 
     @Override
@@ -232,6 +283,7 @@ public class dashboardAdmin extends AppCompatActivity implements View.OnClickLis
         }
         return super.onOptionsItemSelected(item);
     }
+
 
 
 }

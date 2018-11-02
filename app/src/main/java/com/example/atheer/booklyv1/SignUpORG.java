@@ -1,8 +1,18 @@
 package com.example.atheer.booklyv1;
 
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
+import android.media.RingtoneManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Patterns;
 import android.view.View;
@@ -24,6 +34,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 public class SignUpORG extends AppCompatActivity implements View.OnClickListener {
@@ -216,11 +227,14 @@ public class SignUpORG extends AppCompatActivity implements View.OnClickListener
                                                                                                                                 mRef.child("Status").setValue("Not approved");
                                                                                                                                 mRef.child("cat").setValue(Category);
                                                                                                                                 user.sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                                                                                                    @RequiresApi(api = Build.VERSION_CODES.O)
                                                                                                                                     @Override
                                                                                                                                     public void onComplete(@NonNull Task<Void> task) {
                                                                                                                                         Toast.makeText(SignUpORG.this,"Please check your Email",Toast.LENGTH_LONG).show();
                                                                                                                                         Intent homepage = new Intent(SignUpORG.this, orgmessage.class);
                                                                                                                                         startActivity(homepage);
+
+
                                                                                                                                     }
                                                                                                                                 });
                                                                                                                             }
@@ -241,12 +255,16 @@ public class SignUpORG extends AppCompatActivity implements View.OnClickListener
 
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onClick(View view) {
         switch (view.getId()){
-            case R.id.btn_signup:
+            case R.id.btn_signup:{
                 regsterUser();
-                break;
+                //Intent intent = new Intent(SignUpORG.this, dashboardAdmin.class);
+               // intent.putExtra("org", "hi");
+               // startActivity(intent);
+                break;}
             case R.id.link_login:
                 Intent login=new Intent(this,loginActivity.class);
                 startActivity(login);
@@ -256,5 +274,7 @@ public class SignUpORG extends AppCompatActivity implements View.OnClickListener
     }
 
 
+
 }
+
 

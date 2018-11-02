@@ -108,7 +108,7 @@ public class orginforequest extends AppCompatActivity  implements View.OnClickLi
         // Delete user from firebse
        database = FirebaseDatabase.getInstance();
        ref =  database.getReference().child("client").child(temp.getUid());
-        //ref.setValue(null);\
+
 
 
        // i made this "dissaproved1" to distinguish between the real disapproved and the new orgs

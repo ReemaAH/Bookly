@@ -127,7 +127,7 @@ public class orgServices extends AppCompatActivity {
                 });
 
         ser = new services();
-        ListView = (ListView) findViewById(R.id.ListView);
+        ListView = (ListView) findViewById(R.id.ListView1);
         database = FirebaseDatabase.getInstance();
         //ref =database.getReference().child("client");
         mAuth = FirebaseAuth.getInstance();

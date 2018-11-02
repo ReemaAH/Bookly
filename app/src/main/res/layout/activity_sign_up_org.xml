@@ -176,12 +176,12 @@
 
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="123dp"
+        android:layout_width="162dp"
+        android:layout_height="138dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="26dp"
-        android:src="@drawable/logohome" />
+        android:src="@drawable/user" />
 
 
     <EditText
@@ -216,7 +216,7 @@
         android:layout_height="55dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="52dp"
+        android:layout_marginBottom="64dp"
         android:background="@drawable/edit_rouded"
         android:fontFamily="sans-serif"
         android:padding="12dp"
