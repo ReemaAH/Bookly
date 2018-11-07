@@ -2,7 +2,6 @@ package com.example.atheer.booklyv1;
 
 import android.content.Intent;
 import android.support.design.widget.NavigationView;
-import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -10,6 +9,8 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -18,37 +19,42 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
-public class mynav extends AppCompatActivity implements View.OnClickListener  {
+import java.io.Serializable;
+import java.util.ArrayList;
 
+public class ApproveResrvation extends AppCompatActivity {
+    android.widget.ListView ListView;
+    ArrayList<String> list;
+    ArrayList<Reservation> list1;
+    ArrayAdapter<String> adapter;
+    Reservation reservation;
+    String name1;
+    String status;
 
+    String name;
     TextView navUsername, navUserponts;
     NavigationView navigationView;
     View headerView;
-    //TextView serviceO;
     private FirebaseAuth mAuth;
     private FirebaseDatabase database;
     private FirebaseAuth.AuthStateListener mAuthStateListener;
     private DatabaseReference ref;
+    private DatabaseReference ref2;
     private String userId;
     private FirebaseUser user;
 
     private DrawerLayout mDrawerLayout;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_mynav);
+        setContentView(R.layout.activity_approve_resrvation);
+
+        setTitle("Approve Reservation");
 
 
-        setTitle("Home");
-
-
-
-        findViewById(R.id.serviceO).setOnClickListener(this);
-        findViewById(R.id.offer).setOnClickListener(this);
-        findViewById(R.id.ReservationsId).setOnClickListener(this);
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.bringToFront();
         headerView = navigationView.getHeaderView(0);
@@ -82,34 +88,35 @@ public class mynav extends AppCompatActivity implements View.OnClickListener  {
 
                         int id = menuItem.getItemId();
 
+
                         if (id == R.id.settingsId) {
 
-                        startActivity(new Intent(mynav.this,settingsorg.class));
+                            startActivity(new Intent(ApproveResrvation.this,settingsorg.class));
                         } else if (id == R.id.logoutId){
 
                             FirebaseAuth.getInstance().signOut();
                             finish();
-                            Intent signOUT=new Intent(mynav.this,loginActivity.class);
+                            Intent signOUT=new Intent(ApproveResrvation.this,loginActivity.class);
                             startActivity(signOUT);
 
 
                         } else if (id == R.id.homeId){
 
-                            startActivity(new Intent(mynav.this,mynav.class));
+                            startActivity(new Intent(ApproveResrvation.this,mynav.class));
 
                         } else if (id == R.id.servicesId){
 
-                            startActivity(new Intent(mynav.this,orgServices.class));
+                            startActivity(new Intent(ApproveResrvation.this,orgServices.class));
 
-                        } else if (id == R.id.ReservationsId) {
+                        } else if (id == R.id.ReservationsId){
 
                             //    startActivity(new Intent(mynav.this,orgServices.class));
+
+                        } else if (id == R.id.ReportsId){
+
+                            //    startActivity(new Intent(mynav.this,orgServices.class));
+
                         }
-                       // else if (id == R.id.settingsId){
-
-                           //    startActivity(new Intent(mynav.this,settingsorg.class));
-
-                       // }
 
 
                         return true;
@@ -117,36 +124,73 @@ public class mynav extends AppCompatActivity implements View.OnClickListener  {
                 });
 
 
+        reservation=new Reservation();
+
+
+        ListView = (android.widget.ListView) findViewById(R.id.ListView);
+        database = FirebaseDatabase.getInstance();
+        mAuth = FirebaseAuth.getInstance();
+        user =  mAuth.getCurrentUser();
+        userId = user.getUid();
+
+        name=database.getReference().child("client").child(userId).child("name").toString();
+        //ref =  database.getReference().child("reservaiton");
+        DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference itemsRef = rootRef.child("reservaiton");
+        Query query=itemsRef.orderByChild("org").equalTo(name);
+        list = new ArrayList<>();
+        list1 = new ArrayList<>();
+        adapter = new ArrayAdapter<String>(this, R.layout.requesttext,R.id.requestInfo,list);
+
+        query.addValueEventListener(new ValueEventListener() {
+
+
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                    String str;
+                    reservation = ds.getValue(Reservation.class);
+                            str = reservation.getService().toString() + " \n\n ";
+                            list.add(str);
+                            list1.add(reservation);
+
+
+                }
+
+                ListView.setAdapter(adapter);
+                ListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                        Intent intent = new Intent(ApproveResrvation.this, orginforequest.class);
+                        intent.putExtra("reservation", (Serializable) list1.get(position));
+                        startActivity(intent);
+
+
+
+                    }
+                });
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError){
+
+
+            }
+        });
+
 
     }
 
 
-    @Override
-    public void onClick(View v) {
-        switch(v.getId()) {
-            case R.id.serviceO:
-                startActivity(new Intent(this, orgServices.class));
-                break;
-            case R.id.offer:
-                startActivity(new Intent(this, OffersImages.class));
-                break;
-            case R.id.ReservationsId:
-                startActivity(new Intent(this, ApproveResrvation.class));
-                break;
-
-        }}
-
-
-    private void loaduserinfo() {
+    public void loaduserinfo(){
 
         mAuth = FirebaseAuth.getInstance();
         database =  FirebaseDatabase.getInstance();
         user =  mAuth.getCurrentUser();
         userId = user.getUid();
         ref =  database.getReference().child("client").child(userId);
-
-
-
 
         ref.addValueEventListener(new ValueEventListener() {
             @Override
@@ -193,29 +237,8 @@ public class mynav extends AppCompatActivity implements View.OnClickListener  {
 
         }
 
-    }
-
-
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                mDrawerLayout.openDrawer(GravityCompat.START);
-                return true;
-
-
-
-
-
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-
-    @Override
-    public void onPointerCaptureChanged(boolean hasCapture) {
 
     }
+
+
 }
-

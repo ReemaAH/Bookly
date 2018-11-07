@@ -20,6 +20,8 @@
     <color name="red">#f50008</color>
     <color name="darker_gray">#7fc8bacc</color>
     <color name="black_overlay">#66000000</color>
+
+    <color name="black_overlay2">#b73d2559</color>
     <color name="icons">#488c4f</color>
 
 </resources>

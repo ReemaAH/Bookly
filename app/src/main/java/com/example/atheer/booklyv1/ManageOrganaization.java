@@ -20,9 +20,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-public class mynav extends AppCompatActivity implements View.OnClickListener  {
-
-
+public class ManageOrganaization extends AppCompatActivity implements View.OnClickListener {
     TextView navUsername, navUserponts;
     NavigationView navigationView;
     View headerView;
@@ -39,16 +37,10 @@ public class mynav extends AppCompatActivity implements View.OnClickListener  {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_mynav);
+        setContentView(R.layout.activity_manage_organaization);
+        setTitle("Manage Orgnaization");
 
 
-        setTitle("Home");
-
-
-
-        findViewById(R.id.serviceO).setOnClickListener(this);
-        findViewById(R.id.offer).setOnClickListener(this);
-        findViewById(R.id.ReservationsId).setOnClickListener(this);
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.bringToFront();
         headerView = navigationView.getHeaderView(0);
@@ -57,6 +49,13 @@ public class mynav extends AppCompatActivity implements View.OnClickListener  {
 
         loaduserinfo();
 
+        super.onStart();
+        if(mAuth.getCurrentUser()==null){
+
+            finish();
+            startActivity(new Intent(this,loginActivity.class));
+
+        }
 
         mDrawerLayout = findViewById(R.id.drawerId);
 
@@ -84,32 +83,48 @@ public class mynav extends AppCompatActivity implements View.OnClickListener  {
 
                         if (id == R.id.settingsId) {
 
-                        startActivity(new Intent(mynav.this,settingsorg.class));
+                            startActivity(new Intent(ManageOrganaization.this,settingsadmin.class));
+
                         } else if (id == R.id.logoutId){
 
                             FirebaseAuth.getInstance().signOut();
                             finish();
-                            Intent signOUT=new Intent(mynav.this,loginActivity.class);
+                            Intent signOUT=new Intent(ManageOrganaization.this,loginActivity.class);
                             startActivity(signOUT);
 
 
-                        } else if (id == R.id.homeId){
-
-                            startActivity(new Intent(mynav.this,mynav.class));
-
-                        } else if (id == R.id.servicesId){
-
-                            startActivity(new Intent(mynav.this,orgServices.class));
-
-                        } else if (id == R.id.ReservationsId) {
-
-                            //    startActivity(new Intent(mynav.this,orgServices.class));
                         }
-                       // else if (id == R.id.settingsId){
 
-                           //    startActivity(new Intent(mynav.this,settingsorg.class));
+                        else if (id == R.id.OrgId){
 
-                       // }
+                            startActivity(new Intent(ManageOrganaization.this,ManageOrganaization.class));}
+
+
+
+
+                        else if (id == R.id.homeId){
+
+                            startActivity(new Intent(ManageOrganaization.this,dashboardAdmin.class));
+
+                        } else if (id == R.id.CategoriesId){
+
+                            startActivity(new Intent(ManageOrganaization.this,CatView.class));
+
+                        }else if (id == R.id.OrgId){
+
+                            //         startActivity(new Intent(dashboardAdmin.this,CatView.class));
+
+                        }else if (id == R.id.Services1Id){
+
+                            startActivity(new Intent(ManageOrganaization.this,BrowseAdmin.class));
+
+                        } else if (id == R.id.ReportsId){
+
+                            //       startActivity(new Intent(dashboardAdmin.this,CatView.class));
+
+                        }
+
+
 
 
                         return true;
@@ -118,24 +133,24 @@ public class mynav extends AppCompatActivity implements View.OnClickListener  {
 
 
 
+        findViewById(R.id.approveOrg).setOnClickListener(this);
+        findViewById(R.id.deleteORG).setOnClickListener(this);
     }
-
 
     @Override
     public void onClick(View v) {
-        switch(v.getId()) {
-            case R.id.serviceO:
-                startActivity(new Intent(this, orgServices.class));
+        switch(v.getId()){
+            case R.id.approveOrg:
+                startActivity(new Intent(this,approveOrgByadmin.class));
                 break;
-            case R.id.offer:
-                startActivity(new Intent(this, OffersImages.class));
-                break;
-            case R.id.ReservationsId:
-                startActivity(new Intent(this, ApproveResrvation.class));
+            case R.id.deleteORG:
+                startActivity(new Intent(ManageOrganaization.this,DeleteOrg2.class));
                 break;
 
-        }}
 
+
+        }
+    }
 
     private void loaduserinfo() {
 
@@ -144,7 +159,6 @@ public class mynav extends AppCompatActivity implements View.OnClickListener  {
         user =  mAuth.getCurrentUser();
         userId = user.getUid();
         ref =  database.getReference().child("client").child(userId);
-
 
 
 
@@ -212,10 +226,4 @@ public class mynav extends AppCompatActivity implements View.OnClickListener  {
         return super.onOptionsItemSelected(item);
     }
 
-
-    @Override
-    public void onPointerCaptureChanged(boolean hasCapture) {
-
-    }
 }
-

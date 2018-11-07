@@ -74,6 +74,7 @@ public class loginActivity extends AppCompatActivity implements View.OnClickList
         }
 
         Newprogressbar.setVisibility(View.VISIBLE);
+       mDatabase= FirebaseDatabase.getInstance().getReference("client");
         mAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                                                                                    @Override
                                                                                    public void onComplete(@NonNull Task<AuthResult> task) {
@@ -83,7 +84,7 @@ public class loginActivity extends AppCompatActivity implements View.OnClickList
 
                                                                                            FirebaseDatabase database =  FirebaseDatabase.getInstance();
                                                                                            FirebaseUser user =  mAuth.getCurrentUser();
-                                                                                           String userId = user.getUid();
+                                                                                           final String userId = user.getUid();
                                                                                    //        if (user.isEmailVerified()){
                                                                                            DatabaseReference mRef =  database.getReference().child("client").child(userId);
 
@@ -104,6 +105,11 @@ public class loginActivity extends AppCompatActivity implements View.OnClickList
                                                                                                        else if (status.equals("approved"))
                                                                                                       {
                                                                                                         Intent homepage = new Intent(loginActivity.this, mynav.class);
+                                                                                                        startActivity(homepage);
+
+                                                                                                    }else if (status.equals("disapproved1"))
+                                                                                                    {
+                                                                                                        Intent homepage = new Intent(loginActivity.this, disapprovemsg.class);
                                                                                                         startActivity(homepage);
 
                                                                                                     }

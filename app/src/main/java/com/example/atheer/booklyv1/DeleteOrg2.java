@@ -10,6 +10,8 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -20,13 +22,21 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-public class mynav extends AppCompatActivity implements View.OnClickListener  {
+import java.io.Serializable;
+import java.util.ArrayList;
 
+public class DeleteOrg2 extends AppCompatActivity {
+    android.widget.ListView ListView;
+    ArrayList<String> list;
+    ArrayList<orguser> list1;
+    ArrayAdapter<String> adapter;
+    orguser org;
+    String name1;
+    String status;
 
     TextView navUsername, navUserponts;
     NavigationView navigationView;
     View headerView;
-    //TextView serviceO;
     private FirebaseAuth mAuth;
     private FirebaseDatabase database;
     private FirebaseAuth.AuthStateListener mAuthStateListener;
@@ -39,16 +49,12 @@ public class mynav extends AppCompatActivity implements View.OnClickListener  {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_mynav);
+        setContentView(R.layout.activity_delete_org2);
 
 
-        setTitle("Home");
+        setTitle("Delete Organizations");
 
 
-
-        findViewById(R.id.serviceO).setOnClickListener(this);
-        findViewById(R.id.offer).setOnClickListener(this);
-        findViewById(R.id.ReservationsId).setOnClickListener(this);
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.bringToFront();
         headerView = navigationView.getHeaderView(0);
@@ -84,57 +90,108 @@ public class mynav extends AppCompatActivity implements View.OnClickListener  {
 
                         if (id == R.id.settingsId) {
 
-                        startActivity(new Intent(mynav.this,settingsorg.class));
+                            startActivity(new Intent(DeleteOrg2.this,settingsadmin.class));
+
                         } else if (id == R.id.logoutId){
 
                             FirebaseAuth.getInstance().signOut();
                             finish();
-                            Intent signOUT=new Intent(mynav.this,loginActivity.class);
+                            Intent signOUT=new Intent(DeleteOrg2.this,loginActivity.class);
                             startActivity(signOUT);
 
 
                         } else if (id == R.id.homeId){
 
-                            startActivity(new Intent(mynav.this,mynav.class));
+                            startActivity(new Intent(DeleteOrg2.this,dashboardAdmin.class));
 
-                        } else if (id == R.id.servicesId){
+                        } else if (id == R.id.CategoriesId){
 
-                            startActivity(new Intent(mynav.this,orgServices.class));
+                            startActivity(new Intent(DeleteOrg2.this,CatView.class));
 
-                        } else if (id == R.id.ReservationsId) {
+                        }else if (id == R.id.OrgId){
 
-                            //    startActivity(new Intent(mynav.this,orgServices.class));
+                            //         startActivity(new Intent(dashboardAdmin.this,CatView.class));
+
+                        }else if (id == R.id.Services1Id){
+
+                            startActivity(new Intent(DeleteOrg2.this,BrowseAdmin.class));
+
+                        } else if (id == R.id.ReportsId){
+
+                            //       startActivity(new Intent(dashboardAdmin.this,CatView.class));
+
                         }
-                       // else if (id == R.id.settingsId){
-
-                           //    startActivity(new Intent(mynav.this,settingsorg.class));
-
-                       // }
 
 
                         return true;
                     }
                 });
 
+        org= new orguser();
+        ListView = (android.widget.ListView) findViewById(R.id.ListView);
+        database = FirebaseDatabase.getInstance();
+        mAuth = FirebaseAuth.getInstance();
+        user =  mAuth.getCurrentUser();
+        userId = user.getUid();
+        ref =  database.getReference("client");
+        list = new ArrayList<>();
+        list1 = new ArrayList<>();
+        adapter = new ArrayAdapter<String>(this, R.layout.requesttext,R.id.requestInfo,list);
+        ref.addValueEventListener(new ValueEventListener() {
+
+
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                    String key = ds.getKey(); // to get the user ID 5gbccxxxxgdbehswxxgsf
+                    String str;
+                    org = ds.getValue(orguser.class);
+                    org.setUid(key);
+                    if (org.getStatus() != null) {
+                        if (org.getStatus().equals("approved")) {
+                            str = org.getName().toString() + " \n\n ";
+                            list.add(str);
+                            list1.add(org);
+                        }
+                    }
+                }
+
+                ListView.setAdapter(adapter);
+                ListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                        Intent intent = new Intent(DeleteOrg2.this, DeleteOrg3.class);
+                        intent.putExtra("org", (Serializable) list1.get(position));
+                        startActivity(intent);
+
+
+
+                    }
+                });
+            }
+
+
+
+
+
+
+
+
+
+
+            @Override
+            public void onCancelled(DatabaseError databaseError){
+
+
+            }
+        });
+
+
 
 
     }
-
-
-    @Override
-    public void onClick(View v) {
-        switch(v.getId()) {
-            case R.id.serviceO:
-                startActivity(new Intent(this, orgServices.class));
-                break;
-            case R.id.offer:
-                startActivity(new Intent(this, OffersImages.class));
-                break;
-            case R.id.ReservationsId:
-                startActivity(new Intent(this, ApproveResrvation.class));
-                break;
-
-        }}
 
 
     private void loaduserinfo() {
@@ -218,4 +275,3 @@ public class mynav extends AppCompatActivity implements View.OnClickListener  {
 
     }
 }
-

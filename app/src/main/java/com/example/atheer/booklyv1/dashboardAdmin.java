@@ -167,7 +167,7 @@ public class dashboardAdmin extends AppCompatActivity implements View.OnClickLis
                 startActivity(new Intent(this,CatView.class));
                 break;
             case R.id.Organization:
-                startActivity(new Intent(dashboardAdmin.this,approveOrgByadmin.class));
+                startActivity(new Intent(dashboardAdmin.this,ManageOrganaization.class));
                 break;
             case R.id.browse:
                 startActivity(new Intent(this,BrowseAdmin.class));

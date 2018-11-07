@@ -116,6 +116,7 @@
                             android:src="@drawable/network" />
 
                         <TextView
+                            android:id="@+id/ReservationsId"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
@@ -253,7 +254,7 @@
         android:background="#FFFFFF"
         app:itemTextColor="#26243C"
         android:layout_gravity="start"
-        app:menu='@menu/nav_menu_layout2'
+        app:menu='@menu/nav_menu_layout3'
         app:headerLayout="@layout/nav_header_org"
         >
 
