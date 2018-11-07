@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "666514046827",
+    "firebase_url": "https://booklyv1-45a93.firebaseio.com",
+    "project_id": "booklyv1-45a93",
+    "storage_bucket": "booklyv1-45a93.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:666514046827:android:60ad4570c33e1aec",
+        "android_client_info": {
+          "package_name": "com.example.atheer.booklyv1"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "666514046827-5p64aecoka6qc9t5u42vornr3p58krq9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.atheer.booklyv1",
+            "certificate_hash": "ed66bfdd700161ddc71a80b3751eaac951b15308"
+          }
+        },
+        {
+          "client_id": "666514046827-9912e9vqk2kmksl3o8vmraepn2hgpg6t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAMFF7LtbvjUR8qwxJKJntI1XnCZtpMOhw"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "666514046827-9912e9vqk2kmksl3o8vmraepn2hgpg6t.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
