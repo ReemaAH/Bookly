@@ -91,12 +91,6 @@ public class mynav1 extends AppCompatActivity {
                             startActivity(new Intent(mynav1.this,myServices.class));
 
                         }
-                        else if (id == R.id.offer){
-
-                            startActivity(new Intent(mynav1.this,OfferView.class));
-
-                        }
-
 
 
                         return true;

@@ -56,7 +56,7 @@ int n=0;
     ArrayList<String> data;
     String service = "";
   // ElegantNumberButton numRes;
-    EditText date;
+    EditText date,SerNum;
     DatePickerDialog datePickerDialog;
     String dateval = "";
     EditText time;
@@ -91,6 +91,7 @@ int n=0;
         headerView = navigationView.getHeaderView(0);
         navUsername = (TextView) headerView.findViewById(R.id.useremail);
         navUserponts = (TextView) headerView.findViewById(R.id.userpoints);
+        SerNum = (EditText) headerView.findViewById(R.id.SerNum);
 
         findViewById(R.id.buttonBook).setOnClickListener(this);
 
@@ -207,31 +208,56 @@ int n=0;
 //                }
 //            });
 
-            date.setOnClickListener(new View.OnClickListener(){
+        date.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final Calendar c = Calendar.getInstance();
+                year = c.get(Calendar.YEAR);
+                month = c.get(Calendar.MONTH);
+                day = c.get(Calendar.DAY_OF_MONTH);
 
-                @Override
-                public void onClick(View view){
 
-                    Calendar calander = Calendar.getInstance();
-                    year = calander.get(Calendar.YEAR);
-                    month = calander.get(Calendar.MONTH);
-                    day = calander.get(Calendar.DAY_OF_MONTH);
+                DatePickerDialog cc = new DatePickerDialog(bookService.this,
+                        new DatePickerDialog.OnDateSetListener() {
 
-                    datePickerDialog = new DatePickerDialog(bookService.this, new DatePickerDialog.OnDateSetListener() {
-                        @Override
-                        public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
 
-                            dateval = day+"-"+(month+1)+"-"+year;
+                            @Override
+                            public void onDateSet(DatePicker view, int year,
+                                                  int monthOfYear, int dayOfMonth) {
 
-                            date.setText(dateval);
-                        }
-                    },year,month,day);
+                                date.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
 
-                    datePickerDialog.show();
+                            }
+                        }, year, month, day);
+                cc.getDatePicker().setMinDate(System.currentTimeMillis()-1000);
 
-                }
+                cc.show();
+            }
+        });
 
-            });
+
+
+//            date.setOnClickListener(new View.OnClickListener(){
+//
+//                @Override
+//                public void onClick(View view){
+//
+//
+//                    datePickerDialog = new DatePickerDialog(bookService.this, new DatePickerDialog.OnDateSetListener() {
+//                        @Override
+//                        public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+//
+//                            dateval = day+"-"+(month+1)+"-"+year;
+//
+//                            date.setText(dateval);
+//                        }
+//                    },year,month,day);
+//
+//                    datePickerDialog.show();
+//
+//                }
+//
+//            });
 
       //  datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
 
@@ -301,6 +327,7 @@ int n=0;
 
 
                 for(DataSnapshot ds: dataSnapshot.getChildren() ){
+
                     name = dataSnapshot.child("name").getValue(String.class);
 
                     if (dataSnapshot.hasChild("totalPoint")) {
@@ -349,40 +376,48 @@ int n=0;
         date1= date.getText().toString().trim();;
         time1= time.getText().toString().trim();
         service1= service.toString();
-        num = 1;
+        //String w =  SerNum.getText().toString().trim();
+       // num = Integer.parseInt(w);
         if(date1.isEmpty()){
             date.setError("Date is required");
             date.requestFocus();
             return;}
 
-        if(time1.isEmpty())  {
+       else if(time1.isEmpty())  {
             time.setError("Time is required");
             date.requestFocus();
             return;
-        } if(!date1.matches("\\d{2}-\\d{2}-\\d{4}")){
+        }else  if(!date1.matches("\\d{2}-\\d{2}-\\d{4}")){
             date.setError("Date should be in the following format DD-MM-YYYY");
             date.requestFocus();
             return;
-        } if(!time1.matches("^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$")){
+        }else if(!time1.matches("^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$")){
             time.setError("Time should be in the following format HH:MM");
             time.requestFocus();
             return;
-        }
+        }else if(num>5){
+            SerNum.setError("number of people is required");
+            SerNum.requestFocus();
+            return;
+        } else{
 
         FirebaseDatabase database =  FirebaseDatabase.getInstance();
         FirebaseUser user =  mAuth.getCurrentUser();
         String userId = user.getUid();
         Random rand = new Random();
         int  n = rand.nextInt(2000) + 1;
-        DatabaseReference mRef =  database.getReference().child("reservaiton").child(userId).child("Services").child(n+"");
+        DatabaseReference mRef =  database.getReference().child("reservaiton").child(n+"");
+        mRef.child("clientID").setValue(userId);
         mRef.child("date").setValue(date1);
         mRef.child("time").setValue(time1);
         mRef.child("service").setValue(service1);
-        mRef.child("num").setValue(num);
+        mRef.child("num").setValue(1);
         mRef.child("org").setValue(intent.getStringExtra("name"));
+        mRef.child("orgID").setValue(intent.getStringExtra("name"));
+        mRef.child("resNum").setValue(n+"");
         mRef.child("approved").setValue(false);
 
-        startActivity(new Intent(bookService.this,Booked.class));
+        startActivity(new Intent(bookService.this,Booked.class));}
 
     }
 

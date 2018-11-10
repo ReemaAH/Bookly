@@ -149,21 +149,21 @@ public class BrowseOrgAdmin extends AppCompatActivity {
 
         list = new ArrayList<>();
         adapter = new ArrayAdapter<String>(this, R.layout.org_layout,R.id.serviceInfo,list);
-        org = new Orgz("Apple Pie", "4.4", "7", "Restaurant");
-        Orgz org2 = new Orgz("Urth", "4.4", "7", "Restaurant");
-        Orgz org3 = new Orgz("Five Guys", "4.4", "7","Restaurant");
-        Orgz org4 = new Orgz("Apple Pie", "4.4", "7","Restaurant");
-        Orgz org5 = new Orgz("The Cinema", "4.4", "7", "Cinema");
-        Orgz org6 = new Orgz("VOX", "4.4", "7","Cinema");
-        Orgz org7 = new Orgz("AMC", "4.4", "7","Cinema");
-
-
-        orgBasedonCat(org2);
-        orgBasedonCat(org3);
-        orgBasedonCat(org4);
-        orgBasedonCat(org5);
-        orgBasedonCat(org6);
-        orgBasedonCat(org7);
+//        org = new Orgz("Apple Pie", "4.4", "7", "Restaurant");
+//        Orgz org2 = new Orgz("Urth", "4.4", "7", "Restaurant");
+//        Orgz org3 = new Orgz("Five Guys", "4.4", "7","Restaurant");
+//        Orgz org4 = new Orgz("Apple Pie", "4.4", "7","Restaurant");
+//        Orgz org5 = new Orgz("The Cinema", "4.4", "7", "Cinema");
+//        Orgz org6 = new Orgz("VOX", "4.4", "7","Cinema");
+//        Orgz org7 = new Orgz("AMC", "4.4", "7","Cinema");
+//
+//
+//        orgBasedonCat(org2);
+//        orgBasedonCat(org3);
+//        orgBasedonCat(org4);
+//        orgBasedonCat(org5);
+//        orgBasedonCat(org6);
+//        orgBasedonCat(org7);
 
         list.add("org1");
         list.add("org2");
@@ -195,12 +195,12 @@ public class BrowseOrgAdmin extends AppCompatActivity {
 
     }
 
-    public void orgBasedonCat( Orgz o ){
-        String  s =   o.getCatg();
-        if(s.equals(cat)){
-            list.add(o.getName());
-        }
-    }
+//    public void orgBasedonCat( Orgz o ){
+//        String  s =   o.getCatg();
+//        if(s.equals(cat)){
+//            list.add(o.getName());
+//        }
+//    }
 
     private void loaduserinfo() {
 

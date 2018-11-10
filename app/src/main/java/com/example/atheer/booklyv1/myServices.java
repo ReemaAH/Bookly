@@ -26,6 +26,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -133,30 +134,29 @@ public class myServices extends AppCompatActivity implements View.OnClickListene
 
         ListView = (ListView) findViewById(R.id.ListView);
         reserv = new ArrayList<>();
+//        if(reserv.isEmpty()){
+//            myLinearLayout.setVisibility(View.VISIBLE);
+//        }
        // reserv.add(new Res("22/12/1417","02:00","book table",3,"Urth","33",true));
 
         Log.d(TAG, "onCreate: Started");
 
 
         list = new ArrayList<String>();
-      res = new Res();
+        res = new Res();
         FirebaseUser user =  mAuth.getCurrentUser();
         String userId = user.getUid();
-      ref2 =  database.getReference().child("reservaiton").child(userId).child("Services");
+      ref2 =  database.getReference().child("reservaiton").child(userId);
 
         ref2.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                   // String key = (String) ds.getKey();
 
                     res = ds.getValue(Res.class);
-
-
-                        reserv.add(res);
-
-
+                    if(res.getResNum() != null)
+                    reserv.add(res);
 
                 }  resAdapter = new ResAdapter(getApplicationContext(),reserv);
                 ListView.setAdapter(resAdapter);
@@ -165,6 +165,18 @@ public class myServices extends AppCompatActivity implements View.OnClickListene
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        ListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                Intent intent = new Intent(myServices.this,bookedService.class);
+                intent.putExtra("res", reserv.get(position).getResNum());
+                startActivity(intent);
+
 
             }
         });

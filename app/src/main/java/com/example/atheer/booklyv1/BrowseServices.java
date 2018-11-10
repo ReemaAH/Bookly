@@ -3,6 +3,7 @@ package com.example.atheer.booklyv1;
 import android.content.Intent;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -11,18 +12,23 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class BrowseServices extends AppCompatActivity {
     private static final String TAG = "viewOrgnization";
@@ -30,11 +36,16 @@ public class BrowseServices extends AppCompatActivity {
     android.widget.ListView ListView;
     ArrayAdapter<String> adapter;
     Orgz org;
+    private List<Orgz> orgz;
     String cat;
+    private OrgzAdapter orgAdapter;
+
+    private DatabaseReference ref2;
 
     TextView navUsername, navUserponts;
     NavigationView navigationView;
     View headerView;
+
 
     private FirebaseAuth mAuth;
     private FirebaseDatabase database;
@@ -42,7 +53,7 @@ public class BrowseServices extends AppCompatActivity {
     private DatabaseReference ref;
     private String userId;
     private FirebaseUser user;
-
+    String str = "ok";
     private DrawerLayout mDrawerLayout;
 
     @Override
@@ -75,7 +86,7 @@ public class BrowseServices extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        android.support.v7.app.ActionBar actionbar = getSupportActionBar();
+        ActionBar actionbar = getSupportActionBar();
         actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.setHomeAsUpIndicator(R.drawable.ic_menu_black_24dp);
 
@@ -122,54 +133,175 @@ public class BrowseServices extends AppCompatActivity {
                     }
                 });
 
+      //  EditText search = (EditText) findViewById(R.id.search) ;
+
 
 
         Intent intent = getIntent();
         cat = intent.getStringExtra("name");
+        cat = cat.trim();
         setTitle(cat);
 
         ListView = (ListView) findViewById(R.id.ListView);
 
         Log.d(TAG, "onCreate: Started");
 
+        org = new Orgz();
+        orgz = new ArrayList<>();
+
         list = new ArrayList<>();
-        adapter = new ArrayAdapter<String>(this, R.layout.org_layout,R.id.serviceInfo,list);
-        org = new Orgz("Apple Pie", "4.4", "7", "Restaurant");
-        Orgz org2 = new Orgz("Urth", "4.4", "7", "Restaurant");
-        Orgz org3 = new Orgz("Five Guys", "4.4", "7","Restaurant");
-        Orgz org4 = new Orgz("Apple Pie", "4.4", "7","Restaurant");
-        Orgz org5 = new Orgz("The Cinema", "4.4", "7", "Cinema");
-        Orgz org6 = new Orgz("VOX", "4.4", "7","Cinema");
-        Orgz org7 = new Orgz("AMC", "4.4", "7","Cinema");
+
+        database = FirebaseDatabase.getInstance();
+        mAuth = FirebaseAuth.getInstance();
+        user =  mAuth.getCurrentUser();
+        userId = user.getUid();
+        ref =  database.getReference("client");
+
+//        ref.addValueEventListener(new ValueEventListener()  {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//
+//
+//                for(DataSnapshot ds: dataSnapshot.getChildren() ){
+//
+//                    org = ds.getValue(Orgz.class);
+//                    if(org.getStatus() != null){
+//                        if(org.getCat().trim().equals(cat))
+//                        orgz.add(org);
+//                    }
+//
+////                    if (ds.hasChild("Status")){
+////
+////                        org = ds.getValue(orguser.class);
+////
+////
+////                        if (org.getCat().trim().equals(cat)){
+////
+////                            orgz.add(org);
+////                        }
+////                    }
+//                }
+//
+//                orgAdapter = new OrgzAdapter(getApplicationContext(),orgz);
+//                ListView.setAdapter(orgAdapter);}
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError){
+//
+//
+//            }
+//
+//
+//        });
 
 
-        orgBasedonCat(org2);
-        orgBasedonCat(org3);
-        orgBasedonCat(org4);
-        orgBasedonCat(org5);
-        orgBasedonCat(org6);
-        orgBasedonCat(org7);
 
-        list.add("org1");
-        list.add("org2");
-        list.add("org2");
-        list.add("org3");
-//        ArrayList<String> orgs = new ArrayList<>();
-//        orgs.add("Urth");
-//        orgs.add("Five Guys");
-//        orgs.add("Nozomi");
-//        orgs.add("Lusin");
-//        orgs.add("Red Chilli");
+//        ref.addValueEventListener(new ValueEventListener() {
+//
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//
+//
+//                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+//
+//
+//                    org = ds.getValue(orguser.class);
+//
+//
+//                    if(org.getStatus() != null){
+//                        if(org.getCat().equals(cat+" "))
+//                        orgz.add(org);
+//                    }
+////
+////
+////
+//                } orgAdapter = new OrgzAdapter(getApplicationContext(),orgz);
+//                 ListView.setAdapter(orgAdapter);
+//            }
+//
+//
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError){
+//
+//
+//            }
+//        });
 
-        // adapter= new OrgzAdapter(dataModels,getApplicationContext());
 
-        ListView.setAdapter(adapter);
+
+
+        ref2 =  FirebaseDatabase.getInstance().getReference().child("orgz");
+
+        Query query = ref2.orderByChild("cat").equalTo(cat+" ");
+        ValueEventListener valueEventListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                for(DataSnapshot ds : dataSnapshot.getChildren()) {
+                    org = ds.getValue(Orgz.class);
+                    orgz.add(org);
+
+                } orgAdapter = new OrgzAdapter(getApplicationContext(),orgz);
+        ListView.setAdapter(orgAdapter);
+
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {}
+        };
+        query.addListenerForSingleValueEvent(valueEventListener);
+
+
+
+//
+//        ref2.addValueEventListener(new ValueEventListener() {
+//
+//
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//
+//                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+//
+//                    String key = ds.getKey().toString();
+//                    DatabaseReference Ref3 = ref2.child(key);
+//                    Ref3.addValueEventListener(new ValueEventListener() {
+//                        @Override
+//                        public void onDataChange(DataSnapshot dataSnapshot) {
+//
+//                            for (DataSnapshot ds : dataSnapshot.getChildren()) {
+//                                org = ds.getValue(Orgz.class);
+//                                orgz.add(org);
+//                            }
+//
+//                        }
+//
+//                    @Override
+//                    public void onCancelled(DatabaseError databaseError) {
+//
+//                    }
+//                });
+//
+//
+//
+//                }
+//            }
+//
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//
+//            }
+//        });
+
+
         ListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 Intent intent = new Intent(BrowseServices.this,bookService.class);
-                intent.putExtra("name",list.get(position)  );
+                intent.putExtra("name",orgz.get(position).getName()  );
                 startActivity(intent);
 
 
@@ -179,12 +311,12 @@ public class BrowseServices extends AppCompatActivity {
 
     }
 
-    public void orgBasedonCat( Orgz o ){
-        String  s =   o.getCatg();
-        if(s.equals(cat)){
-            list.add(o.getName());
-        }
-    }
+//    public void orgBasedonCat( Orgz o ){
+//        String  s =   o.getCatg();
+//        if(s.equals(cat)){
+//            list.add(o.getName());
+//        }
+//    }
 
     private void loaduserinfo() {
 

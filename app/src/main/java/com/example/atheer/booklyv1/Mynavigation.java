@@ -1,8 +1,17 @@
 package com.example.atheer.booklyv1;
 
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -22,7 +31,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 
 public class Mynavigation extends AppCompatActivity  {
@@ -32,11 +44,21 @@ public class Mynavigation extends AppCompatActivity  {
     View headerView;
     ArrayList<Category_pic> createLists;
     ListView listView;
+    Res ser;
 
+    ///////////////// getting current date////////////////////////////
+    DateFormat dateFormat ;
+    Date date ;
+    String date1;
+    ///////////////// getting current date////////////////////////////
+
+
+    ArrayList<String> list;
     private FirebaseAuth mAuth;
     private FirebaseDatabase database;
     private FirebaseAuth.AuthStateListener mAuthStateListener;
     private DatabaseReference ref;
+    private DatabaseReference ref4;
     private String userId;
     private FirebaseUser user;
 
@@ -146,15 +168,92 @@ public class Mynavigation extends AppCompatActivity  {
                 startActivity(intent);
 
 
-                // Toast.makeText(Home.this, title, Toast.LENGTH_LONG).show();
-//                 Intent it = new Intent(Mynavigation.this,BrowseServices.class);
-//                   it.putExtra("name", value.getImage_title());
-//                startActivity(it);
-
             }
 
 
         });
+
+
+        mAuth = FirebaseAuth.getInstance();
+        database =  FirebaseDatabase.getInstance();
+        user =  mAuth.getCurrentUser();
+        userId = user.getUid();
+        list = new ArrayList<>();
+
+        dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        date = new Date();
+        date1= dateFormat.format(date);
+
+
+
+        ref4= database.getReference().child("reservaiton").child(userId);
+        ref4.addValueEventListener(new ValueEventListener() {
+
+            @RequiresApi(api = Build.VERSION_CODES.O)
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+
+                    String clientDate;
+                    String clientTime;
+                    String orgname;
+
+                    String key= ds.getKey();
+                    int id = Integer.parseInt(key);
+
+                    ser = ds.getValue(Res.class);
+                    clientDate = ser.getDate();
+                    ///////// if the date is today and the reservation approved a notification will be send///////
+                    if(ser!=null&& clientDate!=null){
+                    if( (clientDate.equals(date1)==true) && (ser.isApproved()==false) ){
+                        clientTime=ser.getTime();
+                        orgname=ser.getOrg();
+                        showNotification(clientTime,orgname,id);
+
+
+
+                    }}
+
+                }
+
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError){
+
+
+            }
+        });
+
+    }
+
+
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public void showNotification(String time, String orgname, int id) {
+
+        String content= "Your reservation Today at " + orgname +" on: " + time+" Be ready!";
+        NotificationChannel channel = new NotificationChannel("channel01", "name",
+                NotificationManager.IMPORTANCE_HIGH);   // for heads-up notifications
+        channel.setDescription("description");
+
+        NotificationManager notificationManager = getSystemService(NotificationManager.class);
+
+        notificationManager.createNotificationChannel(channel);
+
+        Notification notification = new NotificationCompat.Builder(this, "channel01")
+                .setSmallIcon(android.R.drawable.ic_popup_reminder)
+                .setLargeIcon(BitmapFactory.decodeResource(getResources(),R.drawable.logohome))
+                .setContentTitle("Reservation Reminder")
+                .setContentText(content)
+                .setDefaults(Notification.DEFAULT_ALL)
+                .setPriority(NotificationCompat.PRIORITY_HIGH)   // heads-up
+                .build();
+
+        NotificationManagerCompat no = NotificationManagerCompat.from(this);
+        no.notify(id, notification);
 
 
 

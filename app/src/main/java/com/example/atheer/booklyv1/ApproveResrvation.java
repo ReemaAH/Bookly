@@ -33,7 +33,7 @@ public class ApproveResrvation extends AppCompatActivity {
     Reservation reservation;
     String name1;
     String status;
-
+    orguser org;
     String name;
     TextView navUsername, navUserponts;
     NavigationView navigationView;
@@ -52,7 +52,7 @@ public class ApproveResrvation extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_approve_resrvation);
 
-        setTitle("Approve Reservation");
+   //     setTitle("Approve Reservation");
 
 
         navigationView = (NavigationView) findViewById(R.id.nav_view);
@@ -133,7 +133,39 @@ public class ApproveResrvation extends AppCompatActivity {
         user =  mAuth.getCurrentUser();
         userId = user.getUid();
 
-        name=database.getReference().child("client").child(userId).child("name").toString();
+
+
+
+        mAuth = FirebaseAuth.getInstance();
+        database =  FirebaseDatabase.getInstance();
+        user =  mAuth.getCurrentUser();
+        userId = user.getUid();
+        ref =  database.getReference().child("client");
+       // name1=  database.getReference().child("client").child(userId).toString();
+        org= new orguser();
+
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for(DataSnapshot ds: dataSnapshot.getChildren() ){
+                    String key = ds.getKey();
+                    org = ds.getValue(orguser.class);
+                    org.setUid(key);
+                    if(org.getUid().equals(userId)){
+                    name = ds.child("name").getValue(String.class);
+                    name = org.getName().toString();}
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        setTitle(name);
+
+      //  name=database.getReference().child("client").child(userId).child("name").toString();
         //ref =  database.getReference().child("reservaiton");
         DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
         DatabaseReference itemsRef = rootRef.child("reservaiton");

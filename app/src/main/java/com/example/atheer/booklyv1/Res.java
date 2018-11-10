@@ -6,8 +6,11 @@ public class Res {
     public String date;
     public int  num;
     public String org;
+    public String orgID;
+    public String resNum;
     public String service;
     public String time;
+
 
 
     public boolean isApproved() {
@@ -42,6 +45,25 @@ public class Res {
         this.org = org;
     }
 
+    public String getOrgID() {
+        return orgID;
+    }
+
+    public void setOrgID(String orgID) {
+        this.orgID = orgID;
+    }
+
+
+
+
+    public String getResNum() {
+        return resNum;
+    }
+
+    public void setResNum(String resNum) {
+        this.resNum = resNum;
+    }
+
     public String getService() {
         return service;
     }
@@ -60,13 +82,16 @@ public class Res {
 
 
 
-    public Res(boolean approved, String date, int num, String org, String service, String time) {
+    public Res(boolean approved, String date, int num, String org, String orgIDString, String resNum,  String service, String time) {
         this.approved = approved;
         this.date = date;
         this.num = num;
         this.org = org;
+        this.orgID = orgID;
         this.service = service;
         this.time = time;
+        this.resNum = resNum;
+
 
     }
 

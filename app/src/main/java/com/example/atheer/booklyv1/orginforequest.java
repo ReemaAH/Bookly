@@ -100,6 +100,12 @@ public class orginforequest extends AppCompatActivity  implements View.OnClickLi
        // redirect user to the previous page
       Intent prev = new Intent(orginforequest.this, approveOrgByadmin.class);
       startActivity(prev);
+
+      DatabaseReference mRef =  database.getReference().child("orgz").child(temp.getUid());
+
+      mRef.child("Status").setValue("approved");
+
+
   }
 
 

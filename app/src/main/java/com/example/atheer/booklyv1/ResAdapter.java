@@ -45,9 +45,9 @@ public class ResAdapter extends BaseAdapter {
         TextView time = (TextView) v.findViewById(R.id.time);
         time.setText(res.get(position).getTime());
      CircleImageView image = (CircleImageView) v.findViewById(R.id.userimage);
-      if(res.get(position).isApproved()){
-          image.setImageResource(R.drawable.approve);
-    }
+//      if(res.get(position).isApproved()){
+//          image.setImageResource(R.drawable.approve);
+//    }
 
 
 

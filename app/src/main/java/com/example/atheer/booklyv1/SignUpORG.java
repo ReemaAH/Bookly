@@ -226,6 +226,16 @@ public class SignUpORG extends AppCompatActivity implements View.OnClickListener
                                                                                                                                 mRef.child("phoneNO").setValue(phoneNo);
                                                                                                                                 mRef.child("Status").setValue("Not approved");
                                                                                                                                 mRef.child("cat").setValue(Category);
+
+                                                                                                                               mRef =  database.getReference().child("orgz").child(userId);
+                                                                                                                                mRef.child("name").setValue(name);
+                                                                                                                                mRef.child("email").setValue(email);
+                                                                                                                                mRef.child("recordNO").setValue(recordNO);
+                                                                                                                                mRef.child("groupID").setValue(2);
+                                                                                                                                mRef.child("phoneNO").setValue(phoneNo);
+                                                                                                                                mRef.child("Status").setValue("Not approved");
+                                                                                                                                mRef.child("cat").setValue(Category);
+
                                                                                                                                 user.sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
                                                                                                                                     @RequiresApi(api = Build.VERSION_CODES.O)
                                                                                                                                     @Override

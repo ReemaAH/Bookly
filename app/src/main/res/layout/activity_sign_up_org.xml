@@ -175,13 +175,6 @@
         android:layout_marginLeft="20dp" />
 
 
-    <ImageView
-        android:layout_width="162dp"
-        android:layout_height="138dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="26dp"
-        android:src="@drawable/user" />
 
 
     <EditText

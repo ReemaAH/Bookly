@@ -270,7 +270,7 @@ public class settings extends AppCompatActivity implements View.OnClickListener{
 
     private void EditUser(){
 
-        name1=editTextName.getText().toString().trim();
+         name1=editTextName.getText().toString().trim();
          phoneNum= editphone.getText().toString().trim();
 
 

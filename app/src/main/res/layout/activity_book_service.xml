@@ -183,30 +183,41 @@
                         />
 
 
-                    <RelativeLayout
-                        android:layout_width="wrap_content"
+                    <EditText
+                        android:id="@+id/SerNum"
+                        android:layout_width="294dp"
                         android:layout_height="wrap_content"
-                        android:gravity="center">
-
-                        <com.cepheuen.elegantnumberbutton.view.ElegantNumberButton
-                            android:layout_width="280dp"
-                            android:layout_height="80dp"
-                            android:id="@+id/numberRes"
-                            android:gravity="center"
-                            android:layout_marginTop="20dp"
-                            android:paddingBottom="30dp"
-                            android:paddingLeft="20dp"
-                            >
-
-
-
-
-                        </com.cepheuen.elegantnumberbutton.view.ElegantNumberButton>
+                        android:layout_alignParentTop="true"
+                        android:layout_centerHorizontal="true"
+                        android:backgroundTint="#D3D3D3"
+                        android:fontFamily="sans-serif"
+                        android:hint="number of people"
+                        android:textColor="#7c7a7a"
+                        android:textColorHint="#A9A9A9"
+                        android:clickable="true"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="10dp"
+                        android:inputType="number"
+                        />
 
 
+                    <EditText
+                        android:id="@+id/coupon"
+                        android:layout_width="294dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_centerHorizontal="true"
+                        android:backgroundTint="#D3D3D3"
+                        android:fontFamily="sans-serif"
+                        android:hint="coupon"
+                        android:textColor="#7c7a7a"
+                        android:textColorHint="#A9A9A9"
+                        android:clickable="true"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="10dp"
+                        android:inputType="number"
+                        />
 
-
-                    </RelativeLayout>
 
                 </LinearLayout>
 
@@ -228,6 +239,20 @@
                 />
 
 
+
+            <TextView
+                android:id="@+id/friend"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginBottom="20dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="Book for a friend"
+                android:textColor="#6F73FF"
+                android:textSize="16dip"
+                android:layout_alignParentLeft="true" />
 
         </LinearLayout>
 

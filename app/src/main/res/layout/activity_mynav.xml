@@ -254,7 +254,7 @@
         android:background="#FFFFFF"
         app:itemTextColor="#26243C"
         android:layout_gravity="start"
-        app:menu='@menu/nav_menu_layout3'
+        app:menu='@menu/nav_menu_layout2'
         app:headerLayout="@layout/nav_header_org"
         >
 
