@@ -72,8 +72,6 @@ public class orginforequest extends AppCompatActivity  implements View.OnClickLi
         orgphone1.setText(temp.getPhoneNO());
         orgcate1.setText(temp.getCat());
         orgemail1.setText(temp.getEmail());
-
-
     }
 
     @Override

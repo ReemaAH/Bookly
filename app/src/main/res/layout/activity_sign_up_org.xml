@@ -231,6 +231,14 @@
         android:textSize="16dip"
         android:layout_alignParentLeft="true" />
 
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="25dp"
+        app:srcCompat="@drawable/userdefault" />
 
 
 </RelativeLayout>

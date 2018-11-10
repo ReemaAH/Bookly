@@ -6,6 +6,27 @@
     android:layout_height="match_parent"
     tools:context=".DeleteOrg3">
 
+
+    <LinearLayout
+        android:layout_marginTop="50dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        >
+        <ImageView
+            android:layout_width="800dp"
+            android:layout_height="106dp"
+            android:background="@drawable/bg"
+            android:paddingTop="-58dp"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="1dp"
+
+            tools:layout_editor_absoluteY="59dp" />
+
+
+    </LinearLayout>
+
+
+
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/userimage"
         android:layout_width="130dp"
@@ -14,27 +35,33 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="87dp"
         android:paddingTop="13dp"
-        android:src="@drawable/unicorn"
+        android:src="@drawable/pic"
         app:border_color="@color/colorAccent"
         tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteX="140dp"
         tools:layout_editor_absoluteY="99dp" />
 
-    <!-- <TextView
-         android:id="@+id/orgidd"
-         android:layout_width="211dp"
-         android:layout_height="wrap_content"
-         android:layout_alignParentTop="true"
-         android:layout_centerHorizontal="true"
-         android:layout_marginTop="46dp"
-         android:textSize="18sp" /> -->
+
+    <android.support.v7.widget.CardView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:layout_width="383dp"
+        android:layout_height="248dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="161dp"
+        android:paddingBottom="30dp"
+        card_view:cardBackgroundColor="#f4f3f3"
+        card_view:cardCornerRadius="10dp"
+        card_view:cardElevation="2dp">
+
     <RelativeLayout
         android:layout_width="357dp"
         android:layout_height="254dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="162dp"
-        android:background="@drawable/border">
+   >
 
         <TextView
             android:id="@+id/textView2"
@@ -154,15 +181,17 @@
             android:textColor="#26204e"
             android:textSize="18sp" />
     </RelativeLayout>
+    </android.support.v7.widget.CardView>
 
     <Button
         android:id="@+id/dis"
         android:layout_width="150dp"
         android:layout_height="55dp"
         android:layout_alignParentBottom="true"
-        android:layout_alignStart="@+id/userimage"
-        android:layout_marginBottom="90dp"
-        android:background="#f40f0f"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="87dp"
+        android:background="@drawable/edit_rouded"
+        android:fontFamily="sans-serif"
         android:text="Delete"
         android:textColor="@color/white"
         tools:ignore="RtlCompat" />

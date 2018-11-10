@@ -46,7 +46,7 @@ public class addOffer extends AppCompatActivity {
     TextView navUsername, navUserponts;
     NavigationView navigationView;
     View headerView;
-
+   ///
     private FirebaseAuth mAuth;
     private FirebaseDatabase database;
     private FirebaseAuth.AuthStateListener mAuthStateListener;

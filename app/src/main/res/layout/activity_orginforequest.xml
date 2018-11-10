@@ -5,6 +5,23 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".orginforequest">
+    <LinearLayout
+        android:layout_marginTop="50dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        >
+        <ImageView
+            android:layout_width="800dp"
+            android:layout_height="106dp"
+            android:background="@drawable/bg"
+            android:paddingTop="-58dp"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="1dp"
+
+            tools:layout_editor_absoluteY="59dp" />
+
+
+    </LinearLayout>
 
 
     <de.hdodenhof.circleimageview.CircleImageView
@@ -15,156 +32,171 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="87dp"
         android:paddingTop="13dp"
-        android:src="@drawable/unicorn"
+        android:src="@drawable/pic"
         app:border_color="@color/colorAccent"
         tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteX="140dp"
         tools:layout_editor_absoluteY="99dp" />
 
-   <!-- <TextView
-        android:id="@+id/orgidd"
-        android:layout_width="211dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="46dp"
-        android:textSize="18sp" /> -->
-    <RelativeLayout
-        android:layout_width="366dp"
-        android:layout_height="254dp"
+
+    <android.support.v7.widget.CardView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:layout_width="383dp"
+        android:layout_height="248dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="162dp"
-        android:background="@drawable/border">
+        android:layout_marginBottom="161dp"
+        android:paddingBottom="30dp"
+        card_view:cardBackgroundColor="#f4f3f3"
+        card_view:cardCornerRadius="10dp"
+        card_view:cardElevation="2dp">
 
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/textView4"
-            android:layout_alignStart="@+id/textView4"
-            android:layout_centerVertical="true"
-            android:text=" Commercial number:"
-            android:textColor="#26214e"
-            android:textSize="18sp"
-            app:fontFamily="sans-serif" />
-
-        <TextView
-            android:id="@+id/orgname"
-            android:layout_width="241dp"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/textView4"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginEnd="34dp"
-            android:layout_marginRight="34dp"
-            android:background="@null"
-            android:textSize="18sp" />
-
-        <TextView
-            android:id="@+id/orgcom"
-            android:layout_width="140dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginEnd="20dp"
-            android:layout_marginRight="20dp"
-            android:background="@null"
-            android:textSize="18sp" />
-
-
-        <TextView
-            android:id="@+id/orgcate"
-            android:layout_width="211dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignTop="@+id/textview99"
-            android:layout_marginEnd="43dp"
-            android:layout_marginRight="43dp"
-            android:background="@null"
-            android:textSize="18sp" />
-
-
-        <TextView
-            android:id="@+id/orgphone"
-            android:layout_width="178dp"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/textView3"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginEnd="27dp"
-            android:layout_marginRight="27dp"
-            android:background="@null"
-            android:textSize="18sp" />
-
-        <TextView
-            android:id="@+id/textView3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/textView2"
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="254dp"
             android:layout_alignParentBottom="true"
-            android:layout_alignStart="@+id/textView2"
-            android:layout_marginBottom="65dp"
-            android:text=" Phone number:"
-            android:textColor="#26204e"
-            android:textSize="18sp"
-            app:fontFamily="sans-serif" />
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="162dp">
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignTop="@+id/orgcom"
+                android:layout_marginStart="12dp"
+                android:text=" Commercial number:"
+                android:textColor="#26214e"
+                android:textSize="18sp"
+                app:fontFamily="sans-serif"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="12dp" />
+
+            <TextView
+                android:id="@+id/orgname"
+                android:layout_width="269dp"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/textView4"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginEnd="34dp"
+                android:layout_marginRight="34dp"
+                android:background="@null"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/orgcom"
+                android:layout_width="182dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginEnd="12dp"
+                android:layout_marginTop="103dp"
+                android:background="@null"
+                android:textSize="18sp"
+                android:layout_marginRight="12dp"
+                android:layout_alignParentRight="true" />
 
 
-        <TextView
-            android:id="@+id/textView4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginLeft="17dp"
-            android:layout_marginStart="17dp"
-            android:layout_marginTop="22dp"
-            android:text=" Name:"
-            android:textColor="#26214e"
-            android:textSize="18sp"
-            app:fontFamily="sans-serif" />
+            <TextView
+                android:id="@+id/orgcate"
+                android:layout_width="255dp"
+                android:layout_height="wrap_content"
+                android:layout_alignEnd="@+id/orgphone"
+                android:layout_alignTop="@+id/textview99"
+                android:background="@null"
+                android:textSize="18sp"
+                android:layout_alignRight="@+id/orgphone" />
 
-        <TextView
-            android:id="@+id/textview99"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/textView2"
-            android:layout_alignParentTop="true"
-            android:layout_alignStart="@+id/textView2"
-            android:layout_marginTop="64dp"
-            android:text="Category:"
-            android:textColor="#26214e"
-            android:textSize="18sp"
-            app:fontFamily="sans-serif" />
 
-        <TextView
-            android:id="@+id/textView6"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginBottom="27dp"
-            android:layout_marginLeft="25dp"
-            android:layout_marginStart="25dp"
-            android:text="Email:"
-            android:textColor="#26204e"
-            android:textSize="18sp" />
-    </RelativeLayout>
+            <TextView
+                android:id="@+id/orgphone"
+                android:layout_width="220dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignTop="@+id/textView3"
+                android:layout_marginEnd="14dp"
+                android:background="@null"
+                android:textSize="18sp"
+                android:layout_marginRight="14dp"
+                android:layout_alignParentRight="true" />
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignStart="@+id/textView2"
+                android:layout_marginBottom="86dp"
+                android:text=" Phone number:"
+                android:textColor="#26204e"
+                android:textSize="18sp"
+                app:fontFamily="sans-serif"
+                android:layout_alignLeft="@+id/textView2" />
+
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_alignStart="@+id/textView2"
+                android:layout_marginTop="25dp"
+                android:text=" Name:"
+                android:textColor="#26214e"
+                android:textSize="18sp"
+                app:fontFamily="sans-serif"
+                android:layout_alignLeft="@+id/textView2" />
+
+            <TextView
+                android:id="@+id/textview99"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/textView2"
+                android:layout_alignParentTop="true"
+                android:layout_alignStart="@+id/textView2"
+                android:layout_marginTop="64dp"
+                android:text="Category:"
+                android:textColor="#26214e"
+                android:textSize="18sp"
+                app:fontFamily="sans-serif" />
+
+            <TextView
+                android:id="@+id/textView6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignStart="@+id/textView2"
+                android:layout_marginBottom="44dp"
+                android:text="Email:"
+                android:textColor="#26204e"
+                android:textSize="18sp"
+                android:layout_alignLeft="@+id/textView2" />
+
+
+            <TextView
+                android:id="@+id/orgemail"
+                android:layout_width="269dp"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/textView6"
+                android:layout_toEndOf="@+id/textView4"
+                android:textSize="18sp"
+                android:layout_toRightOf="@+id/textView4" />
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
 
     <Button
         android:id="@+id/dis"
         android:layout_width="150dp"
         android:layout_height="55dp"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="90dp"
-        android:layout_marginStart="48dp"
-        android:background="#f40f0f"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="92dp"
+        android:layout_marginEnd="40dp"
+        android:background="@drawable/edit_rouded2"
+        android:fontFamily="sans-serif"
+        android:padding="12dp"
         android:text="Disapprove"
         android:textColor="@color/white"
         tools:ignore="RtlCompat" />
@@ -173,24 +205,20 @@
         android:id="@+id/app"
         android:layout_width="150dp"
         android:layout_height="55dp"
-        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true"
         android:layout_alignTop="@+id/dis"
-        android:layout_marginEnd="41dp"
-        android:background="#08c705"
+        android:layout_marginStart="47dp"
+        android:background="@drawable/edit_rouded"
+        android:fontFamily="sans-serif"
+        android:padding="12dp"
         android:text="Approve"
         android:textColor="@color/white"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="41dp" />
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="47dp" />
 
-    <TextView
-        android:id="@+id/orgemail"
-        android:layout_width="269dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginBottom="187dp"
-        android:layout_marginEnd="30dp"
-        android:textSize="18sp" />
+
+
+
 
 
 </RelativeLayout>
