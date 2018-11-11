@@ -36,7 +36,6 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
 
     @Override
     public void onBindViewHolder(@NonNull ImageViewHolder imageViewHolder, int i) {
-
         uloadOffers uploadCurrent=mUpload.get(i);
         imageViewHolder.textViewName.setText(uploadCurrent.getmName());
         imageViewHolder.textViewPercentage.setText(uploadCurrent.getPrecentage()+"%");

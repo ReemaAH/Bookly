@@ -263,7 +263,7 @@ public class addCategory extends AppCompatActivity {
                         }
                     });
         }else{
-            Toast.makeText(this, "NO file selected", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "NO image selected", Toast.LENGTH_LONG).show();
         }
     }
 

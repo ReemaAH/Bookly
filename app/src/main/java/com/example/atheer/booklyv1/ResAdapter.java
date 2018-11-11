@@ -42,7 +42,7 @@ public class ResAdapter extends BaseAdapter {
         serviceInfo.setText(res.get(position).getService() + " | " + res.get(position).getOrg());
         TextView date = (TextView) v.findViewById(R.id.date);
         date.setText(res.get(position).getDate());
-        TextView time = (TextView) v.findViewById(R.id.time);
+        TextView time = (TextView) v.findViewById(R.id.date);
         time.setText(res.get(position).getTime());
      CircleImageView image = (CircleImageView) v.findViewById(R.id.userimage);
 //      if(res.get(position).isApproved()){

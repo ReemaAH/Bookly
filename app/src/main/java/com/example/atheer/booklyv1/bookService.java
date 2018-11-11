@@ -400,7 +400,7 @@ int n=0;
             SerNum.requestFocus();
             return;
         } else{
-
+String str="Noura Salon";
         FirebaseDatabase database =  FirebaseDatabase.getInstance();
         FirebaseUser user =  mAuth.getCurrentUser();
         String userId = user.getUid();
@@ -411,8 +411,8 @@ int n=0;
         mRef.child("date").setValue(date1);
         mRef.child("time").setValue(time1);
         mRef.child("service").setValue(service1);
-        mRef.child("num").setValue(1);
-        mRef.child("org").setValue(intent.getStringExtra("name"));
+        mRef.child("num").setValue("1");
+        mRef.child("org").setValue(str);
         mRef.child("orgID").setValue(intent.getStringExtra("name"));
         mRef.child("resNum").setValue(n+"");
         mRef.child("approved").setValue(false);

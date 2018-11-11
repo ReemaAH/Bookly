@@ -1,6 +1,8 @@
 package com.example.atheer.booklyv1;
 
-public class Reservation {
+import java.io.Serializable;
+
+public class Reservation implements Serializable {
 
     private boolean approved;
     private String date;

@@ -11,7 +11,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -26,14 +28,14 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public class ApproveResrvation extends AppCompatActivity {
-    android.widget.ListView ListView;
+    android.widget.ListView listView;
     ArrayList<String> list;
     ArrayList<Reservation> list1;
     ArrayAdapter<String> adapter;
     Reservation reservation;
     String name1;
     String status;
-    orguser org;
+    Name org;
     String name;
     TextView navUsername, navUserponts;
     NavigationView navigationView;
@@ -45,6 +47,8 @@ public class ApproveResrvation extends AppCompatActivity {
     private DatabaseReference ref2;
     private String userId;
     private FirebaseUser user;
+
+    private DatabaseReference mDatabase;
 
     private DrawerLayout mDrawerLayout;
     @Override
@@ -127,7 +131,7 @@ public class ApproveResrvation extends AppCompatActivity {
         reservation=new Reservation();
 
 
-        ListView = (android.widget.ListView) findViewById(R.id.ListView);
+        listView=(ListView)findViewById(R.id.ListView);
         database = FirebaseDatabase.getInstance();
         mAuth = FirebaseAuth.getInstance();
         user =  mAuth.getCurrentUser();
@@ -136,69 +140,62 @@ public class ApproveResrvation extends AppCompatActivity {
 
 
 
-        mAuth = FirebaseAuth.getInstance();
+       mAuth = FirebaseAuth.getInstance();
         database =  FirebaseDatabase.getInstance();
         user =  mAuth.getCurrentUser();
         userId = user.getUid();
-        ref =  database.getReference().child("client");
-       // name1=  database.getReference().child("client").child(userId).toString();
-        org= new orguser();
 
-        ref.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for(DataSnapshot ds: dataSnapshot.getChildren() ){
-                    String key = ds.getKey();
-                    org = ds.getValue(orguser.class);
-                    org.setUid(key);
-                    if(org.getUid().equals(userId)){
-                    name = ds.child("name").getValue(String.class);
-                    name = org.getName().toString();}
-                }
-            }
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-
-        setTitle(name);
-
-      //  name=database.getReference().child("client").child(userId).child("name").toString();
-        //ref =  database.getReference().child("reservaiton");
-        DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
-        DatabaseReference itemsRef = rootRef.child("reservaiton");
-        Query query=itemsRef.orderByChild("org").equalTo(name);
+       name="nora";
         list = new ArrayList<>();
         list1 = new ArrayList<>();
         adapter = new ArrayAdapter<String>(this, R.layout.requesttext,R.id.requestInfo,list);
+        mDatabase = FirebaseDatabase.getInstance().getReference();
 
-        query.addValueEventListener(new ValueEventListener() {
-
-
+        mDatabase.addValueEventListener(new ValueEventListener() {
+            @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                name = dataSnapshot.child("client").child(userId).child("name").getValue(String.class);
+
+                DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
+                DatabaseReference itemsRef = rootRef.child("reservaiton");
+                Query query=itemsRef.orderByChild("org").equalTo(name);
 
 
-                for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                    String str;
-                    reservation = ds.getValue(Reservation.class);
+
+                query.addValueEventListener(new ValueEventListener() {
+
+
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+
+
+                        for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                            String str;
+                            reservation = ds.getValue(Reservation.class);
+                            if (!reservation.isApproved()){
                             str = reservation.getService().toString() + " \n\n ";
                             list.add(str);
-                            list1.add(reservation);
+                            list1.add(reservation);}
+                          //  Toast.makeText(getApplicationContext(), name, Toast.LENGTH_LONG).show();
+                        }
+
+                        listView.setAdapter(adapter);
+                        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                                Intent intent = new Intent(ApproveResrvation.this, ApproveResrvation2.class);
+                                intent.putExtra("reservation", (Serializable) list1.get(position));
+                                startActivity(intent);
 
 
-                }
 
-                ListView.setAdapter(adapter);
-                ListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                            }
+                        });
+                    }
+
                     @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                        Intent intent = new Intent(ApproveResrvation.this, orginforequest.class);
-                        intent.putExtra("reservation", (Serializable) list1.get(position));
-                        startActivity(intent);
-
+                    public void onCancelled(DatabaseError databaseError){
 
 
                     }
@@ -206,11 +203,13 @@ public class ApproveResrvation extends AppCompatActivity {
             }
 
             @Override
-            public void onCancelled(DatabaseError databaseError){
-
-
+            public void onCancelled(DatabaseError databaseError) {
+                // Getting Post failed, log a message
             }
         });
+
+        setTitle("Reservations");
+
 
 
     }

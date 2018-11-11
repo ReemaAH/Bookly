@@ -5,7 +5,6 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
 
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -64,15 +63,13 @@
         <activity android:name=".ApproveResrvation" />
         <!-- <activity android:name=".orgdes" /> -->
 
-
         <activity
             android:name=".ManageOrganaization"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-
         <activity android:name=".DeleteOrg2" />
         <activity android:name=".DeleteOrg3" />
-
-        <activity android:name=".disapprovemsg"></activity>
+        <activity android:name=".disapprovemsg" />
+        <activity android:name=".ApproveResrvation2"></activity>
     </application>
 
 </manifest>
