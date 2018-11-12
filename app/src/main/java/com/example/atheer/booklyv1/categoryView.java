@@ -1,24 +1,23 @@
 package com.example.atheer.booklyv1;
 
-import android.app.Notification;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
 import android.content.Intent;
-import android.os.Build;
-import android.support.annotation.RequiresApi;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.v4.app.NotificationCompat;
-import android.support.v4.app.NotificationManagerCompat;
-import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -26,12 +25,32 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
-public class dashboardAdmin extends AppCompatActivity implements View.OnClickListener {
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
+public class categoryView extends AppCompatActivity implements categoryViewAdapter.OnItemClickListener{
     TextView navUsername, navUserponts;
     NavigationView navigationView;
     View headerView;
+    ArrayList<cat> list1;
+
+    private RecyclerView mRecyclerView;
+    private categoryViewAdapter mAdapter;
+
+    private ValueEventListener mDBListener;
+    private FirebaseStorage mStorge;
+    private DatabaseReference mDatabaseRef;
+    private List<cat> mUpload;
+    FloatingActionButton mFloatingActionButton;
+    //
+
+    private ProgressBar mProgressBar;
 
     private FirebaseAuth mAuth;
     private FirebaseDatabase database;
@@ -41,20 +60,13 @@ public class dashboardAdmin extends AppCompatActivity implements View.OnClickLis
     private FirebaseUser user;
 
     private DrawerLayout mDrawerLayout;
-
-
-
-    public dashboardAdmin(){
-
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.O)
+    ImageView imagev;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_dashboard_admin);
+        setContentView(R.layout.activity_category_view);
 
-        setTitle("Home");
+        setTitle("Categories");
 
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.bringToFront();
@@ -98,32 +110,23 @@ public class dashboardAdmin extends AppCompatActivity implements View.OnClickLis
 
                         if (id == R.id.settingsId) {
 
-                                startActivity(new Intent(dashboardAdmin.this,settingsadmin.class));
+                            startActivity(new Intent(categoryView.this,settingsadmin.class));
 
                         } else if (id == R.id.logoutId){
 
                             FirebaseAuth.getInstance().signOut();
                             finish();
-                            Intent signOUT=new Intent(dashboardAdmin.this,loginActivity.class);
+                            Intent signOUT=new Intent(categoryView.this,loginActivity.class);
                             startActivity(signOUT);
 
 
-                        }
+                        } else if (id == R.id.homeId){
 
-                    else if (id == R.id.OrgId){
-
-                        startActivity(new Intent(dashboardAdmin.this,approveOrgByadmin.class));}
-
-
-
-
-                        else if (id == R.id.homeId){
-
-                            startActivity(new Intent(dashboardAdmin.this,dashboardAdmin.class));
+                            startActivity(new Intent(categoryView.this,dashboardAdmin.class));
 
                         } else if (id == R.id.CategoriesId){
 
-                            startActivity(new Intent(dashboardAdmin.this,CatView.class));
+                            startActivity(new Intent(categoryView.this,CatView.class));
 
                         }else if (id == R.id.OrgId){
 
@@ -131,7 +134,7 @@ public class dashboardAdmin extends AppCompatActivity implements View.OnClickLis
 
                         }else if (id == R.id.Services1Id){
 
-                            startActivity(new Intent(dashboardAdmin.this,BrowseAdmin.class));
+                            startActivity(new Intent(categoryView.this,BrowseAdmin.class));
 
                         } else if (id == R.id.ReportsId){
 
@@ -140,43 +143,67 @@ public class dashboardAdmin extends AppCompatActivity implements View.OnClickLis
                         }
 
 
-
-
                         return true;
                     }
                 });
 
+        mRecyclerView=findViewById(R.id.recycler_view);
+        mRecyclerView.setHasFixedSize(true);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mFloatingActionButton =findViewById(R.id.newbutton);
+        mFloatingActionButton.setImageResource(R.drawable.addicon2);
+        imagev=(ImageView) findViewById(R.id.newbutton);
+        imagev.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(categoryView.this,addCategory.class));
+            }
+
+        });
+        imagev.setY(1770);
+        imagev.setX(800);
+        list1 = new ArrayList<>();
+        mProgressBar=findViewById(R.id.progress_circle);
+
+        mUpload=new ArrayList<>();
+
+        mAdapter=new categoryViewAdapter(categoryView.this, mUpload);
+
+        mRecyclerView.setAdapter(mAdapter);
+
+        mAdapter.setOnClickListener(categoryView.this);
+
+        mStorge= FirebaseStorage.getInstance();
+        mDatabaseRef= FirebaseDatabase.getInstance().getReference("category"); // make sure
+        mDBListener= mDatabaseRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                mUpload.clear();
+
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()){
+                    cat upload=postSnapshot.getValue(cat.class);
+
+                            upload.setKey(postSnapshot.getKey());
+                            mUpload.add(upload);
+                            list1.add(upload);
+
+                }
 
 
-        findViewById(R.id.Category).setOnClickListener(this);
-        findViewById(R.id.Organization).setOnClickListener(this);
-        findViewById(R.id.browse).setOnClickListener(this);
-        findViewById(R.id.report).setOnClickListener(this);
+                mAdapter.notifyDataSetChanged();
+
+                mProgressBar.setVisibility(View.INVISIBLE);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Toast.makeText(categoryView.this,databaseError.getMessage(),Toast.LENGTH_LONG).show();
+                mProgressBar.setVisibility(View.INVISIBLE);
+            }
+        });
 
 
 
-       // Intent i = getIntent();
-      // String name=  i.getStringExtra("org");
-        //showNotification("Bookly", name );
-    }
-
-    @Override
-    public void onClick(View v) {
-        switch(v.getId()){
-            case R.id.Category:
-                startActivity(new Intent(this,categoryView.class));
-                break;
-            case R.id.Organization:
-                startActivity(new Intent(dashboardAdmin.this,ManageOrganaization.class));
-                break;
-            case R.id.browse:
-                startActivity(new Intent(this,BrowseAdmin.class));
-                break;
-            case R.id.report:
-              //  startActivity(new Intent(this,SignUp.class));
-                break;
-
-        }
     }
 
     private void loaduserinfo() {
@@ -236,54 +263,33 @@ public class dashboardAdmin extends AppCompatActivity implements View.OnClickLis
 
     }
 
-    /*@RequiresApi(api = Build.VERSION_CODES.O)
-    public void showNotification(String title, String content) {
+    @Override
+    public void onItemClick(int position) {
+        //  Toast.makeText(this,"Normal click at position"+ position, Toast.LENGTH_LONG).show();
+    }
 
+    @Override
+    public void onDeleteClick(int position) {
+        cat selectedItem=mUpload.get(position);
+        final String selectedKey=selectedItem.getKey();
 
-        NotificationChannel channel = new NotificationChannel("channel01", "name",
-                NotificationManager.IMPORTANCE_HIGH);   // for heads-up notifications
-        channel.setDescription("description");
+        StorageReference imageRef= mStorge.getReferenceFromUrl(selectedItem.getImageUrl());
+        imageRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                mDatabaseRef.child(selectedKey).removeValue();
+                Toast.makeText(categoryView.this,"Item deleted", Toast.LENGTH_LONG).show();
 
-// Register channel with system
-
-        NotificationManager notificationManager = getSystemService(NotificationManager.class);
-
-        notificationManager.createNotificationChannel(channel);
-
-        Notification notification = new NotificationCompat.Builder(this, "channel01")
-                .setSmallIcon(android.R.drawable.ic_dialog_info)
-                .setContentTitle(title)
-                .setContentText(content)
-                .setDefaults(Notification.DEFAULT_ALL)
-                .setPriority(NotificationCompat.PRIORITY_HIGH)   // heads-up
-                .build();
-
-        NotificationManagerCompat no = NotificationManagerCompat.from(this);
-        no.notify(0, notification);
-
-
-
-
-
-    }    */
-
+            }
+        });
+    }
 
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                mDrawerLayout.openDrawer(GravityCompat.START);
-                return true;
-
-
-
-
-
-        }
-        return super.onOptionsItemSelected(item);
+    protected void onDestroy() {
+        super.onDestroy();
+        mDatabaseRef.removeEventListener(mDBListener);
     }
-
 
 
 }

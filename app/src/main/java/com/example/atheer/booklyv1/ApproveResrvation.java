@@ -35,7 +35,7 @@ public class ApproveResrvation extends AppCompatActivity {
     Reservation reservation;
     String name1;
     String status;
-    Name org;
+  //  Name org;
     String name;
     TextView navUsername, navUserponts;
     NavigationView navigationView;

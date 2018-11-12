@@ -11,8 +11,8 @@
 
         <ImageView
             android:id="@+id/image_view_upload"
-            android:layout_width="201dp"
-            android:layout_height="181dp"
+            android:layout_width="217dp"
+            android:layout_height="179dp"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:layout_gravity="center_vertical"
@@ -24,18 +24,18 @@
             android:id="@+id/text_view_name"
             android:layout_width="107dp"
             android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/text_view_sDate"
             android:layout_alignParentTop="true"
             android:layout_alignStart="@+id/text_view_sDate"
             android:layout_gravity="center_vertical"
-            android:layout_marginTop="87dp"
+            android:layout_marginTop="42dp"
             android:fontFamily="sans-serif"
             android:paddingTop="25dp"
             android:text="Name"
             android:textColor="#39374D"
             android:textSize="15sp"
             android:textStyle="bold"
-            android:typeface="normal"
-            android:layout_alignLeft="@+id/text_view_sDate" />
+            android:typeface="normal" />
 
         <TextView
             android:id="@+id/text_view_percentage"
@@ -56,6 +56,23 @@
             android:typeface="normal" />
 
         <TextView
+            android:id="@+id/text_view_coupon"
+            android:layout_width="104dp"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/text_view_percentage"
+            android:layout_alignParentBottom="true"
+            android:layout_alignStart="@+id/text_view_percentage"
+            android:layout_gravity="center_vertical"
+            android:layout_marginBottom="141dp"
+            android:fontFamily="sans-serif"
+            android:paddingTop="5dp"
+            android:text="Name"
+            android:textColor="#39374D"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:typeface="normal" />
+
+        <TextView
             android:id="@+id/text_view_sDate"
             android:layout_width="104dp"
             android:layout_height="wrap_content"
@@ -63,7 +80,7 @@
             android:layout_alignParentBottom="true"
             android:layout_alignStart="@+id/text_view_percentage"
             android:layout_gravity="center_vertical"
-            android:layout_marginBottom="99dp"
+            android:layout_marginBottom="116dp"
             android:fontFamily="sans-serif"
             android:paddingTop="5dp"
             android:text="Name"
@@ -76,11 +93,10 @@
             android:id="@+id/text_view_eDate"
             android:layout_width="102dp"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/text_view_name"
             android:layout_alignStart="@+id/text_view_name"
             android:layout_below="@+id/text_view_sDate"
             android:layout_gravity="center_vertical"
-            android:layout_marginTop="-99dp"
+            android:layout_marginTop="-116dp"
             android:fontFamily="sans-serif"
             android:paddingTop="5dp"
             android:text="Name"

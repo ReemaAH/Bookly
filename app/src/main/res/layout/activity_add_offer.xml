@@ -60,10 +60,11 @@
             android:id="@+id/button_choose_image"
             android:layout_width="210dp"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/progress_bar"
+            android:layout_below="@+id/edit_text_file_edate"
             android:layout_centerHorizontal="true"
+            android:layout_marginTop="-256dp"
             android:background="@drawable/edit_rouded2"
-            android:text="Choose file"
+            android:text="Choose image"
             android:textColor="@color/white" />
 
 
@@ -79,7 +80,7 @@
             android:id="@+id/edit_text_file_percentage"
             android:layout_width="259dp"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/edit_text_file_sdate"
+            android:layout_above="@+id/edit_text_file_coupon"
             android:layout_centerHorizontal="true"
             android:clickable="true"
             android:hint="Enter percentage of discount"
@@ -89,8 +90,9 @@
             android:id="@+id/edit_text_file_sdate"
             android:layout_width="259dp"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/edit_text_file_edate"
+            android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
+            android:layout_marginBottom="294dp"
             android:clickable="true"
             android:hint="Start date"
             android:inputType="date" />
@@ -101,36 +103,46 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="171dp"
+            android:layout_marginBottom="256dp"
             android:clickable="true"
             android:hint="End date"
             android:inputType="date" />
 
+        <EditText
+            android:id="@+id/edit_text_file_coupon"
+            android:layout_width="259dp"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:clickable="true"
+            android:hint="coupon" />
+
         <ImageView
             android:id="@+id/image_view"
-            android:layout_width="236dp"
-            android:layout_height="129dp"
+            android:layout_width="280dp"
+            android:layout_height="159dp"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="58dp" />
+            android:layout_marginTop="57dp" />
 
         <ProgressBar
             android:id="@+id/progress_bar"
             style="@style/Widget.AppCompat.ProgressBar.Horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/button_upload"
-            android:layout_centerHorizontal="true" />
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginBottom="143dp"
+            android:layout_alignParentRight="true" />
 
         <Button
             android:id="@+id/button_upload"
             android:layout_width="210dp"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
+            android:layout_below="@+id/progress_bar"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="36dp"
+            android:layout_marginTop="-143dp"
             android:background="@drawable/edit_rouded"
-            android:text="Upload"
+            android:text=" Add offer"
             android:textColor="@color/white" />
 
 

@@ -1,7 +1,10 @@
 package com.example.atheer.booklyv1;
 
+import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.ContentResolver;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Handler;
@@ -39,8 +42,10 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 
 public class addOffer extends AppCompatActivity {
     TextView navUsername, navUserponts;
@@ -65,7 +70,7 @@ public class addOffer extends AppCompatActivity {
     private EditText mEditTextFileName;
     private EditText mEditTextFilepre;
     private EditText mEditTextFilesDate;
-    private EditText mEditTextFileeDate;
+    private EditText mEditTextFileeDate,mEditTextFileCoupon;
     private ImageView mImageView;
     private ProgressBar mProgressBar;
 
@@ -90,7 +95,7 @@ public class addOffer extends AppCompatActivity {
     String dateval = "";
     String dateval2 = "";
 
-    String sDate, eDate, name,pre;
+    String sDate, eDate, name,pre,coupon;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -103,6 +108,7 @@ public class addOffer extends AppCompatActivity {
         headerView = navigationView.getHeaderView(0);
         navUsername = (TextView) headerView.findViewById(R.id.useremail);
         navUserponts = (TextView) headerView.findViewById(R.id.userpoints);
+
 
         loaduserinfo();
 
@@ -181,29 +187,34 @@ public class addOffer extends AppCompatActivity {
         mEditTextFilepre= findViewById(R.id.edit_text_file_percentage);
         mEditTextFilesDate= findViewById(R.id.edit_text_file_sdate);
         mEditTextFileeDate= findViewById(R.id.edit_text_file_edate);
-
+        mEditTextFileCoupon=findViewById(R.id.edit_text_file_coupon);
 
         mEditTextFilesDate.setOnClickListener(new View.OnClickListener(){
 
             @Override
             public void onClick(View view){
 
-                Calendar calander = Calendar.getInstance();
-                year = calander.get(Calendar.YEAR);
-                month = calander.get(Calendar.MONTH);
-                day = calander.get(Calendar.DAY_OF_MONTH);
+                final Calendar c = Calendar.getInstance();
+                year = c.get(Calendar.YEAR);
+                month = c.get(Calendar.MONTH);
+                day = c.get(Calendar.DAY_OF_MONTH);
 
-                datePickerDialog = new DatePickerDialog(addOffer.this, new DatePickerDialog.OnDateSetListener() {
-                    @Override
-                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
 
-                        dateval = day+"-"+(month+1)+"-"+year;
+                DatePickerDialog cc = new DatePickerDialog(addOffer.this,
+                        new DatePickerDialog.OnDateSetListener() {
 
-                        mEditTextFilesDate.setText(dateval);
-                    }
-                },year,month,day);
 
-                datePickerDialog.show();
+                            @Override
+                            public void onDateSet(DatePicker view, int year,
+                                                  int monthOfYear, int dayOfMonth) {
+
+                                mEditTextFilesDate.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
+
+                            }
+                        }, year, month, day);
+                cc.getDatePicker().setMinDate(System.currentTimeMillis()-1000);
+
+                cc.show();
 
             }
 
@@ -214,26 +225,32 @@ public class addOffer extends AppCompatActivity {
             @Override
             public void onClick(View view){
 
-                Calendar calander = Calendar.getInstance();
-                year2 = calander.get(Calendar.YEAR);
-                month2 = calander.get(Calendar.MONTH);
-                day2 = calander.get(Calendar.DAY_OF_MONTH);
+                final Calendar c = Calendar.getInstance();
+                year2 = c.get(Calendar.YEAR);
+                month2 = c.get(Calendar.MONTH);
+                day2 = c.get(Calendar.DAY_OF_MONTH);
 
-                datePickerDialog = new DatePickerDialog(addOffer.this, new DatePickerDialog.OnDateSetListener() {
-                    @Override
-                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
 
-                        dateval2 = day+"-"+(month+1)+"-"+year;
+                DatePickerDialog cc = new DatePickerDialog(addOffer.this,
+                        new DatePickerDialog.OnDateSetListener() {
 
-                        mEditTextFileeDate.setText(dateval2);
-                    }
-                },year2,month2,day2);
 
-                datePickerDialog.show();
+                            @Override
+                            public void onDateSet(DatePicker view, int year,
+                                                  int monthOfYear, int dayOfMonth) {
+
+                                mEditTextFileeDate.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
+
+                            }
+                        }, year, month, day);
+                cc.getDatePicker().setMinDate(System.currentTimeMillis()-1000);
+
+                cc.show();
 
             }
 
         });
+
 
         mStorageRef= FirebaseStorage.getInstance().getReference("offer");
         mDatabaseRef= database.getReference().child("client").child(userId).child("offer");
@@ -247,6 +264,36 @@ public class addOffer extends AppCompatActivity {
         mButtonUpload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String catName=mEditTextFileName.getText().toString().trim();
+                String percentage=mEditTextFilepre.getText().toString().trim();
+                String sDate=mEditTextFilesDate.getText().toString().trim();
+                String eDate=mEditTextFileeDate.getText().toString().trim();
+                String coupon=mEditTextFileCoupon.getText().toString().trim();
+                if (catName.isEmpty()){
+                    mEditTextFileName.setError("Service name is required");
+                    mEditTextFileName.requestFocus();
+                    return;}
+                if (percentage.isEmpty()){
+                    mEditTextFilepre.setError("percentage is required");
+                    mEditTextFilepre.requestFocus();
+                    return;}
+                if (coupon.isEmpty()){
+                    mEditTextFileCoupon.setError("Coupon is required");
+                    mEditTextFileCoupon.requestFocus();
+                    return;}
+                if (sDate.isEmpty()){
+                    mEditTextFilesDate.setError("Start date is required");
+                    mEditTextFilesDate.requestFocus();
+                    return;}
+                if (eDate.isEmpty()){
+                    mEditTextFileeDate.setError("End date is required");
+                    mEditTextFileeDate.requestFocus();
+                    return;}
+                if(!isDateAfter(sDate,eDate)){
+                    mEditTextFileeDate.setError("The end date should be after the start date");
+                    mEditTextFileeDate.requestFocus();
+                    return;
+                }
                 if (mUploadTask != null && mUploadTask.isInProgress()) {
                     Toast.makeText(addOffer.this, "Upload in progress", Toast.LENGTH_SHORT).show();
                 } else {
@@ -257,7 +304,26 @@ public class addOffer extends AppCompatActivity {
 
 
     }
+    public static boolean isDateAfter(String startDate,String endDate)
+    {
+        try
+        {
+            String myFormatString = "dd-MM-yyyy"; // for example
+            SimpleDateFormat df = new SimpleDateFormat(myFormatString);
+            Date date1 = df.parse(endDate);
+            Date startingDate = df.parse(startDate);
 
+            if (date1.after(startingDate))
+                return true;
+            else
+                return false;
+        }
+        catch (Exception e)
+        {
+
+            return false;
+        }
+    }
 
     private void openFileChooser() {
         Intent intent = new Intent();
@@ -292,6 +358,7 @@ public class addOffer extends AppCompatActivity {
         eDate=mEditTextFileeDate.getText().toString().trim();
         name= mEditTextFileName.getText().toString().trim();
         pre=mEditTextFilepre.getText().toString().trim();
+        coupon=mEditTextFileCoupon.getText().toString().trim();
         if(mImageUri!=null){
             StorageReference fileRefrence=mStorageRef.child(System.currentTimeMillis()+"."+getFileExtension(mImageUri));
             mUploadTask =    fileRefrence.putFile(mImageUri)
@@ -306,7 +373,7 @@ public class addOffer extends AppCompatActivity {
                                 }
                             },5000);
                             Toast.makeText(addOffer.this, "Upload successful", Toast.LENGTH_LONG).show();
-                            uloadOffers upld=new uloadOffers(mEditTextFileName.getText().toString().trim(),taskSnapshot.getDownloadUrl().toString(),sDate,eDate,pre);
+                            uloadOffers upld=new uloadOffers(mEditTextFileName.getText().toString().trim(),taskSnapshot.getDownloadUrl().toString(),eDate,sDate,pre,coupon);
                             String uploadId=mDatabaseRef.push().getKey();
                             mDatabaseRef.child(uploadId).setValue(upld);
                      //       mDatabaseRef.child("percentage").setValue(pre);

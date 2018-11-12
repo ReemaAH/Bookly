@@ -16,37 +16,34 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHolder> {
+public class categoryViewAdapter extends RecyclerView.Adapter<categoryViewAdapter.ImageViewHolder>  {
+
 
     private Context mContext;
-    private List<uloadOffers> mUpload;
-    private OnItemClickListener mListener;
+    private List<cat> mUpload;
+    private categoryViewAdapter.OnItemClickListener mListener;
 
-    public ImageAdapter(Context mContext,List<uloadOffers> mUpload){
+    public categoryViewAdapter(Context mContext,List<cat> mUpload){
         this.mContext=mContext;
         this.mUpload=mUpload;
     }
 
     @NonNull
     @Override
-    public ImageViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View v= LayoutInflater.from(mContext).inflate(R.layout.image_item,viewGroup,false);
-        return new ImageViewHolder(v);
+    public categoryViewAdapter.ImageViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+        View v= LayoutInflater.from(mContext).inflate(R.layout.cat_image_item,viewGroup,false);
+        return new categoryViewAdapter.ImageViewHolder(v);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ImageViewHolder imageViewHolder, int i) {
-        uloadOffers uploadCurrent=mUpload.get(i);
-        imageViewHolder.textViewName.setText(uploadCurrent.getmName());
-        imageViewHolder.textViewPercentage.setText(uploadCurrent.getPrecentage()+"%");
-        imageViewHolder.textViewSdate.setText(uploadCurrent.getsDate());
-        imageViewHolder.mEditTextFileCoupon.setText(uploadCurrent.getCoupon());
-        imageViewHolder.textViewEdate.setText(uploadCurrent.geteDate());
+    public void onBindViewHolder(@NonNull categoryViewAdapter.ImageViewHolder imageViewHolder, int i) {
+        cat uploadCurrent=mUpload.get(i);
+        imageViewHolder.textViewName.setText(uploadCurrent.getName());
         Picasso.with(mContext)
-        .load(uploadCurrent.getmImageUrl())
-        .fit()
-        .centerCrop()
-        .into(imageViewHolder.imageView);
+                .load(uploadCurrent.getImageUrl())
+                .fit()
+                .centerCrop()
+                .into(imageViewHolder.imageView);
     }
 
     @Override
@@ -55,16 +52,12 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
     }
 
     public class ImageViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnCreateContextMenuListener, MenuItem.OnMenuItemClickListener {
-        public TextView textViewName, textViewPercentage, textViewSdate,textViewEdate, mEditTextFileCoupon;;
+        public TextView textViewName;
         public ImageView imageView;
         public ImageViewHolder(@NonNull View itemView) {
             super(itemView);
             textViewName=itemView.findViewById(R.id.text_view_name);
-            textViewPercentage=itemView.findViewById(R.id.text_view_percentage);
-            textViewSdate=itemView.findViewById(R.id.text_view_sDate);
-            textViewEdate=itemView.findViewById(R.id.text_view_eDate);
             imageView=itemView.findViewById(R.id.image_view_upload);
-            mEditTextFileCoupon=itemView.findViewById(R.id.text_view_coupon);
 
             itemView.setOnClickListener(this);
             itemView.setOnCreateContextMenuListener(this);
@@ -80,14 +73,13 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
                 }
             }
         }
-
         @Override
         public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-         //   menu.setHeaderTitle("Select Action");
-          //  MenuItem doWhatever = menu.add(Menu.NONE, 1,1,"Do whatever");
+            //   menu.setHeaderTitle("Select Action");
+            //  MenuItem doWhatever = menu.add(Menu.NONE, 1,1,"Do whatever");
             MenuItem delete= menu.add(Menu.NONE, 1,1,"Delete");
 
-         //   doWhatever.setOnMenuItemClickListener(this);
+            //   doWhatever.setOnMenuItemClickListener(this);
             delete.setOnMenuItemClickListener(this);
         }
 
@@ -110,10 +102,10 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
     public interface OnItemClickListener{
         void onItemClick(int position);
         void onDeleteClick(int position);
-       // void onWhateverClick(int position);
+        // void onWhateverClick(int position);
     }
 
-    public void setOnClickListener(OnItemClickListener listenet){
+    public void setOnClickListener(categoryViewAdapter.OnItemClickListener listenet){
         mListener=listenet;
     }
 

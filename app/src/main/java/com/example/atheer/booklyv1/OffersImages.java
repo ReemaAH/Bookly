@@ -29,6 +29,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -39,6 +40,7 @@ public class OffersImages extends AppCompatActivity implements ImageAdapter.OnIt
 TextView navUsername, navUserponts;
 NavigationView navigationView;
 View headerView;
+    ArrayList<uloadOffers> list1;
 
 private RecyclerView mRecyclerView;
 private ImageAdapter mAdapter;
@@ -156,10 +158,10 @@ private ProgressBar mProgressBar;
             }
 
         });
-        imagev.setY(1400);
+        imagev.setY(1770);
         imagev.setX(800);
       //  imagev = (ImageView)findViewById(R.id.newbutton);
-
+        list1 = new ArrayList<>();
         mProgressBar=findViewById(R.id.progress_circle);
 
         mUpload=new ArrayList<>();
@@ -194,11 +196,13 @@ private ProgressBar mProgressBar;
                         } else {
                             upload.setmKey(postSnapshot.getKey());
                             mUpload.add(upload);
+                            list1.add(upload);
                         }
                     } catch (ParseException e) {
                         e.printStackTrace();
                     }
                 }
+
 
                 mAdapter.notifyDataSetChanged();
 
@@ -276,7 +280,7 @@ private ProgressBar mProgressBar;
 
     @Override
     public void onItemClick(int position) {
-        Toast.makeText(this,"Normal click at position"+ position, Toast.LENGTH_LONG).show();
+      //  Toast.makeText(this,"Normal click at position"+ position, Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -295,10 +299,6 @@ private ProgressBar mProgressBar;
         });
     }
 
-    @Override
-    public void onWhateverClick(int position) {
-        Toast.makeText(this,"Delete click at position"+ position, Toast.LENGTH_LONG).show();
-    }
 
     @Override
     protected void onDestroy() {
