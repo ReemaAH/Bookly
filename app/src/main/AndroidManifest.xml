@@ -70,8 +70,9 @@
         <activity android:name=".DeleteOrg3" />
         <activity android:name=".disapprovemsg" />
         <activity android:name=".ApproveResrvation2" />
-        <activity android:name=".deletaOffer" />
-        <activity android:name=".categoryView"></activity>
+        <activity android:name=".categoryView" />
+        <activity android:name=".displayOffer" />
+        <activity android:name=".bookOffer"></activity>
     </application>
 
 </manifest>

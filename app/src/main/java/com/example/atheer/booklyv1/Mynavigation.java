@@ -9,6 +9,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.RequiresApi;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
@@ -16,13 +17,19 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -30,14 +37,18 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
+import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 
-public class Mynavigation extends AppCompatActivity  {
+public class Mynavigation extends AppCompatActivity  implements CategoryAdapter.OnItemClickListener{
 
     TextView navUsername, navUserponts;
     NavigationView navigationView;
@@ -63,6 +74,22 @@ public class Mynavigation extends AppCompatActivity  {
     private FirebaseUser user;
 
     private DrawerLayout mDrawerLayout;
+
+    ArrayList<cat> list1;
+
+    private RecyclerView mRecyclerView;
+    private CategoryAdapter mAdapter;
+
+    private ValueEventListener mDBListener;
+    private FirebaseStorage mStorge;
+    private DatabaseReference mDatabaseRef;
+    private List<cat> mUpload;
+    FloatingActionButton mFloatingActionButton;
+    //
+
+    private ProgressBar mProgressBar;
+
+    ImageView imagev;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -126,6 +153,10 @@ public class Mynavigation extends AppCompatActivity  {
 
                             startActivity(new Intent(Mynavigation.this,myServices.class));
 
+                        } else if (id == R.id.offer){
+
+                            startActivity(new Intent(Mynavigation.this,displayOffer.class));
+
                         }
 
 
@@ -134,43 +165,50 @@ public class Mynavigation extends AppCompatActivity  {
                 });
 
 
-        createLists = new ArrayList<>();
-        Category_pic restaurant = new Category_pic("Restaurant", R.drawable.restaurant);
-        Category_pic clinic = new Category_pic("Clinic", R.drawable.clinic);
-        Category_pic salon = new Category_pic("Salon", R.drawable.salon);
-        Category_pic cinema = new Category_pic("Cinema", R.drawable.cinema);
-        Category_pic event = new Category_pic("Events", R.drawable.event);
-        Category_pic meeting = new Category_pic("Meeting rooms", R.drawable.meeting);
-
-//
-        createLists.add(restaurant);
-        createLists.add(clinic);
-        createLists.add(salon);
-        createLists.add(cinema);
-        createLists.add(event);
-        createLists.add(meeting);
-
-        CategoryAdapter adapter = new CategoryAdapter(getApplicationContext(), createLists);
-        listView = (ListView) findViewById(R.id.list);
-
-        listView.setAdapter(adapter);
 
 
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        mRecyclerView=findViewById(R.id.recycler_view);
+        mRecyclerView.setHasFixedSize(true);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mFloatingActionButton =findViewById(R.id.newbutton);
+        list1 = new ArrayList<>();
+        mProgressBar=findViewById(R.id.progress_circle);
 
-            public void onItemClick(AdapterView<?> adapter, View v, int position, long id) {
+        mUpload=new ArrayList<>();
+
+        mAdapter=new CategoryAdapter(Mynavigation.this, mUpload);
+
+        mRecyclerView.setAdapter(mAdapter);
+
+        mAdapter.setOnClickListener(Mynavigation.this);
+
+        mStorge= FirebaseStorage.getInstance();
+        mDatabaseRef= FirebaseDatabase.getInstance().getReference("category"); // make sure
+        mDBListener= mDatabaseRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                mUpload.clear();
+
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()){
+                    cat upload=postSnapshot.getValue(cat.class);
+
+                    upload.setKey(postSnapshot.getKey());
+                    mUpload.add(upload);
+                    list1.add(upload);
+
+                }
 
 
-                Category_pic value = ( Category_pic )adapter.getItemAtPosition(position);  ;//getter method
-                String title=value.getImage_title();
-                Intent intent = new Intent(Mynavigation.this,BrowseServices.class);
-                intent.putExtra("name",title  );
-                startActivity(intent);
+                mAdapter.notifyDataSetChanged();
 
-
+                mProgressBar.setVisibility(View.INVISIBLE);
             }
 
-
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Toast.makeText(Mynavigation.this,databaseError.getMessage(),Toast.LENGTH_LONG).show();
+                mProgressBar.setVisibility(View.INVISIBLE);
+            }
         });
 
 
@@ -331,6 +369,26 @@ public class Mynavigation extends AppCompatActivity  {
 
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onItemClick(int position) {
+        cat selectedItem = mUpload.get(position);
+        final String selectedKey = selectedItem.getKey();
+        String tiltle=selectedItem.getName();
+
+        Intent intent = new Intent(Mynavigation.this, BrowseServices.class);
+        intent.putExtra("name", (Serializable) list1.get(position));
+        startActivity(intent);
+    }
+
+
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+     //   mDatabaseRef.removeEventListener(mDBListener);
     }
 
 

@@ -40,7 +40,7 @@ public class DeleteOrg2 extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseDatabase database;
     private FirebaseAuth.AuthStateListener mAuthStateListener;
-    private DatabaseReference ref;
+    private DatabaseReference ref,ref2;
     private String userId;
     private FirebaseUser user;
 
@@ -134,6 +134,7 @@ public class DeleteOrg2 extends AppCompatActivity {
         user =  mAuth.getCurrentUser();
         userId = user.getUid();
         ref =  database.getReference("client");
+        ref2 =  database.getReference("orgz");
         list = new ArrayList<>();
         list1 = new ArrayList<>();
         adapter = new ArrayAdapter<String>(this, R.layout.requesttext,R.id.requestInfo,list);
@@ -172,21 +173,51 @@ public class DeleteOrg2 extends AppCompatActivity {
                 });
             }
 
-
-
-
-
-
-
-
-
-
             @Override
             public void onCancelled(DatabaseError databaseError){
 
 
             }
         });
+
+
+      /*  ref2.addValueEventListener(new ValueEventListener() {
+
+
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                    String key = ds.getKey(); // to get the user ID 5gbccxxxxgdbehswxxgsf
+                    String str;
+                    org = ds.getValue(orguser.class);
+                    org.setUid(key);
+                    if (org.getStatus() != null) {
+                        if (org.getStatus().equals("approved")) {
+                            str = org.getName().toString() + " \n\n ";
+                        //    list.add(str);
+                        //    list1.add(org);
+                        }
+                    }
+                }
+
+             //   ListView.setAdapter(adapter);
+            /*    ListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                        Intent intent = new Intent(DeleteOrg2.this, DeleteOrg3.class);
+                        intent.putExtra("org", (Serializable) list1.get(position));
+                        startActivity(intent);
+
+
+
+                    }
+                });
+            }
+
+
+        });*/
 
 
 

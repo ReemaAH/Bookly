@@ -34,7 +34,7 @@ public class settingsorg extends AppCompatActivity implements View.OnClickListen
     private FirebaseAuth mAuth;
     private FirebaseDatabase database;
     private FirebaseAuth.AuthStateListener mAuthStateListener;
-    private DatabaseReference ref;
+    private DatabaseReference ref,ref2;
     private String userId;
     private FirebaseUser user;
 
@@ -285,12 +285,15 @@ public class settingsorg extends AppCompatActivity implements View.OnClickListen
         user =  mAuth.getCurrentUser();
         userId = user.getUid();
         ref =  database.getReference().child("client").child(userId);
-
+        ref2 =  database.getReference().child("orgz").child(userId);
         if(!name1.isEmpty()&& !phoneNum.isEmpty()){
             if (phoneNum.length() < 10 || phoneNum.length() > 10) {
                 Toast.makeText(settingsorg.this, "Phone length should be 10 digits", Toast.LENGTH_LONG).show();
 
             } else {
+
+                ref2.child("name").setValue(name1);
+                ref2.child("phoneNO").setValue(phoneNum);
                 ref.child("name").setValue(name1);
                 ref.child("phoneNO").setValue(phoneNum);
                 Toast.makeText(settingsorg.this, "Successfully Updated", Toast.LENGTH_LONG).show();}}

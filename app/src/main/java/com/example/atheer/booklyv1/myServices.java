@@ -17,6 +17,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -24,6 +25,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.io.Serializable;
@@ -34,6 +36,8 @@ public class myServices extends AppCompatActivity implements View.OnClickListene
 
     private static final String TAG = "viewOrgnization";
 
+    private DatabaseReference mDatabase;
+    String name="Nora";
     private DrawerLayout mDrawerLayout;
 
     TextView navUsername, navUserponts;
@@ -144,30 +148,50 @@ public class myServices extends AppCompatActivity implements View.OnClickListene
 
         list = new ArrayList<String>();
         res = new Res();
-        FirebaseUser user =  mAuth.getCurrentUser();
-        String userId = user.getUid();
-      ref2 =  database.getReference().child("reservaiton").child(userId);
 
-        ref2.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+        mDatabase = FirebaseDatabase.getInstance().getReference();
 
-                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+     //   mDatabase.addValueEventListener(new ValueEventListener() {
+       //     @Override
+         //   public void onDataChange(DataSnapshot dataSnapshot) {
+                FirebaseUser user =  mAuth.getCurrentUser();
+                String userId = user.getUid();
 
-                    res = ds.getValue(Res.class);
-                    if(res.getResNum() != null)
-                    reserv.add(res);
+                name = mDatabase.child("client").child(userId).toString();
+                int index=name.lastIndexOf("/");
+                name=name.substring(index+1);
+                  //  setTitle(name);
+                Toast.makeText(getApplicationContext(), name, Toast.LENGTH_LONG).show();
 
-                }  resAdapter = new ResAdapter(getApplicationContext(),reserv);
-                ListView.setAdapter(resAdapter);
-            }
+                DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
+                DatabaseReference itemsRef = rootRef.child("reservaiton");
+                Query query=itemsRef.orderByChild("clientID").equalTo(name);
+
+            //    Toast.makeText(getApplicationContext(), "loadbooking", Toast.LENGTH_LONG).show();
 
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
 
-            }
-        });
+
+                query.addValueEventListener(new ValueEventListener() {
+
+
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        for (DataSnapshot ds : dataSnapshot.getChildren()) {
+
+                            res = ds.getValue(Res.class);
+                            if(res.getResNum() != null)
+                                reserv.add(res);
+
+                        }  resAdapter = new ResAdapter(getApplicationContext(),reserv);
+                        ListView.setAdapter(resAdapter);
+
+                    }
+                    @Override
+                    public void onCancelled(DatabaseError databaseError){
+
+
+                    }
+                });
 
         ListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -180,42 +204,7 @@ public class myServices extends AppCompatActivity implements View.OnClickListene
 
             }
         });
-
-
-
-
-
-
-//        org = new Orgz("Apple Pie", "4.4", "7", "Restaurant");
-//        Orgz org2 = new Orgz("Urth", "4.4", "7", "Restaurant");
-//        Orgz org3 = new Orgz("Five Guys", "4.4", "7","Restaurant");
-//        Orgz org4 = new Orgz("Apple Pie", "4.4", "7","Restaurant");
-//        Orgz org5 = new Orgz("The Cinema", "4.4", "7", "Cinema");
-//        Orgz org6 = new Orgz("VOX", "4.4", "7","Cinema");
-//        Orgz org7 = new Orgz("AMC", "4.4", "7","Cinema");
-//
-//
-//
-
-       // list.add("Urth | 2:00");
-
-////        ArrayList<String> orgs = new ArrayList<>();
-////        orgs.add("Urth");
-////        orgs.add("Five Guys");
-////        orgs.add("Nozomi");
-////        orgs.add("Lusin");
-////        orgs.add("Red Chilli");
-//
-//        // adapter= new OrgzAdapter(dataModels,getApplicationContext());
-
-
-
-
-
-
-
-
-    }
+            }
 
 
 

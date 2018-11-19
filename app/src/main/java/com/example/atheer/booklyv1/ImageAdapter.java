@@ -37,11 +37,11 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
     @Override
     public void onBindViewHolder(@NonNull ImageViewHolder imageViewHolder, int i) {
         uloadOffers uploadCurrent=mUpload.get(i);
-        imageViewHolder.textViewName.setText(uploadCurrent.getmName());
-        imageViewHolder.textViewPercentage.setText(uploadCurrent.getPrecentage()+"%");
-        imageViewHolder.textViewSdate.setText(uploadCurrent.getsDate());
-        imageViewHolder.mEditTextFileCoupon.setText(uploadCurrent.getCoupon());
-        imageViewHolder.textViewEdate.setText(uploadCurrent.geteDate());
+        imageViewHolder.textViewName.setText("Service name: "+uploadCurrent.getmName());
+        imageViewHolder.textViewPercentage.setText(uploadCurrent.getPrecentage()+"% discount");
+        imageViewHolder.textViewSdate.setText("From "+uploadCurrent.getsDate());
+        imageViewHolder.mEditTextFileCoupon.setText("Coupon: "+uploadCurrent.getCoupon());
+        imageViewHolder.textViewEdate.setText("To "+uploadCurrent.geteDate());
         Picasso.with(mContext)
         .load(uploadCurrent.getmImageUrl())
         .fit()

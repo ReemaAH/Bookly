@@ -19,19 +19,21 @@
         tools:layout_editor_absoluteX="140dp"
         tools:layout_editor_absoluteY="99dp" />
 
-    <!-- <TextView
-         android:id="@+id/orgidd"
-         android:layout_width="211dp"
-         android:layout_height="wrap_content"
-         android:layout_alignParentTop="true"
-         android:layout_centerHorizontal="true"
-         android:layout_marginTop="46dp"
-         android:textSize="18sp" /> -->
+
     <RelativeLayout
         android:layout_width="357dp"
-        android:layout_height="160dp"
+        android:layout_height="210dp"
         android:layout_centerInParent="true"
         android:background="@drawable/border">
+
+        <TextView
+            android:id="@+id/coupon"
+            android:layout_width="211dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignStart="@+id/service"
+            android:layout_marginBottom="24dp"
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/textView2"
@@ -64,7 +66,7 @@
             android:layout_alignLeft="@+id/date"
             android:layout_alignParentBottom="true"
             android:layout_alignStart="@+id/date"
-            android:layout_marginBottom="39dp"
+            android:layout_marginBottom="77dp"
             android:background="@null"
             android:textSize="18sp" />
 
@@ -74,13 +76,13 @@
             android:layout_width="243dp"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
-            android:layout_marginEnd="46dp"
-            android:layout_marginRight="46dp"
-            android:layout_marginTop="58dp"
+            android:layout_marginEnd="45dp"
+            android:layout_marginTop="70dp"
             android:background="@null"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="45dp" />
 
 
         <TextView
@@ -99,6 +101,18 @@
             app:fontFamily="sans-serif" />
 
         <TextView
+            android:id="@+id/textView5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/textView2"
+            android:layout_alignTop="@+id/coupon"
+            android:text="Coupon:"
+            android:textColor="#26214e"
+            android:textSize="18sp"
+            app:fontFamily="sans-serif"
+            android:layout_alignLeft="@+id/textView2" />
+
+        <TextView
             android:id="@+id/textview99"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -110,6 +124,7 @@
             android:textSize="18sp"
             app:fontFamily="sans-serif" />
 
+
     </RelativeLayout>
 
     <Button
@@ -117,8 +132,8 @@
         android:layout_width="150dp"
         android:layout_height="55dp"
         android:layout_alignParentBottom="true"
-        android:layout_alignStart="@+id/userimage"
-        android:layout_marginBottom="133dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="154dp"
         android:background="#08c705"
         android:text="Approve"
         android:textColor="@color/white"

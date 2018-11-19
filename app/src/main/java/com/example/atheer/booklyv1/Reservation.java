@@ -7,7 +7,7 @@ public class Reservation implements Serializable {
     private boolean approved;
     private String date;
     private String service;
-    private String org, orgID, resNum, clientID;
+    private String org, orgID, resNum, clientID,coupon;
     private String time,Uid;
     private int num;
 
@@ -24,8 +24,29 @@ public Reservation(){
         this.resNum = resNum;
         this.clientID = clientID;
         this.time = time;
+        this.Uid = uid;
+        this.num = num;
+    }
+    public Reservation(boolean approved, String date, String service, String org, String orgID, String resNum, String clientID, String time, String uid, int num,String coupon) {
+        this.approved = approved;
+        this.date = date;
+        this.service = service;
+        this.org = org;
+        this.orgID = orgID;
+        this.resNum = resNum;
+        this.clientID = clientID;
+        this.time = time;
         Uid = uid;
         this.num = num;
+        this.coupon=coupon;
+    }
+
+    public String getCoupon() {
+        return coupon;
+    }
+
+    public void setCoupon(String coupon) {
+        this.coupon = coupon;
     }
 
     public boolean isApproved() {

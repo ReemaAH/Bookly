@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,7 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ImageView;
+import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,6 +24,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
@@ -37,14 +37,20 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class OffersImages extends AppCompatActivity implements ImageAdapter.OnItemClickListener {
+public class displayOffer extends AppCompatActivity implements OfferAdapter.OnItemClickListener {
     TextView navUsername, navUserponts;
     NavigationView navigationView;
+  //  private OnImageClickListener onImageClickListener;
     View headerView;
     ArrayList<uloadOffers> list1;
-
-    private RecyclerView mRecyclerView;
-    private ImageAdapter mAdapter;
+    private FirebaseAuth mAuth;
+    private FirebaseDatabase database;
+    private FirebaseAuth.AuthStateListener mAuthStateListener;
+    private DatabaseReference ref;
+    private String userId;
+    private FirebaseUser user;
+    Intent intent;
+    private DrawerLayout mDrawerLayout;
 
     private ValueEventListener mDBListener;
     private FirebaseStorage mStorge;
@@ -52,23 +58,16 @@ public class OffersImages extends AppCompatActivity implements ImageAdapter.OnIt
     private List<uloadOffers> mUpload;
     FloatingActionButton mFloatingActionButton;
     //
-
+    uloadOffers org;
     private ProgressBar mProgressBar;
 
-    private FirebaseAuth mAuth;
-    private FirebaseDatabase database;
-    private FirebaseAuth.AuthStateListener mAuthStateListener;
-    private DatabaseReference ref;
-    private String userId;
-    private FirebaseUser user;
-
-    private DrawerLayout mDrawerLayout;
-    ImageView imagev;
+    private RecyclerView mRecyclerView;
+    private OfferAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_offers_images);
+        setContentView(R.layout.activity_display_offer);
 
         setTitle("Offers");
 
@@ -78,6 +77,8 @@ public class OffersImages extends AppCompatActivity implements ImageAdapter.OnIt
         navUsername = (TextView) headerView.findViewById(R.id.useremail);
         navUserponts = (TextView) headerView.findViewById(R.id.userpoints);
 
+        //  findViewById(R.id.buttonBook).setOnClickListener(this);
+
         loaduserinfo();
 
 
@@ -85,16 +86,9 @@ public class OffersImages extends AppCompatActivity implements ImageAdapter.OnIt
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        ActionBar actionbar = getSupportActionBar();
+        android.support.v7.app.ActionBar actionbar = getSupportActionBar();
         actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.setHomeAsUpIndicator(R.drawable.ic_menu_black_24dp);
-
-        super.onStart();
-        if (mAuth.getCurrentUser() == null) {
-            finish();
-            startActivity(new Intent(this, loginActivity.class));
-        }
-
 
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.bringToFront();
@@ -114,30 +108,23 @@ public class OffersImages extends AppCompatActivity implements ImageAdapter.OnIt
 
                         if (id == R.id.settingsId) {
 
-                            startActivity(new Intent(OffersImages.this, settingsorg.class));
+                            startActivity(new Intent(displayOffer.this, settings.class));
+
                         } else if (id == R.id.logoutId) {
 
                             FirebaseAuth.getInstance().signOut();
                             finish();
-                            Intent signOUT = new Intent(OffersImages.this, loginActivity.class);
+                            Intent signOUT = new Intent(displayOffer.this, loginActivity.class);
                             startActivity(signOUT);
 
 
                         } else if (id == R.id.homeId) {
 
-                            startActivity(new Intent(OffersImages.this, mynav.class));
+                            startActivity(new Intent(displayOffer.this, Mynavigation.class));
 
-                        } else if (id == R.id.servicesId) {
+                        } else if (id == R.id.myservicesId) {
 
-                            startActivity(new Intent(OffersImages.this, orgServices.class));
-
-                        } else if (id == R.id.ReservationsId) {
-
-                            //    startActivity(new Intent(mynav.this,orgServices.class));
-
-                        } else if (id == R.id.ReportsId) {
-
-                            //    startActivity(new Intent(mynav.this,orgServices.class));
+                            startActivity(new Intent(displayOffer.this, myServices.class));
 
                         }
 
@@ -150,42 +137,28 @@ public class OffersImages extends AppCompatActivity implements ImageAdapter.OnIt
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mFloatingActionButton = findViewById(R.id.newbutton);
-        mFloatingActionButton.setImageResource(R.drawable.addicon2);
-        imagev = (ImageView) findViewById(R.id.newbutton);
-        imagev.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(OffersImages.this, addOffer.class));
-            }
 
-        });
-        imagev.setY(1500);
-        imagev.setX(800);
-        //  imagev = (ImageView)findViewById(R.id.newbutton);
+
         list1 = new ArrayList<>();
         mProgressBar = findViewById(R.id.progress_circle);
 
         mUpload = new ArrayList<>();
 
-        mAdapter = new ImageAdapter(OffersImages.this, mUpload);
+        mAdapter = new OfferAdapter(displayOffer.this, mUpload);
 
         mRecyclerView.setAdapter(mAdapter);
 
-        mAdapter.setOnClickListener(OffersImages.this);
+        mAdapter.setOnClickListener(displayOffer.this);
 
         mStorge = FirebaseStorage.getInstance();
+        //  mDatabaseRef= FirebaseDatabase.getInstance().getReference("orgz"); // make sure
 
-        mAuth = FirebaseAuth.getInstance();
+        org = new uloadOffers();
+
         database = FirebaseDatabase.getInstance();
-        user = mAuth.getCurrentUser();
-        userId = user.getUid();
+        ref = database.getReference("offer");
 
-        DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
-        DatabaseReference itemsRef = rootRef.child("offer");
-        Query query = itemsRef.orderByChild("orgID").equalTo(userId);
-
-        query.addValueEventListener(new ValueEventListener() {
-            @Override
+        ref.addValueEventListener(new ValueEventListener() {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 mUpload.clear();
                 SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
@@ -199,7 +172,7 @@ public class OffersImages extends AppCompatActivity implements ImageAdapter.OnIt
                             imageRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void aVoid) {
-                                    mDatabaseRef.child(userId).child("offer").child(selectedKey).removeValue();
+                                    mDatabaseRef.child("offer").child(selectedKey).removeValue();
                                 }
                             });
 
@@ -217,18 +190,20 @@ public class OffersImages extends AppCompatActivity implements ImageAdapter.OnIt
                 mAdapter.notifyDataSetChanged();
 
                 mProgressBar.setVisibility(View.INVISIBLE);
+
+
+
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                Toast.makeText(OffersImages.this, databaseError.getMessage(), Toast.LENGTH_LONG).show();
-                mProgressBar.setVisibility(View.INVISIBLE);
+
+
             }
         });
 
 
     }
-
 
     private void loaduserinfo() {
 
@@ -238,7 +213,6 @@ public class OffersImages extends AppCompatActivity implements ImageAdapter.OnIt
         userId = user.getUid();
         ref = database.getReference().child("client").child(userId);
 
-
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -247,6 +221,7 @@ public class OffersImages extends AppCompatActivity implements ImageAdapter.OnIt
 
 
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
+
                     name = dataSnapshot.child("name").getValue(String.class);
 
                     if (dataSnapshot.hasChild("totalPoint")) {
@@ -255,13 +230,8 @@ public class OffersImages extends AppCompatActivity implements ImageAdapter.OnIt
                         navUserponts.setText(points + "");
                     }
 
-
                     navUsername.setText(name);
-
-
                 }
-
-
             }
 
             @Override
@@ -270,42 +240,33 @@ public class OffersImages extends AppCompatActivity implements ImageAdapter.OnIt
             }
         });
 
-
-        super.onStart();
-        if (mAuth.getCurrentUser() == null) {
-
-            finish();
-            startActivity(new Intent(this, loginActivity.class));
-
-        }
-
     }
 
     @Override
     public void onItemClick(int position) {
-        //  Toast.makeText(this,"Normal click at position"+ position, Toast.LENGTH_LONG).show();
-    }
-
-    @Override
-    public void onDeleteClick(int position) {
         uloadOffers selectedItem = mUpload.get(position);
         final String selectedKey = selectedItem.getmKey();
 
-        StorageReference imageRef = mStorge.getReferenceFromUrl(selectedItem.getmImageUrl());
-        imageRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void aVoid) {
-                mDatabaseRef.child(userId).child("offer").child(selectedKey).removeValue();
-                Toast.makeText(OffersImages.this, "Item deleted", Toast.LENGTH_LONG).show();
+        Intent intent = new Intent(displayOffer.this, bookOffer.class);
+        intent.putExtra("org", (Serializable) list1.get(position));
+        startActivity(intent);
+    }
 
-            }
-        });
+    @Override
+    public void onOfferClick(int position) {
+        uloadOffers selectedItem = mUpload.get(position);
+        final String selectedKey = selectedItem.getmKey();
+
+        Intent intent = new Intent(displayOffer.this, bookOffer.class);
+        intent.putExtra("org", (Serializable) list1.get(position));
+        startActivity(intent);
+
     }
 
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-       // mDatabaseRef.removeEventListener(mDBListener);
+        // mDatabaseRef.removeEventListener(mDBListener);
     }
 }

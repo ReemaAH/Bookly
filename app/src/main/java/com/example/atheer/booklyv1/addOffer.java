@@ -78,7 +78,7 @@ public class addOffer extends AppCompatActivity {
     private Uri mImageUri;
 
     private StorageReference mStorageRef;
-    private DatabaseReference mDatabaseRef;
+    private DatabaseReference mDatabaseRef,mDatabaseRef2;
 
     ArrayList<String> data1;
     ArrayList<String> data2;
@@ -251,9 +251,10 @@ public class addOffer extends AppCompatActivity {
 
         });
 
-
+//.child("client").child(userId)
         mStorageRef= FirebaseStorage.getInstance().getReference("offer");
-        mDatabaseRef= database.getReference().child("client").child(userId).child("offer");
+        mDatabaseRef= database.getReference().child("offer");
+      //  mDatabaseRef2= database.getReference().child("orgz").child(userId).child("offer");
         mButtonChooseImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -359,6 +360,10 @@ public class addOffer extends AppCompatActivity {
         name= mEditTextFileName.getText().toString().trim();
         pre=mEditTextFilepre.getText().toString().trim();
         coupon=mEditTextFileCoupon.getText().toString().trim();
+        mAuth = FirebaseAuth.getInstance();
+        database =  FirebaseDatabase.getInstance();
+        user =  mAuth.getCurrentUser();
+        userId = user.getUid();
         if(mImageUri!=null){
             StorageReference fileRefrence=mStorageRef.child(System.currentTimeMillis()+"."+getFileExtension(mImageUri));
             mUploadTask =    fileRefrence.putFile(mImageUri)
@@ -373,14 +378,16 @@ public class addOffer extends AppCompatActivity {
                                 }
                             },5000);
                             Toast.makeText(addOffer.this, "Upload successful", Toast.LENGTH_LONG).show();
-                            uloadOffers upld=new uloadOffers(mEditTextFileName.getText().toString().trim(),taskSnapshot.getDownloadUrl().toString(),eDate,sDate,pre,coupon);
+                            uloadOffers upld=new uloadOffers(mEditTextFileName.getText().toString().trim(),taskSnapshot.getDownloadUrl().toString(),eDate,sDate,pre,coupon,userId);
                             String uploadId=mDatabaseRef.push().getKey();
+                      //    String uploadId2=mDatabaseRef2.push().getKey();
                             mDatabaseRef.child(uploadId).setValue(upld);
-                     //       mDatabaseRef.child("percentage").setValue(pre);
-                     //       mDatabaseRef.child("sDate").setValue(sDate);
-                     //       mDatabaseRef.child("eDate").setValue(eDate);
+                      //    mDatabaseRef2.child(uploadId2).setValue(upld);
+                      //       mDatabaseRef.child("percentage").setValue(pre);
+                      //       mDatabaseRef.child("sDate").setValue(sDate);
+                      //       mDatabaseRef.child("eDate").setValue(eDate);
                       //      mDatabaseRef.child("name").setValue(name);
-                            //   mDatabaseRef.child(uploadId).setValue(mEditTextFileName.getText().toString());
+                      //   mDatabaseRef.child(uploadId).setValue(mEditTextFileName.getText().toString());
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {

@@ -39,7 +39,7 @@ public class orginforequest extends AppCompatActivity  implements View.OnClickLi
     private FirebaseAuth mAuth;
     private FirebaseDatabase database;
     private FirebaseAuth.AuthStateListener mAuthStateListener;
-    private DatabaseReference ref;
+    private DatabaseReference ref,ref2;
     private String userId;
     private FirebaseUser user;
 
@@ -112,13 +112,12 @@ public class orginforequest extends AppCompatActivity  implements View.OnClickLi
         // Delete user from firebse
        database = FirebaseDatabase.getInstance();
        ref =  database.getReference().child("client").child(temp.getUid());
-
-
+       ref2 =  database.getReference().child("orgz").child(temp.getUid());
 
        // i made this "dissaproved1" to distinguish between the real disapproved and the new orgs
        // they should be in waiting status not disappeoved
        ref.child("Status").setValue("disapproved1");
-
+       ref2.child("Status").setValue("disapproved1");
 
        // redirect user to the previous page
        Intent prev = new Intent(orginforequest.this, approveOrgByadmin.class);

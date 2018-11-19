@@ -279,7 +279,6 @@ public class settings extends AppCompatActivity implements View.OnClickListener{
         user =  mAuth.getCurrentUser();
         userId = user.getUid();
         ref =  database.getReference().child("client").child(userId);
-
         if(!name1.isEmpty()&& !phoneNum.isEmpty()){
             if (phoneNum.length() < 10 || phoneNum.length() > 10) {
                 Toast.makeText(settings.this, "Phone length should be 10 digits", Toast.LENGTH_LONG).show();

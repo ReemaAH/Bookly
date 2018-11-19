@@ -20,6 +20,7 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -58,6 +59,8 @@ public class bookedService extends AppCompatActivity implements View.OnClickList
     Res org2;
     private List<Res> orgz2;
 
+    private DatabaseReference mDatabase;
+String name="Nora";
 
     TextView listdata;
     TextView displaytxt;
@@ -179,7 +182,6 @@ public class bookedService extends AppCompatActivity implements View.OnClickList
 
 
 
-
 //
 //          numRes.setOnValueChangeListener(new ElegantNumberButton.OnValueChangeListener() {
 //                @Override
@@ -274,13 +276,12 @@ public class bookedService extends AppCompatActivity implements View.OnClickList
 
     private void loadbooking(){
 
-
         mAuth = FirebaseAuth.getInstance();
         database =  FirebaseDatabase.getInstance();
         user =  mAuth.getCurrentUser();
         userId = user.getUid();
 
-      ref =  FirebaseDatabase.getInstance().getReference().child("reservaiton").child(userId);
+        ref =  FirebaseDatabase.getInstance().getReference().child("reservaiton");
 
 
 
@@ -298,11 +299,11 @@ public class bookedService extends AppCompatActivity implements View.OnClickList
 
 
 
-               for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
 
-                //   String key = ds.getKey();
-                   org2 = ds.getValue(Res.class);
-                 //  org2.setResNum(key);
+                    //   String key = ds.getKey();
+                    org2 = ds.getValue(Res.class);
+                    //  org2.setResNum(key);
 //
 //
 //                        org1 = dataSnapshot.child("org").getValue(String.class);
@@ -313,22 +314,22 @@ public class bookedService extends AppCompatActivity implements View.OnClickList
 
 
 //
-                if(org2!=null){
-                  String o = org2.getResNum().trim() + "";
-                    if(o.equals(resId)){
-                        listdata.setText(org2.getOrg()+"");
-                      date.setText(org2.getDate()+"");
-                      time.setText(org2.getTime()+"");
-                     SerName.setText(org2.getService()+"");
+                    if(org2!=null){
+                        String o = org2.getResNum().trim() + "";
+                        if(o.equals(resId)){
+                            listdata.setText(org2.getOrg()+"");
+                            date.setText(org2.getDate()+"");
+                            time.setText(org2.getTime()+"");
+                            SerName.setText(org2.getService()+"");
 
 
-                   }
+                        }
+                    }
+//
+//
+//
                 }
-//
-//
-//
-                   }
-                }
+            }
 
 
 
@@ -483,7 +484,7 @@ public class bookedService extends AppCompatActivity implements View.OnClickList
         FirebaseUser user =  mAuth.getCurrentUser();
         String userId = user.getUid();
 
-        DatabaseReference mRef =  database.getReference().child("reservaiton").child(userId);
+        DatabaseReference mRef =  database.getReference().child("reservaiton");
 
         mRef.child(resId).removeValue();
 
@@ -520,14 +521,14 @@ public class bookedService extends AppCompatActivity implements View.OnClickList
         FirebaseUser user =  mAuth.getCurrentUser();
         String userId = user.getUid();
 
-        DatabaseReference mRef =  database.getReference().child("reservaiton").child(userId).child(resId);
+        DatabaseReference mRef =  database.getReference().child("reservaiton").child(resId);
 
        mRef.child("date").setValue(date1);
        mRef.child("time").setValue(time1);
 
 
        startActivity(new Intent(bookedService.this,myServices.class));
-
+       Toast.makeText(getApplicationContext(), "updated successfully", Toast.LENGTH_LONG).show();
     }
 
 

@@ -15,7 +15,7 @@ public class ApproveResrvation2 extends AppCompatActivity  implements View.OnCli
     String name1;
     String status;
     Intent intent;
-    TextView navUsername, navUserponts, service, date, time,num;
+    TextView navUsername, navUserponts, service, date, time,coupon;
     View headerView;
     String resNum;
     Reservation temp;
@@ -34,7 +34,7 @@ public class ApproveResrvation2 extends AppCompatActivity  implements View.OnCli
         service = (TextView) findViewById(R.id.service);
         date = (TextView) findViewById(R.id.date);
         time = (TextView) findViewById(R.id.time);
-       // num= (TextView) findViewById(R.id.num);
+        coupon= (TextView) findViewById(R.id.coupon);
 
         // to add events in the buttons
         findViewById(R.id.dis).setOnClickListener(this);
@@ -45,7 +45,8 @@ public class ApproveResrvation2 extends AppCompatActivity  implements View.OnCli
         service.setText(temp.getService());
         date.setText(temp.getDate());
         time.setText(temp.getTime());
-       // num.setText(temp.getNum());
+        if (!temp.getCoupon().equals(null))
+        coupon.setText(" "+temp.getCoupon());
         resNum=temp.getResNum();
 
 

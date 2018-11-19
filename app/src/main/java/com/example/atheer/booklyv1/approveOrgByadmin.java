@@ -1,31 +1,31 @@
 package com.example.atheer.booklyv1;
 
-        import android.content.Intent;
-        import android.support.design.widget.NavigationView;
-        import android.support.v4.view.GravityCompat;
-        import android.support.v4.widget.DrawerLayout;
-        import android.support.v7.app.ActionBar;
-        import android.support.v7.app.AppCompatActivity;
-        import android.os.Bundle;
-        import android.support.v7.widget.Toolbar;
-        import android.view.MenuItem;
-        import android.view.View;
-        import android.widget.AdapterView;
-        import android.widget.ArrayAdapter;
-        import android.widget.ImageView;
-        import android.widget.ListView;
-        import android.widget.TextView;
+import android.content.Intent;
+import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.TextView;
 
-        import com.google.firebase.auth.FirebaseAuth;
-        import com.google.firebase.auth.FirebaseUser;
-        import com.google.firebase.database.DataSnapshot;
-        import com.google.firebase.database.DatabaseError;
-        import com.google.firebase.database.DatabaseReference;
-        import com.google.firebase.database.FirebaseDatabase;
-        import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
-        import java.io.Serializable;
-        import java.util.ArrayList;
+import java.io.Serializable;
+import java.util.ArrayList;
 
 public class approveOrgByadmin extends AppCompatActivity {
 
@@ -33,9 +33,9 @@ public class approveOrgByadmin extends AppCompatActivity {
     ArrayList<String> list;
     ArrayList<orguser> list1;
     ArrayAdapter<String> adapter;
-   orguser org;
-   String name1;
-String status;
+    orguser org;
+    String name1;
+    String status;
 
     TextView navUsername, navUserponts;
     NavigationView navigationView;
@@ -92,33 +92,33 @@ String status;
 
                         if (id == R.id.settingsId) {
 
-                            startActivity(new Intent(approveOrgByadmin.this,settingsadmin.class));
+                            startActivity(new Intent(approveOrgByadmin.this, settingsadmin.class));
 
-                        } else if (id == R.id.logoutId){
+                        } else if (id == R.id.logoutId) {
 
                             FirebaseAuth.getInstance().signOut();
                             finish();
-                            Intent signOUT=new Intent(approveOrgByadmin.this,loginActivity.class);
+                            Intent signOUT = new Intent(approveOrgByadmin.this, loginActivity.class);
                             startActivity(signOUT);
 
 
-                        } else if (id == R.id.homeId){
+                        } else if (id == R.id.homeId) {
 
-                            startActivity(new Intent(approveOrgByadmin.this,dashboardAdmin.class));
+                            startActivity(new Intent(approveOrgByadmin.this, dashboardAdmin.class));
 
-                        } else if (id == R.id.CategoriesId){
+                        } else if (id == R.id.CategoriesId) {
 
-                            startActivity(new Intent(approveOrgByadmin.this,CatView.class));
+                            startActivity(new Intent(approveOrgByadmin.this, CatView.class));
 
-                        }else if (id == R.id.OrgId){
+                        } else if (id == R.id.OrgId) {
 
                             //         startActivity(new Intent(dashboardAdmin.this,CatView.class));
 
-                        }else if (id == R.id.Services1Id){
+                        } else if (id == R.id.Services1Id) {
 
-                            startActivity(new Intent(approveOrgByadmin.this,BrowseAdmin.class));
+                            startActivity(new Intent(approveOrgByadmin.this, BrowseAdmin.class));
 
-                        } else if (id == R.id.ReportsId){
+                        } else if (id == R.id.ReportsId) {
 
                             //       startActivity(new Intent(dashboardAdmin.this,CatView.class));
 
@@ -130,16 +130,16 @@ String status;
                 });
 
 
-        org= new orguser();
+        org = new orguser();
         ListView = (android.widget.ListView) findViewById(R.id.ListView);
         database = FirebaseDatabase.getInstance();
         mAuth = FirebaseAuth.getInstance();
-        user =  mAuth.getCurrentUser();
+        user = mAuth.getCurrentUser();
         userId = user.getUid();
-        ref =  database.getReference("client");
+        ref = database.getReference("client");
         list = new ArrayList<>();
         list1 = new ArrayList<>();
-        adapter = new ArrayAdapter<String>(this, R.layout.requesttext,R.id.requestInfo,list);
+        adapter = new ArrayAdapter<String>(this, R.layout.requesttext, R.id.requestInfo, list);
         ref.addValueEventListener(new ValueEventListener() {
 
 
@@ -170,45 +170,29 @@ String status;
                         startActivity(intent);
 
 
-
                     }
                 });
             }
 
 
-
-
-
-
-
-
-
-
             @Override
-            public void onCancelled(DatabaseError databaseError){
+            public void onCancelled(DatabaseError databaseError) {
 
 
             }
         });
 
 
-
-
     }
-
-
-
 
 
     private void loaduserinfo() {
 
         mAuth = FirebaseAuth.getInstance();
-        database =  FirebaseDatabase.getInstance();
-        user =  mAuth.getCurrentUser();
+        database = FirebaseDatabase.getInstance();
+        user = mAuth.getCurrentUser();
         userId = user.getUid();
-        ref =  database.getReference().child("client").child(userId);
-
-
+        ref = database.getReference().child("client").child(userId);
 
 
         ref.addValueEventListener(new ValueEventListener() {
@@ -218,7 +202,7 @@ String status;
                 int points = 0;
 
 
-                for(DataSnapshot ds: dataSnapshot.getChildren() ){
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
                     name = dataSnapshot.child("name").getValue(String.class);
 
                     if (dataSnapshot.hasChild("totalPoint")) {
@@ -228,14 +212,10 @@ String status;
                     }
 
 
-
                     navUsername.setText(name);
 
 
-
                 }
-
-
 
 
             }
@@ -247,17 +227,15 @@ String status;
         });
 
 
-
         super.onStart();
-        if(mAuth.getCurrentUser()==null){
+        if (mAuth.getCurrentUser() == null) {
 
             finish();
-            startActivity(new Intent(this,loginActivity.class));
+            startActivity(new Intent(this, loginActivity.class));
 
         }
 
     }
-
 
 
     @Override
@@ -266,9 +244,6 @@ String status;
             case android.R.id.home:
                 mDrawerLayout.openDrawer(GravityCompat.START);
                 return true;
-
-
-
 
 
         }

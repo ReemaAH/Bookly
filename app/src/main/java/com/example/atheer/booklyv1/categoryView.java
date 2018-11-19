@@ -288,7 +288,7 @@ public class categoryView extends AppCompatActivity implements categoryViewAdapt
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mDatabaseRef.removeEventListener(mDBListener);
+       // mDatabaseRef.removeEventListener(mDBListener);
     }
 
 

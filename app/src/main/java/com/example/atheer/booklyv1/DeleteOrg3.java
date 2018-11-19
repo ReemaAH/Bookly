@@ -23,7 +23,7 @@ public class DeleteOrg3 extends AppCompatActivity  implements View.OnClickListen
     private FirebaseAuth mAuth;
     private FirebaseDatabase database;
     private FirebaseAuth.AuthStateListener mAuthStateListener;
-    private DatabaseReference ref;
+    private DatabaseReference ref,ref2;
     private String userId;
     private FirebaseUser user;
 
@@ -76,8 +76,9 @@ public class DeleteOrg3 extends AppCompatActivity  implements View.OnClickListen
         // Delete user from firebse
         database = FirebaseDatabase.getInstance();
         ref =  database.getReference().child("client").child(temp.getUid());
+        ref2 =  database.getReference().child("orgz").child(temp.getUid());
         //ref.setValue(null);\
-
+        ref2.child("Status").setValue("disapproved1");
 
         // i made this "dissaproved1" to distinguish between the real disapproved and the new orgs
         // they should be in waiting status not disappeoved
