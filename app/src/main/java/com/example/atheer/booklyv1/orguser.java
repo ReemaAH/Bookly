@@ -3,11 +3,12 @@ package com.example.atheer.booklyv1;
 import java.io.Serializable;
 
 public class orguser implements Serializable {
-    private  String Uid;
-    private  String Status;
-    private  String cat;
-    private  String email;
-    private  int groupID;
+    private   String Uid;
+    private   String Status;
+    private   String cat;
+    private   String email;
+    private   int groupID;
+    private   String image;
     private   String name;
     private   String phoneNO;
     private   String recordNO;
@@ -22,13 +23,13 @@ public class orguser implements Serializable {
 
     }
 
-    public orguser(String Status, String email, int groupID,String name ,String phoneNO, String recocrdNO){
+    public orguser(String Status, String email, int groupID,String name ,String phoneNO, String recocrdNO,String image){
         this.name=name;
         this.Status=Status;
         this.email=email;
         this.groupID=groupID;
         this.phoneNO=phoneNO;
-
+        this.image=image;
         this.recordNO=recocrdNO;
     }
 
@@ -95,5 +96,13 @@ public class orguser implements Serializable {
 
     public void setCat(String cat) {
         this.cat = cat;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 }

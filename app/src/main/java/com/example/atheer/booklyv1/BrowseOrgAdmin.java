@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.SearchView;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -21,24 +22,31 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 public class BrowseOrgAdmin extends AppCompatActivity {
-
-
 
     private static final String TAG = "viewOrgnization";
     ArrayList<String> list;
     android.widget.ListView ListView;
     ArrayAdapter<String> adapter;
     Orgz org;
+    private List<Orgz> orgz;
     String cat;
+    private OrgzAdapter orgAdapter;
+
+    private DatabaseReference ref2;
 
     TextView navUsername, navUserponts;
     NavigationView navigationView;
     View headerView;
+    SearchView search;
+    cat c;
 
     private FirebaseAuth mAuth;
     private FirebaseDatabase database;
@@ -46,7 +54,7 @@ public class BrowseOrgAdmin extends AppCompatActivity {
     private DatabaseReference ref;
     private String userId;
     private FirebaseUser user;
-
+    String str = "ok";
     private DrawerLayout mDrawerLayout;
 
     @Override
@@ -139,52 +147,68 @@ public class BrowseOrgAdmin extends AppCompatActivity {
 
 
 
+
+
         Intent intent = getIntent();
         cat = intent.getStringExtra("name");
+        cat = cat.trim();
         setTitle(cat);
+        search = findViewById(R.id.searchQ) ;
 
-        ListView = (android.widget.ListView) findViewById(R.id.ListView);
+        ListView = (ListView) findViewById(R.id.ListView);
 
         Log.d(TAG, "onCreate: Started");
 
+        org = new Orgz();
+        orgz = new ArrayList<>();
+
         list = new ArrayList<>();
-        adapter = new ArrayAdapter<String>(this, R.layout.org_layout,R.id.serviceInfo,list);
-//        org = new Orgz("Apple Pie", "4.4", "7", "Restaurant");
-//        Orgz org2 = new Orgz("Urth", "4.4", "7", "Restaurant");
-//        Orgz org3 = new Orgz("Five Guys", "4.4", "7","Restaurant");
-//        Orgz org4 = new Orgz("Apple Pie", "4.4", "7","Restaurant");
-//        Orgz org5 = new Orgz("The Cinema", "4.4", "7", "Cinema");
-//        Orgz org6 = new Orgz("VOX", "4.4", "7","Cinema");
-//        Orgz org7 = new Orgz("AMC", "4.4", "7","Cinema");
-//
-//
-//        orgBasedonCat(org2);
-//        orgBasedonCat(org3);
-//        orgBasedonCat(org4);
-//        orgBasedonCat(org5);
-//        orgBasedonCat(org6);
-//        orgBasedonCat(org7);
 
-        list.add("org1");
-        list.add("org2");
-        list.add("org2");
-        list.add("org3");
-//        ArrayList<String> orgs = new ArrayList<>();
-//        orgs.add("Urth");
-//        orgs.add("Five Guys");
-//        orgs.add("Nozomi");
-//        orgs.add("Lusin");
-//        orgs.add("Red Chilli");
+        database = FirebaseDatabase.getInstance();
+        mAuth = FirebaseAuth.getInstance();
+        user =  mAuth.getCurrentUser();
+        userId = user.getUid();
+        ref =  database.getReference("client");
 
-        // adapter= new OrgzAdapter(dataModels,getApplicationContext());
 
-        ListView.setAdapter(adapter);
+
+
+
+
+        ref2 =  FirebaseDatabase.getInstance().getReference().child("orgz");
+
+        Query query = ref2.orderByChild("cat").equalTo(cat+" ");
+        ValueEventListener valueEventListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                for(DataSnapshot ds : dataSnapshot.getChildren()) {
+                    org = ds.getValue(Orgz.class);
+                    if(org.getStatus().toString().equals("approved"))
+                        orgz.add(org);
+
+                } orgAdapter = new OrgzAdapter(getApplicationContext(),orgz);
+                ListView.setAdapter(orgAdapter);
+
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {}
+        };
+        query.addListenerForSingleValueEvent(valueEventListener);
+
+
+
+
+
         ListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                Intent intent = new Intent(BrowseOrgAdmin.this,ServicesAdmin.class);
-                intent.putExtra("name",list.get(position)  );
+
+                Intent intent = new Intent(BrowseOrgAdmin.this, ServicesAdmin.class);
+                intent.putExtra("org", (Serializable) orgz.get(position));
                 startActivity(intent);
 
 
@@ -192,6 +216,35 @@ public class BrowseOrgAdmin extends AppCompatActivity {
         });
 
 
+
+
+   /*     search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String query) {
+                orgAdapter.getFilter().filter(query);
+
+                ListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                        // additon
+                        Orgz model = (Orgz) parent.getItemAtPosition(position);
+                        Intent intent = new Intent(BrowseOrgAdmin.this,ServicesAdmin.class);
+                        intent.putExtra("org",(Serializable) model  );
+                        startActivity(intent);
+
+
+                    }
+                });
+                return false;
+            }
+        });
+*/
 
     }
 

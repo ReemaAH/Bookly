@@ -27,6 +27,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -58,6 +59,7 @@ public class addOffer extends AppCompatActivity {
     private DatabaseReference ref;
     private String userId;
     private FirebaseUser user;
+    ImageView img;
 
     private DrawerLayout mDrawerLayout;
 
@@ -108,7 +110,7 @@ public class addOffer extends AppCompatActivity {
         headerView = navigationView.getHeaderView(0);
         navUsername = (TextView) headerView.findViewById(R.id.useremail);
         navUserponts = (TextView) headerView.findViewById(R.id.userpoints);
-
+        img = (ImageView) headerView.findViewById(R.id.userimage);
 
         loaduserinfo();
 
@@ -422,28 +424,15 @@ public class addOffer extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 String name = "";
-                int points = 0;
-
+                String imgurl="";
 
                 for(DataSnapshot ds: dataSnapshot.getChildren() ){
+                    imgurl=dataSnapshot.child("image").getValue(String.class);
                     name = dataSnapshot.child("name").getValue(String.class);
 
-                    if (dataSnapshot.hasChild("totalPoint")) {
-                        points = dataSnapshot.child("totalPoint").getValue(int.class);
-                        navUserponts.setVisibility(View.VISIBLE);
-                        navUserponts.setText(points + "");
-                    }
-
-
-
+                    Glide.with(getApplicationContext()).load(imgurl).into(img);
                     navUsername.setText(name);
-
-
-
                 }
-
-
-
 
             }
 

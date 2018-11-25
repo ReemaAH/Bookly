@@ -87,7 +87,7 @@ tools:context=".Mynavigation">
             android:layout_marginStart="120dp"
             android:layout_marginTop="80dp"
             android:paddingTop="13dp"
-            android:src="@drawable/habeeb"
+            android:src="@drawable/pic"
             app:border_color="@color/colorAccent"
 
             />

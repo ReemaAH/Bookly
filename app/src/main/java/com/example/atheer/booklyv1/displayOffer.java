@@ -13,10 +13,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -43,6 +45,7 @@ public class displayOffer extends AppCompatActivity implements OfferAdapter.OnIt
   //  private OnImageClickListener onImageClickListener;
     View headerView;
     ArrayList<uloadOffers> list1;
+    ImageView img;
     private FirebaseAuth mAuth;
     private FirebaseDatabase database;
     private FirebaseAuth.AuthStateListener mAuthStateListener;
@@ -74,10 +77,10 @@ public class displayOffer extends AppCompatActivity implements OfferAdapter.OnIt
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.bringToFront();
         headerView = navigationView.getHeaderView(0);
+        img = (ImageView) headerView.findViewById(R.id.userimage);
         navUsername = (TextView) headerView.findViewById(R.id.useremail);
         navUserponts = (TextView) headerView.findViewById(R.id.userpoints);
 
-        //  findViewById(R.id.buttonBook).setOnClickListener(this);
 
         loaduserinfo();
 
@@ -217,19 +220,13 @@ public class displayOffer extends AppCompatActivity implements OfferAdapter.OnIt
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 String name = "";
-                int points = 0;
+                String imgurl="";
 
-
-                for (DataSnapshot ds : dataSnapshot.getChildren()) {
-
+                for(DataSnapshot ds: dataSnapshot.getChildren() ){
+                    imgurl=dataSnapshot.child("image").getValue(String.class);
                     name = dataSnapshot.child("name").getValue(String.class);
 
-                    if (dataSnapshot.hasChild("totalPoint")) {
-                        points = dataSnapshot.child("totalPoint").getValue(int.class);
-                        navUserponts.setVisibility(View.VISIBLE);
-                        navUserponts.setText(points + "");
-                    }
-
+                    Glide.with(getApplicationContext()).load(imgurl).into(img);
                     navUsername.setText(name);
                 }
             }

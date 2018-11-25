@@ -21,6 +21,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+import com.bumptech.glide.Glide;
 import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -28,6 +29,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -39,13 +41,16 @@ public class ServicesAdmin extends AppCompatActivity implements View.OnClickList
     TextView navUsername, navUserponts;
     NavigationView navigationView;
     View headerView;
-
+    Orgz temp;
+    ImageView img;
+    private DatabaseReference ref,ref2;
+    services s;
 
     TextView listdata;
     private FirebaseAuth mAuth;
     private FirebaseDatabase database;
     private FirebaseAuth.AuthStateListener mAuthStateListener;
-    private DatabaseReference ref;
+
     private String userId;
     private FirebaseUser user;
 
@@ -167,71 +172,48 @@ public class ServicesAdmin extends AppCompatActivity implements View.OnClickList
                     }
                 });
 
-      /*  listdata = (TextView) findViewById(R.id.textlist);
-        ser = new services();
-        ListView = (ListView) findViewById(R.id.ListView);
-        database = FirebaseDatabase.getInstance();
-        //ref =database.getReference().child("client");
-      //  mAuth = FirebaseAuth.getInstance();
-     //   user =  mAuth.getCurrentUser();
-     //   userId = user.getUid();
-        Intent intent = getIntent();
-        listdata.setText(intent.getStringExtra("name"));
-        setTitle(intent.getStringExtra("name"));
+        ListView = (android.widget.ListView) findViewById(R.id.ListView);
+        s=new services();
 
-        ref =  database.getReference().child("client").child(intent.getStringExtra("name")).child("services");
         list = new ArrayList<>();
-        adapter = new ArrayAdapter<>(this, R.layout.service_info,R.id.serviceInfo,list);
-        ref.addValueEventListener(new ValueEventListener() {
+        Intent i = getIntent();
+        temp = (Orgz) i.getSerializableExtra("org");
+      //  listdata.setText(temp.getName());
+        setTitle(temp.getName());
+        data= new ArrayList<>();
+        img = (ImageView)findViewById(R.id.userimage);
+        adapter = new ArrayAdapter<String>(this, R.layout.service_display,R.id.name,data);
+        Glide.with(getApplicationContext()).load(temp.getImage()).into(img);
 
 
-
+        ref2 =  FirebaseDatabase.getInstance().getReference().child("services");
+        final Query query = ref2.orderByChild("orgName").equalTo(temp.getName());
+        ValueEventListener valueEventListener = new ValueEventListener() {
+            @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
+                for(DataSnapshot ds : dataSnapshot.getChildren()) {
+                    s = ds.getValue(services.class);
+                    // addition
+                    data.add(s.getName().toString());
 
 
-                for (DataSnapshot ds : dataSnapshot.getChildren()) {
-
-                    String str;
-
-
-                    ser = ds.getValue(services.class);
-                    str = ser.getName().toString()+" \n "+ ser.getPrice()+ "SR \t"+ ser.getRating()+ " " ;
-                    list.add(str);}
-
-
-                ListView.setAdapter(adapter);
+                }
+            //    ArrayAdapter<String> adapter = new ArrayAdapter<>(ServicesAdmin.this, android.R.layout.simple_spinner_item, data); //Create the Adapter to set the data
+             //   adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item); //Set the layout resource to create the drop down views.
+                ListView.setAdapter(adapter); //Set the data to your spinner
 
             }
-
-
-
 
             @Override
-            public void onCancelled(DatabaseError databaseError){
+            public void onCancelled(DatabaseError databaseError) {}
+        };
+        query.addListenerForSingleValueEvent(valueEventListener);
 
 
-            }
-        });
-
-
-
-
-        imagev=(ImageView) findViewById(R.id.addbutton);
-        // imagev.setOnClickListener(new View.OnClickListener() {
-        // @Override
-        // //   startActivity(new Intent(CatView.this,addCategory.class));
-        // }
-
-        // });
-        imagev.setY(1300);
-        imagev.setX(500);*/
     }
 
 
-//    public void dispalyResult(View view){
-//        displaytxt.setText(Service);
-//    }
 
     private void loaduserinfo() {
 

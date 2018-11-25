@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/drawerId"
+    tools:openDrawer="start"
+    tools:context=".Mynavigation">
+
+    <FrameLayout
+        android:id="@+id/content_frame"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?android:attr/actionBarSize"
+            android:background="#FFFFFF"
+            android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+
+            />
+
+        <LinearLayout
+            android:layout_marginTop="50dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            >
+
+
+
+        </LinearLayout>
+
+    </FrameLayout>
+
+
+    <android.support.design.widget.NavigationView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:id="@+id/nav_view"
+        android:background="#FFFFFF"
+        app:itemTextColor="#26243C"
+        android:layout_gravity="start"
+        app:menu='@menu/nav_menu_layout2'
+        app:headerLayout="@layout/nav_header"
+        >
+
+
+    </android.support.design.widget.NavigationView>
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="16dp"
+        tools:context=".addCategory">
+
+
+        <EditText
+            android:id="@+id/edit_text_file_name"
+            android:layout_width="259dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="204dp"
+            android:hint="Service name" />
+
+        <EditText
+            android:id="@+id/edit_text_file_price"
+            android:layout_width="259dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="284dp"
+            android:clickable="true"
+            android:hint="Price"
+            android:inputType="number" />
+
+        <EditText
+            android:id="@+id/edit_text_file_maxNO"
+            android:layout_width="259dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="326dp"
+            android:clickable="true"
+            android:hint="Maximum number services"
+            android:inputType="number"/>
+
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="272dp" />
+
+        <Button
+            android:id="@+id/button_add"
+            android:layout_width="210dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="199dp"
+            android:background="@drawable/edit_rouded"
+            android:text=" Add service"
+            android:textColor="@color/white" />
+
+
+
+
+    </RelativeLayout>
+</android.support.v4.widget.DrawerLayout>

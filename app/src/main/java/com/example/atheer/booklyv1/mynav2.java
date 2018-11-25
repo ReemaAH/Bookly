@@ -106,43 +106,7 @@ public class mynav2 extends AppCompatActivity {
                 });
 
 
-        ArrayList<Category_pic> createLists = new ArrayList<>();
-        Category_pic restaurant = new Category_pic("Restaurant", R.drawable.restaurant);
-        Category_pic clinic = new Category_pic("Clinic", R.drawable.clinic);
-        Category_pic salon = new Category_pic("Salon", R.drawable.salon);
-        Category_pic cinema = new Category_pic("Cinema", R.drawable.cinema);
-        Category_pic event = new Category_pic("Events", R.drawable.event);
-        Category_pic meeting = new Category_pic("Meeting rooms", R.drawable.meeting);
 
-//
-        createLists.add(restaurant);
-        createLists.add(clinic);
-        createLists.add(salon);
-        createLists.add(cinema);
-        createLists.add(event);
-        createLists.add(meeting);
-
-        CategoryAdapter adapter = new CategoryAdapter(getApplicationContext(), createLists);
-        ListView listView = (ListView) findViewById(R.id.list);
-
-        listView.setAdapter(adapter);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-            public void onItemClick(AdapterView<?> adapter, View v, int position, long id) {
-
-
-                //
-                Category_pic value = ( Category_pic )adapter.getItemAtPosition(position);  ;//getter method
-                String title=value.getImage_title();
-                // Toast.makeText(Home.this, title, Toast.LENGTH_LONG).show();
-                //     Intent it = new Intent(Home.this,Product_List.class);
-                //     it.putExtra("name", title);
-                //  startActivity(it);
-
-            }
-
-
-        });
 
 
 

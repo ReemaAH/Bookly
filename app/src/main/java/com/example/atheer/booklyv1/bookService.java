@@ -14,17 +14,22 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
 //mport com.cepheuen.elegantnumberbutton.view.ElegantNumberButton;
+import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.MutableData;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.Transaction;
 import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
@@ -38,11 +43,13 @@ public class bookService extends AppCompatActivity implements View.OnClickListen
     TextView navUsername, navUserponts;
     NavigationView navigationView;
     View headerView;
-
+Orgz temp;
+services temp2;
+ImageView img;
     private FirebaseAuth mAuth;
     private FirebaseDatabase database;
     private FirebaseAuth.AuthStateListener mAuthStateListener;
-    private DatabaseReference ref;
+    private DatabaseReference ref,ref2;
     private String userId;
     private FirebaseUser user;
     Intent intent;
@@ -74,6 +81,7 @@ int n=0;
     String time1;
     int num;
 
+services s;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -150,6 +158,7 @@ int n=0;
                 });
 
 
+        findViewById(R.id.BookFriend).setOnClickListener(this);
 
 
 
@@ -162,24 +171,42 @@ int n=0;
 
 
 
-            intent = getIntent();
-            listdata.setText(intent.getStringExtra("name"));
-            setTitle(intent.getStringExtra("name"));
+        Intent i = getIntent();
+        temp = (Orgz) i.getSerializableExtra("org");
+        listdata.setText(temp.getName());
+        setTitle(temp.getName());
+        data= new ArrayList<>();
+        img = (ImageView)findViewById(R.id.userimage);
+        Glide.with(getApplicationContext()).load(temp.getImage()).into(img);
 
 
 
+setTitle(temp.getName());
 
 
-            data = new ArrayList<>();
-            data.add("Book a table");
-            data.add("Book a table2");
+        ref2 =  FirebaseDatabase.getInstance().getReference().child("services");
+                final Query query = ref2.orderByChild("orgName").equalTo(temp.getName());
+        ValueEventListener valueEventListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                for(DataSnapshot ds : dataSnapshot.getChildren()) {
+                    s = ds.getValue(services.class);
+                    // addition
+                   data.add(s.getName().toString());
 
 
+                }
+                ArrayAdapter<String> adapter = new ArrayAdapter<>(bookService.this, android.R.layout.simple_spinner_item, data); //Create the Adapter to set the data
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item); //Set the layout resource to create the drop down views.
+                sp.setAdapter(adapter); //Set the data to your spinner
 
-            ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, data); //Create the Adapter to set the data
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item); //Set the layout resource to create the drop down views.
-            sp.setAdapter(adapter); //Set the data to your spinner
+            }
 
+            @Override
+            public void onCancelled(DatabaseError databaseError) {}
+        };
+        query.addListenerForSingleValueEvent(valueEventListener);
 
 
             sp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -367,6 +394,36 @@ int n=0;
 
                 book();
                 break;
+            case R.id.BookFriend:
+                date1= date.getText().toString().trim();;
+                time1= time.getText().toString().trim();
+                service1= service.toString();
+
+             //   String w =  SerNum.getText().toString();
+            //    num = Integer.parseInt(w);
+
+                if(date1.isEmpty()){
+                    date.setError("Date is required");
+                    date.requestFocus();
+                    return;}
+
+                if(time1.isEmpty())  {
+                    time.setError("Time is required");
+                    date.requestFocus();
+                    return;
+                } if(!date1.matches("\\d{2}-\\d{2}-\\d{4}")){
+                date.setError("Date should be in the following format DD-MM-YYYY");
+                date.requestFocus();
+                return;
+            } if(!time1.matches("^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$")){
+                time.setError("Time should be in the following format HH:MM");
+                time.requestFocus();
+                return;}
+
+                Intent intent2 = new Intent(bookService.this,BookForAFriend.class);
+                intent2.putExtra("info","in "+temp.getName()+  " at " + time1  + " | " + date1);
+                startActivity(intent2);
+
 
         }
     }
@@ -416,7 +473,25 @@ int n=0;
         mRef.child("orgID").setValue(intent.getStringExtra("name"));
         mRef.child("resNum").setValue(n+"");
         mRef.child("approved").setValue(false);
+            DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
+            DatabaseReference scoreRef = rootRef.child("client").child(userId).child("totalPoint");
+            scoreRef.runTransaction(new Transaction.Handler() {
+                @Override
+                public Transaction.Result doTransaction(MutableData mutableData) {
+                    Integer totalPoint = mutableData.getValue(Integer.class);
+                    if (totalPoint == null) {
+                        return Transaction.success(mutableData);
+                    }
 
+
+                    mutableData.setValue(totalPoint + 10);
+                    return Transaction.success(mutableData);
+
+                }
+
+                @Override
+                public void onComplete(DatabaseError databaseError, boolean b, DataSnapshot dataSnapshot) {}
+            });
         startActivity(new Intent(bookService.this,Booked.class));}
 
     }

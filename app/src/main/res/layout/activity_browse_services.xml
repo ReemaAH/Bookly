@@ -57,7 +57,7 @@
         android:layout_height="match_parent"
         tools:context=".BrowseServices"
         >
-        
+
 
 
         <RelativeLayout
@@ -66,13 +66,27 @@
             android:paddingTop="50dp"
             >
 
+            <SearchView
+                android:id="@+id/searchQ"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:layout_alignRight="@+id/ListView"
+                android:queryHint="Search.."
+
+                ></SearchView>
+
+
 
             <ListView
                 android:layout_width="wrap_content"
                 android:layout_height="551dp"
                 tools:layout_editor_absoluteX="8dp"
                 tools:layout_editor_absoluteY="8dp"
-                android:id="@+id/ListView"/>
+                android:id="@+id/ListView"
+                android:paddingTop="10dp"
+                android:layout_below="@+id/searchQ"/>
 
         </RelativeLayout>
 

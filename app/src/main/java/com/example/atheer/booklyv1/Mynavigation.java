@@ -378,7 +378,7 @@ public class Mynavigation extends AppCompatActivity  implements CategoryAdapter.
         String tiltle=selectedItem.getName();
 
         Intent intent = new Intent(Mynavigation.this, BrowseServices.class);
-        intent.putExtra("name", (Serializable) list1.get(position));
+        intent.putExtra("name", tiltle);
         startActivity(intent);
     }
 

@@ -35,6 +35,19 @@
 
             </ListView>
 
+            <ImageView
+                android:id="@+id/newbutton"
+                android:layout_width="160dp"
+                android:layout_height="169dp"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:clickable="true"
+                android:onClick="ADD"
+                android:layout_marginTop="500dp"
+                android:src="@drawable/addicon2"
+                tools:ignore="MissingConstraints,OnClick"
+                android:paddingLeft="100dp"
+                />
 
         </android.support.constraint.ConstraintLayout>
 

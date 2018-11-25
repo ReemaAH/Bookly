@@ -26,17 +26,18 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 public class approveOrgByadmin extends AppCompatActivity {
 
     android.widget.ListView ListView;
     ArrayList<String> list;
-    ArrayList<orguser> list1;
+    List<orguser> list1;
     ArrayAdapter<String> adapter;
     orguser org;
     String name1;
     String status;
-
+    private orguserAdapter orgAdapter;
     TextView navUsername, navUserponts;
     NavigationView navigationView;
     View headerView;
@@ -92,33 +93,33 @@ public class approveOrgByadmin extends AppCompatActivity {
 
                         if (id == R.id.settingsId) {
 
-                            startActivity(new Intent(approveOrgByadmin.this, settingsadmin.class));
+                            startActivity(new Intent(approveOrgByadmin.this,settingsadmin.class));
 
-                        } else if (id == R.id.logoutId) {
+                        } else if (id == R.id.logoutId){
 
                             FirebaseAuth.getInstance().signOut();
                             finish();
-                            Intent signOUT = new Intent(approveOrgByadmin.this, loginActivity.class);
+                            Intent signOUT=new Intent(approveOrgByadmin.this,loginActivity.class);
                             startActivity(signOUT);
 
 
-                        } else if (id == R.id.homeId) {
+                        } else if (id == R.id.homeId){
 
-                            startActivity(new Intent(approveOrgByadmin.this, dashboardAdmin.class));
+                            startActivity(new Intent(approveOrgByadmin.this,dashboardAdmin.class));
 
-                        } else if (id == R.id.CategoriesId) {
+                        } else if (id == R.id.CategoriesId){
 
-                            startActivity(new Intent(approveOrgByadmin.this, CatView.class));
+                            startActivity(new Intent(approveOrgByadmin.this,CatView.class));
 
-                        } else if (id == R.id.OrgId) {
+                        }else if (id == R.id.OrgId){
 
                             //         startActivity(new Intent(dashboardAdmin.this,CatView.class));
 
-                        } else if (id == R.id.Services1Id) {
+                        }else if (id == R.id.Services1Id){
 
-                            startActivity(new Intent(approveOrgByadmin.this, BrowseAdmin.class));
+                            startActivity(new Intent(approveOrgByadmin.this,BrowseAdmin.class));
 
-                        } else if (id == R.id.ReportsId) {
+                        } else if (id == R.id.ReportsId){
 
                             //       startActivity(new Intent(dashboardAdmin.this,CatView.class));
 
@@ -130,16 +131,16 @@ public class approveOrgByadmin extends AppCompatActivity {
                 });
 
 
-        org = new orguser();
+        org= new orguser();
         ListView = (android.widget.ListView) findViewById(R.id.ListView);
         database = FirebaseDatabase.getInstance();
         mAuth = FirebaseAuth.getInstance();
-        user = mAuth.getCurrentUser();
+        user =  mAuth.getCurrentUser();
         userId = user.getUid();
-        ref = database.getReference("client");
+        ref =  database.getReference("client");
         list = new ArrayList<>();
         list1 = new ArrayList<>();
-        adapter = new ArrayAdapter<String>(this, R.layout.requesttext, R.id.requestInfo, list);
+        adapter = new ArrayAdapter<String>(this, R.layout.requesttext,R.id.requestInfo,list);
         ref.addValueEventListener(new ValueEventListener() {
 
 
@@ -159,8 +160,8 @@ public class approveOrgByadmin extends AppCompatActivity {
                         }
                     }
                 }
-
-                ListView.setAdapter(adapter);
+                orgAdapter = new orguserAdapter(getApplicationContext(),list1);
+                ListView.setAdapter(orgAdapter);
                 ListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -170,29 +171,45 @@ public class approveOrgByadmin extends AppCompatActivity {
                         startActivity(intent);
 
 
+
                     }
                 });
             }
 
 
+
+
+
+
+
+
+
+
             @Override
-            public void onCancelled(DatabaseError databaseError) {
+            public void onCancelled(DatabaseError databaseError){
 
 
             }
         });
 
 
+
+
     }
+
+
+
 
 
     private void loaduserinfo() {
 
         mAuth = FirebaseAuth.getInstance();
-        database = FirebaseDatabase.getInstance();
-        user = mAuth.getCurrentUser();
+        database =  FirebaseDatabase.getInstance();
+        user =  mAuth.getCurrentUser();
         userId = user.getUid();
-        ref = database.getReference().child("client").child(userId);
+        ref =  database.getReference().child("client").child(userId);
+
+
 
 
         ref.addValueEventListener(new ValueEventListener() {
@@ -202,7 +219,7 @@ public class approveOrgByadmin extends AppCompatActivity {
                 int points = 0;
 
 
-                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                for(DataSnapshot ds: dataSnapshot.getChildren() ){
                     name = dataSnapshot.child("name").getValue(String.class);
 
                     if (dataSnapshot.hasChild("totalPoint")) {
@@ -212,10 +229,14 @@ public class approveOrgByadmin extends AppCompatActivity {
                     }
 
 
+
                     navUsername.setText(name);
 
 
+
                 }
+
+
 
 
             }
@@ -227,15 +248,17 @@ public class approveOrgByadmin extends AppCompatActivity {
         });
 
 
+
         super.onStart();
-        if (mAuth.getCurrentUser() == null) {
+        if(mAuth.getCurrentUser()==null){
 
             finish();
-            startActivity(new Intent(this, loginActivity.class));
+            startActivity(new Intent(this,loginActivity.class));
 
         }
 
     }
+
 
 
     @Override
@@ -244,6 +267,9 @@ public class approveOrgByadmin extends AppCompatActivity {
             case android.R.id.home:
                 mDrawerLayout.openDrawer(GravityCompat.START);
                 return true;
+
+
+
 
 
         }

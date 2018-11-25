@@ -14,6 +14,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,6 +28,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,7 +47,9 @@ public class BrowseServices extends AppCompatActivity {
     TextView navUsername, navUserponts;
     NavigationView navigationView;
     View headerView;
+    SearchView search;
 
+    cat c;
 
     private FirebaseAuth mAuth;
     private FirebaseDatabase database;
@@ -133,14 +137,13 @@ public class BrowseServices extends AppCompatActivity {
                     }
                 });
 
-      //  EditText search = (EditText) findViewById(R.id.search) ;
-
 
 
         Intent intent = getIntent();
         cat = intent.getStringExtra("name");
         cat = cat.trim();
         setTitle(cat);
+        search = findViewById(R.id.searchQ) ;
 
         ListView = (ListView) findViewById(R.id.ListView);
 
@@ -157,76 +160,7 @@ public class BrowseServices extends AppCompatActivity {
         userId = user.getUid();
         ref =  database.getReference("client");
 
-//        ref.addValueEventListener(new ValueEventListener()  {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//
-//
-//                for(DataSnapshot ds: dataSnapshot.getChildren() ){
-//
-//                    org = ds.getValue(Orgz.class);
-//                    if(org.getStatus() != null){
-//                        if(org.getCat().trim().equals(cat))
-//                        orgz.add(org);
-//                    }
-//
-////                    if (ds.hasChild("Status")){
-////
-////                        org = ds.getValue(orguser.class);
-////
-////
-////                        if (org.getCat().trim().equals(cat)){
-////
-////                            orgz.add(org);
-////                        }
-////                    }
-//                }
-//
-//                orgAdapter = new OrgzAdapter(getApplicationContext(),orgz);
-//                ListView.setAdapter(orgAdapter);}
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError){
-//
-//
-//            }
-//
-//
-//        });
 
-
-
-//        ref.addValueEventListener(new ValueEventListener() {
-//
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//
-//
-//                for (DataSnapshot ds : dataSnapshot.getChildren()) {
-//
-//
-//                    org = ds.getValue(orguser.class);
-//
-//
-//                    if(org.getStatus() != null){
-//                        if(org.getCat().equals(cat+" "))
-//                        orgz.add(org);
-//                    }
-////
-////
-////
-//                } orgAdapter = new OrgzAdapter(getApplicationContext(),orgz);
-//                 ListView.setAdapter(orgAdapter);
-//            }
-//
-//
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError){
-//
-//
-//            }
-//        });
 
 
 
@@ -240,6 +174,7 @@ public class BrowseServices extends AppCompatActivity {
 
                 for(DataSnapshot ds : dataSnapshot.getChildren()) {
                     org = ds.getValue(Orgz.class);
+                    if(org.getStatus().toString().equals("approved"))
                     orgz.add(org);
 
                 } orgAdapter = new OrgzAdapter(getApplicationContext(),orgz);
@@ -255,59 +190,50 @@ public class BrowseServices extends AppCompatActivity {
 
 
 
-//
-//        ref2.addValueEventListener(new ValueEventListener() {
-//
-//
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//
-//                for (DataSnapshot ds : dataSnapshot.getChildren()) {
-//
-//                    String key = ds.getKey().toString();
-//                    DatabaseReference Ref3 = ref2.child(key);
-//                    Ref3.addValueEventListener(new ValueEventListener() {
-//                        @Override
-//                        public void onDataChange(DataSnapshot dataSnapshot) {
-//
-//                            for (DataSnapshot ds : dataSnapshot.getChildren()) {
-//                                org = ds.getValue(Orgz.class);
-//                                orgz.add(org);
-//                            }
-//
-//                        }
-//
-//                    @Override
-//                    public void onCancelled(DatabaseError databaseError) {
-//
-//                    }
-//                });
-//
-//
-//
-//                }
-//            }
-//
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//
-//            }
-//        });
 
 
         ListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                Intent intent = new Intent(BrowseServices.this,bookService.class);
-                intent.putExtra("name",orgz.get(position).getName()  );
+
+                Intent intent = new Intent(BrowseServices.this, bookService.class);
+                intent.putExtra("org", (Serializable) orgz.get(position));
                 startActivity(intent);
 
 
             }
         });
 
+
+
+
+        search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String query) {
+                orgAdapter.getFilter().filter(query);
+
+                ListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                        // additon
+                        Orgz model = (Orgz) parent.getItemAtPosition(position);
+                        Intent intent = new Intent(BrowseServices.this,bookService.class);
+                        intent.putExtra("org",(Serializable) model  );
+                        startActivity(intent);
+
+
+                    }
+                });
+                return false;
+            }
+        });
 
     }
 

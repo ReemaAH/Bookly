@@ -1,5 +1,6 @@
 package com.example.atheer.booklyv1;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -10,32 +11,40 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class orgServices extends AppCompatActivity {
+public class orgServices extends AppCompatActivity implements View.OnClickListener{
 
+    ImageView img;
     ImageView imagev;
     android.widget.ListView ListView;
     //FirebaseDatabase database;
     //DatabaseReference ref;
     ArrayList<String> list;
     ArrayAdapter<String> adapter;
+    ArrayAdapter<String> adapter2;
+    List<String> list2;
     services ser;
-
-
+    private DatabaseReference mDatabase;
+    private ListView ListView2;
     TextView navUsername, navUserponts;
     NavigationView navigationView;
     View headerView;
@@ -46,9 +55,10 @@ public class orgServices extends AppCompatActivity {
     private DatabaseReference ref;
     private String userId;
     private FirebaseUser user;
-
+    private DatabaseReference mDatabaseRef;
     private DrawerLayout mDrawerLayout;
 
+    @SuppressLint("ResourceType")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -62,7 +72,7 @@ public class orgServices extends AppCompatActivity {
         headerView = navigationView.getHeaderView(0);
         navUsername = (TextView) headerView.findViewById(R.id.useremail);
         navUserponts = (TextView) headerView.findViewById(R.id.userpoints);
-
+        img = (ImageView) headerView.findViewById(R.id.userimage);
         loaduserinfo();
 
 
@@ -126,17 +136,44 @@ public class orgServices extends AppCompatActivity {
                     }
                 });
 
+        imagev=(ImageView) findViewById(R.id.newbutton);
+        imagev.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(orgServices.this,addService.class));
+            }
+
+        });
+        imagev.setY(1300);
+        imagev.setX(500);
+
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        FirebaseUser user =  mAuth.getCurrentUser();
+        String userId = user.getUid();
+        list2= new ArrayList<>();
+        String name = mDatabase.child("orgz").child(userId).toString();
+        int index=name.lastIndexOf("/");
+        name=name.substring(index+1);
+
+        DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference itemsRef = rootRef.child("services");
+        Query query=itemsRef.orderByChild("orgID").equalTo(name);
+
         ser = new services();
         ListView = (ListView) findViewById(R.id.ListView1);
+        ListView2 = (ListView) findViewById(R.id.ListView1);
         database = FirebaseDatabase.getInstance();
         //ref =database.getReference().child("client");
         mAuth = FirebaseAuth.getInstance();
         user =  mAuth.getCurrentUser();
         userId = user.getUid();
-        ref =  database.getReference().child("client").child(userId).child("services");
+      //  ref =  database.getReference().child("services");
         list = new ArrayList<>();
+        //findViewById( R.layout.service_info,R.id.button_delete).setOnClickListener(this);
+
         adapter = new ArrayAdapter<String>(this, R.layout.service_info,R.id.serviceInfo,list);
-        ref.addValueEventListener(new ValueEventListener() {
+     //   adapter2 = new ArrayAdapter(this, R.layout.service_info,R.id.button_delete,list2);
+        query.addValueEventListener(new ValueEventListener() {
 
 
 
@@ -146,15 +183,23 @@ public class orgServices extends AppCompatActivity {
 
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
 
-                    String str;
+                    String str,str2;
 
 
                     ser = ds.getValue(services.class);
-                    str = ser.getName().toString()+" \n\n "+ ser.getPrice()+ "SR \t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tRating:"+ ser.getRating()+ " " ;
-                    list.add(str);}
+                    if(!ser.getName().equals(null)){
+                    str = ser.getName().toString()+" \n\n "+ ser.getPrice().toString()+ " " ;
+                        str2=ser.getName().toString();
+                    list.add(str);
+                    list2.add(str2);}
+                }
 
 
+            //    ListView2.setAdapter(adapter2);
                 ListView.setAdapter(adapter);
+
+
+
 
             }
 
@@ -168,18 +213,22 @@ public class orgServices extends AppCompatActivity {
             }
         });
 
+        mDatabaseRef= FirebaseDatabase.getInstance().getReference("services");
 
 
+        ListView2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String selectedItem = list.get(position);
+                Toast.makeText(orgServices.this,selectedItem+"Nora" , Toast.LENGTH_LONG).show();
+          //      final String selectedKey = selectedItem.getKey();
+           //     mDatabaseRef.child(selectedKey).removeValue();
+           //     ListView2.removeViewAt(position);
 
-        // imagev=(ImageView) findViewById(R.id.addbutton);
-        // imagev.setOnClickListener(new View.OnClickListener() {
-        // @Override
-        // //   startActivity(new Intent(CatView.this,addCategory.class));
-        // }
 
-        // });
-        // imagev.setY(1300);
-        //imagev.setX(500);
+            }
+        });
+
 
 
     }
@@ -203,28 +252,15 @@ public class orgServices extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 String name = "";
-                int points = 0;
-
+                String imgurl="";
 
                 for(DataSnapshot ds: dataSnapshot.getChildren() ){
+                    imgurl=dataSnapshot.child("image").getValue(String.class);
                     name = dataSnapshot.child("name").getValue(String.class);
 
-                    if (dataSnapshot.hasChild("totalPoint")) {
-                        points = dataSnapshot.child("totalPoint").getValue(int.class);
-                        navUserponts.setVisibility(View.VISIBLE);
-                        navUserponts.setText(points + "");
-                    }
-
-
-
+                    Glide.with(getApplicationContext()).load(imgurl).into(img);
                     navUsername.setText(name);
-
-
-
                 }
-
-
-
 
             }
 
@@ -266,6 +302,11 @@ public class orgServices extends AppCompatActivity {
 
     @Override
     public void onPointerCaptureChanged(boolean hasCapture) {
+
+    }
+
+    @Override
+    public void onClick(View v) {
 
     }
 }

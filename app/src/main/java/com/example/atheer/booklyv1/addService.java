@@ -1,8 +1,9 @@
 package com.example.atheer.booklyv1;
 
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.support.design.widget.NavigationView;
-import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -10,8 +11,11 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
@@ -22,43 +26,49 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-public class mynav extends AppCompatActivity implements View.OnClickListener  {
+import java.util.ArrayList;
+import java.util.Random;
 
-
-
+public class addService extends AppCompatActivity implements View.OnClickListener {
     TextView navUsername, navUserponts;
     NavigationView navigationView;
     View headerView;
     ImageView img;
-    //TextView serviceO;
     private FirebaseAuth mAuth;
     private FirebaseDatabase database;
     private FirebaseAuth.AuthStateListener mAuthStateListener;
     private DatabaseReference ref;
     private String userId;
     private FirebaseUser user;
-
+    Intent intent;
+    private DatabaseReference mDatabase;
+    int n=0;
+    // String counter;
     private DrawerLayout mDrawerLayout;
 
+    String orgName;
+    TextView listdata;
+    TextView displaytxt;
+    Spinner sp;
+    ArrayList<String> data;
+    String service = "";
+    EditText serviceName,price;
+    EditText MaxNo;
+    String Service;
+    String price2,maxNO;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_mynav);
+        setContentView(R.layout.activity_add_service);
 
+        setTitle("Add Service");
 
-        setTitle("Home");
-
-
-
-        findViewById(R.id.serviceO).setOnClickListener(this);
-        findViewById(R.id.offer).setOnClickListener(this);
-        findViewById(R.id.ReservationsId).setOnClickListener(this);
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.bringToFront();
         headerView = navigationView.getHeaderView(0);
-        img = (ImageView) headerView.findViewById(R.id.userimage);
         navUsername = (TextView) headerView.findViewById(R.id.useremail);
         navUserponts = (TextView) headerView.findViewById(R.id.userpoints);
+        img = (ImageView) headerView.findViewById(R.id.userimage);
 
         loaduserinfo();
 
@@ -70,6 +80,13 @@ public class mynav extends AppCompatActivity implements View.OnClickListener  {
         ActionBar actionbar = getSupportActionBar();
         actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.setHomeAsUpIndicator(R.drawable.ic_menu_black_24dp);
+
+        super.onStart();
+        if(mAuth.getCurrentUser()==null){
+            finish();
+            startActivity(new Intent(this,loginActivity.class));
+        }
+
 
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.bringToFront();
@@ -89,30 +106,30 @@ public class mynav extends AppCompatActivity implements View.OnClickListener  {
 
                         if (id == R.id.settingsId) {
 
-                        startActivity(new Intent(mynav.this,settingsorg.class));
+                            startActivity(new Intent(addService.this,settingsorg.class));
                         } else if (id == R.id.logoutId){
 
                             FirebaseAuth.getInstance().signOut();
                             finish();
-                            Intent signOUT=new Intent(mynav.this,loginActivity.class);
+                            Intent signOUT=new Intent(addService.this,loginActivity.class);
                             startActivity(signOUT);
 
 
                         } else if (id == R.id.homeId){
 
-                            startActivity(new Intent(mynav.this,mynav.class));
+                            startActivity(new Intent(addService.this,mynav.class));
 
                         } else if (id == R.id.servicesId){
 
-                            startActivity(new Intent(mynav.this,orgServices.class));
+                            startActivity(new Intent(addService.this,orgServices.class));
 
-                        } else if (id == R.id.ReservationsId) {
+                        } else if (id == R.id.ReservationsId){
 
                             //    startActivity(new Intent(mynav.this,orgServices.class));
-                        }
-                        else if (id == R.id.settingsId){
 
-                             startActivity(new Intent(mynav.this,settingsorg.class));
+                        } else if (id == R.id.ReportsId){
+
+                            //    startActivity(new Intent(mynav.this,orgServices.class));
 
                         }
 
@@ -122,24 +139,15 @@ public class mynav extends AppCompatActivity implements View.OnClickListener  {
                 });
 
 
+        serviceName= findViewById(R.id.edit_text_file_name);
+        price= findViewById(R.id.edit_text_file_price);
+        MaxNo= findViewById(R.id.edit_text_file_maxNO);
+
+        findViewById(R.id.button_add).setOnClickListener(this);
+
+
 
     }
-
-
-    @Override
-    public void onClick(View v) {
-        switch(v.getId()) {
-            case R.id.serviceO:
-                startActivity(new Intent(this, orgService.class));
-                break;
-            case R.id.offer:
-                startActivity(new Intent(this, OffersImages.class));
-                break;
-            case R.id.ReservationsId:
-                startActivity(new Intent(this, ApproveResrvation.class));
-                break;
-
-        }}
 
 
     private void loaduserinfo() {
@@ -149,7 +157,6 @@ public class mynav extends AppCompatActivity implements View.OnClickListener  {
         user =  mAuth.getCurrentUser();
         userId = user.getUid();
         ref =  database.getReference().child("client").child(userId);
-
 
 
 
@@ -168,12 +175,6 @@ public class mynav extends AppCompatActivity implements View.OnClickListener  {
                 }
 
             }
-
-
-
-
-
-
             @Override
             public void onCancelled(DatabaseError databaseError) {
 
@@ -192,27 +193,79 @@ public class mynav extends AppCompatActivity implements View.OnClickListener  {
 
     }
 
-
-
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                mDrawerLayout.openDrawer(GravityCompat.START);
-                return true;
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.button_add:
 
-
-
-
+             addServices();
+                break;
 
         }
-        return super.onOptionsItemSelected(item);
     }
 
+    public void  addServices(){
+        Service=serviceName.getText().toString().trim();
+        price2=price.getText().toString().trim();
+        maxNO=MaxNo.getText().toString().trim();
 
-    @Override
-    public void onPointerCaptureChanged(boolean hasCapture) {
+        if(Service.isEmpty()){
+            serviceName.setError("Service name is required");
+            serviceName.requestFocus();
+            return;}
+        else if (price2.isEmpty()){
+            price.setError("price is required");
+            price.requestFocus();
+            return;}
+        else if (maxNO.isEmpty()){
+            MaxNo.setError("maximum number is required");
+            MaxNo.requestFocus();
+            return;}
+            else {
+
+
+            FirebaseDatabase database =  FirebaseDatabase.getInstance();
+            FirebaseUser user =  mAuth.getCurrentUser();
+            String userId = user.getUid();
+
+
+            Random rand = new Random();
+            n = rand.nextInt(2000) + 1;
+            DatabaseReference mRef2 =  database.getReference().child("services").child(n+"");
+            mRef2.child("name").setValue(Service);
+            DatabaseReference mRef3 =  database.getReference().child("services").child(n+"");
+            mRef3.child("price").setValue(price2);
+            DatabaseReference mRef4 =  database.getReference().child("services").child(n+"");
+            mRef4.child("maxNO").setValue(maxNO);
+            DatabaseReference mRef =  database.getReference().child("services").child(n+"");
+            mRef.child("orgID").setValue(userId);
+
+
+
+            mDatabase = FirebaseDatabase.getInstance().getReference();
+
+            mDatabase.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    FirebaseDatabase database =  FirebaseDatabase.getInstance();
+                    FirebaseUser user =  mAuth.getCurrentUser();
+                    String userId = user.getUid();
+                    orgName = dataSnapshot.child("client").child(userId).child("name").getValue(String.class);
+                    //FirebaseDatabase database2 =  FirebaseDatabase.getInstance();
+                    DatabaseReference mRef5 =  database.getReference().child("services").child(n+"");
+                    mRef5.child("orgName").setValue(orgName);
+                }
+
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    // Getting Post failed, log a message
+                }
+            });
+
+            Toast.makeText(addService.this, "added successful", Toast.LENGTH_LONG).show();
+          //  startActivity(new Intent(addService.this,mynav.class));
+        }
 
     }
 }
-

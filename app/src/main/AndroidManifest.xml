@@ -72,7 +72,10 @@
         <activity android:name=".ApproveResrvation2" />
         <activity android:name=".categoryView" />
         <activity android:name=".displayOffer" />
-        <activity android:name=".bookOffer"></activity>
+        <activity android:name=".bookOffer" />
+        <activity android:name=".BookForAFriend" />
+        <activity android:name=".addService" />
+        <activity android:name=".orgService"></activity>
     </application>
 
 </manifest>

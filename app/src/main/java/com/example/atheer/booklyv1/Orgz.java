@@ -1,28 +1,27 @@
 package com.example.atheer.booklyv1;
 
-public class Orgz {
 
+import java.io.Serializable;
+import java.util.List;
+
+public class Orgz implements Serializable {
+    private String Uid;
     private String Status;
     private String cat;
     private String email;
     private int groupID;
+    private String image;
     private String name;
     private String phoneNo;
     private String recordNo;
-    private services services[];
+    private List<services> services;
+    private List<uloadOffers> offers;
 
-    public services[] getServices() {
-        return services;
-    }
-
-    public void setServices(services[] services) {
-        this.services = services;
-    }
 
     public Orgz() {
     }
 
-    public Orgz(String status, String cat, String email, String name, String phoneNo, String recordNo, int groupID,services[] services) {
+    public Orgz(String status, String cat, String email, String name, String phoneNo, String recordNo, int groupID,  String image) {
         Status = status;
         this.cat = cat;
         this.email = email;
@@ -30,7 +29,9 @@ public class Orgz {
         this.name = name;
         this.phoneNo = phoneNo;
         this.recordNo = recordNo;
-        this.services = services;
+     //   this.services = services;
+        this.image = image;
+      //  this.offers = offers;
 
     }
 
@@ -90,5 +91,39 @@ public class Orgz {
         this.recordNo = recordNo;
     }
 
+    public List<services> getServices() {
+        return services;
+    }
 
+    public void setServices(List<services> services) {
+        this.services = services;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+
+    public void setOffers(List<uloadOffers> offers) {
+
+        this.offers = offers;
+    }
+
+
+    public List<uloadOffers> getOffers() {
+
+        return offers;
+    }
+
+    public String getUid() {
+        return Uid;
+    }
+
+    public void setUid(String uid) {
+        Uid = uid;
+    }
 }

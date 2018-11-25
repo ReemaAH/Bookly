@@ -11,10 +11,12 @@ package com.example.atheer.booklyv1;
         import android.view.MenuItem;
         import android.view.View;
         import android.widget.EditText;
+        import android.widget.ImageView;
         import android.widget.ProgressBar;
         import android.widget.TextView;
         import android.widget.Toast;
 
+        import com.bumptech.glide.Glide;
         import com.google.firebase.auth.FirebaseAuth;
         import com.google.firebase.auth.FirebaseUser;
         import com.google.firebase.database.DataSnapshot;
@@ -39,7 +41,7 @@ public class settingsorg extends AppCompatActivity implements View.OnClickListen
     private FirebaseUser user;
 
     private DrawerLayout mDrawerLayout;
-
+    ImageView img;
     EditText editTextName, editTextEmail,editphone,editbirth;
 
 
@@ -57,7 +59,7 @@ public class settingsorg extends AppCompatActivity implements View.OnClickListen
         headerView = navigationView.getHeaderView(0);
         navUsername = (TextView) headerView.findViewById(R.id.useremail);
         navUserponts = (TextView) headerView.findViewById(R.id.userpoints);
-
+        img = (ImageView) headerView.findViewById(R.id.userimage);
         loaduserinfo();
 
 
@@ -221,28 +223,15 @@ public class settingsorg extends AppCompatActivity implements View.OnClickListen
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 String name = "";
-                int points = 0;
-
+                String imgurl="";
 
                 for(DataSnapshot ds: dataSnapshot.getChildren() ){
+                    imgurl=dataSnapshot.child("image").getValue(String.class);
                     name = dataSnapshot.child("name").getValue(String.class);
 
-                    if (dataSnapshot.hasChild("totalPoint")) {
-                        points = dataSnapshot.child("totalPoint").getValue(int.class);
-                        navUserponts.setVisibility(View.VISIBLE);
-                        navUserponts.setText(points + "");
-                    }
-
-
-
+                    Glide.with(getApplicationContext()).load(imgurl).into(img);
                     navUsername.setText(name);
-
-
-
                 }
-
-
-
 
             }
 

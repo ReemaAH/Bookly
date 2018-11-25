@@ -14,8 +14,11 @@ package com.example.atheer.booklyv1;
         import android.view.MenuItem;
         import android.view.View;
         import android.widget.AdapterView;
+        import android.widget.ImageView;
         import android.widget.ListView;
         import android.widget.TextView;
+
+        import com.bumptech.glide.Glide;
         import com.google.firebase.auth.FirebaseAuth;
         import com.google.firebase.auth.FirebaseUser;
         import com.google.firebase.database.DataSnapshot;
@@ -47,7 +50,7 @@ public class EditPasswordorg extends AppCompatActivity implements View.OnClickLi
     EditText currentpass , newpass , conEdit;
 
 
-
+    ImageView img;
     TextView navUsername, navUserponts;
     NavigationView navigationView;
     View headerView;
@@ -83,7 +86,7 @@ public class EditPasswordorg extends AppCompatActivity implements View.OnClickLi
         headerView = navigationView.getHeaderView(0);
         navUsername = (TextView) headerView.findViewById(R.id.useremail);
         navUserponts = (TextView) headerView.findViewById(R.id.userpoints);
-
+        img = (ImageView) headerView.findViewById(R.id.userimage);
         loaduserinfo();
 
 
@@ -250,28 +253,15 @@ public class EditPasswordorg extends AppCompatActivity implements View.OnClickLi
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 String name = "";
-                int points = 0;
-
+                String imgurl="";
 
                 for(DataSnapshot ds: dataSnapshot.getChildren() ){
+                    imgurl=dataSnapshot.child("image").getValue(String.class);
                     name = dataSnapshot.child("name").getValue(String.class);
 
-                    if (dataSnapshot.hasChild("totalPoint")) {
-                        points = dataSnapshot.child("totalPoint").getValue(int.class);
-                        navUserponts.setVisibility(View.VISIBLE);
-                        navUserponts.setText(points + "");
-                    }
-
-
-
+                    Glide.with(getApplicationContext()).load(imgurl).into(img);
                     navUsername.setText(name);
-
-
-
                 }
-
-
-
 
             }
 
