@@ -149,9 +149,9 @@ public class dashboardAdmin extends AppCompatActivity implements View.OnClickLis
 
 
         findViewById(R.id.Category).setOnClickListener(this);
-        findViewById(R.id.Organization).setOnClickListener(this);
+        findViewById(R.id.serviceO).setOnClickListener(this);
         findViewById(R.id.browse).setOnClickListener(this);
-        findViewById(R.id.report).setOnClickListener(this);
+        findViewById(R.id.Organization).setOnClickListener(this);
 
 
 
@@ -167,13 +167,13 @@ public class dashboardAdmin extends AppCompatActivity implements View.OnClickLis
                 startActivity(new Intent(this,categoryView.class));
                 break;
             case R.id.Organization:
-                startActivity(new Intent(dashboardAdmin.this,ManageOrganaization.class));
+                startActivity(new Intent(dashboardAdmin.this,DeleteOrg2.class));
                 break;
             case R.id.browse:
                 startActivity(new Intent(this,BrowseAdmin.class));
                 break;
-            case R.id.report:
-              //  startActivity(new Intent(this,SignUp.class));
+            case R.id.serviceO:
+               startActivity(new Intent(this,approveOrgByadmin.class));
                 break;
 
         }

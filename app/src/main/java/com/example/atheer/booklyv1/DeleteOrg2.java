@@ -52,7 +52,7 @@ public class DeleteOrg2 extends AppCompatActivity {
         setContentView(R.layout.activity_delete_org2);
 
 
-        setTitle("Delete Organizations");
+        setTitle("Manage Organizations");
 
 
         navigationView = (NavigationView) findViewById(R.id.nav_view);
