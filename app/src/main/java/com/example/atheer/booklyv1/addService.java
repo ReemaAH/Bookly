@@ -121,15 +121,15 @@ public class addService extends AppCompatActivity implements View.OnClickListene
 
                         } else if (id == R.id.servicesId){
 
-                            startActivity(new Intent(addService.this,orgServices.class));
+                            startActivity(new Intent(addService.this,orgService.class));
 
-                        } else if (id == R.id.ReservationsId){
+                        } else if (id == R.id.ReservationsId) {
 
-                            //    startActivity(new Intent(mynav.this,orgServices.class));
+                            startActivity(new Intent(addService.this,ApproveResrvation.class));
+                        }
+                        else if (id == R.id.OffersId){
 
-                        } else if (id == R.id.ReportsId){
-
-                            //    startActivity(new Intent(mynav.this,orgServices.class));
+                            startActivity(new Intent(addService.this,OffersImages.class));
 
                         }
 
@@ -140,7 +140,7 @@ public class addService extends AppCompatActivity implements View.OnClickListene
 
 
         serviceName= findViewById(R.id.edit_text_file_name);
-        price= findViewById(R.id.edit_text_file_price);
+     //   price= findViewById(R.id.edit_text_file_price);
         MaxNo= findViewById(R.id.edit_text_file_maxNO);
 
         findViewById(R.id.button_add).setOnClickListener(this);
@@ -206,16 +206,11 @@ public class addService extends AppCompatActivity implements View.OnClickListene
 
     public void  addServices(){
         Service=serviceName.getText().toString().trim();
-        price2=price.getText().toString().trim();
         maxNO=MaxNo.getText().toString().trim();
 
         if(Service.isEmpty()){
             serviceName.setError("Service name is required");
             serviceName.requestFocus();
-            return;}
-        else if (price2.isEmpty()){
-            price.setError("price is required");
-            price.requestFocus();
             return;}
         else if (maxNO.isEmpty()){
             MaxNo.setError("maximum number is required");
@@ -233,8 +228,6 @@ public class addService extends AppCompatActivity implements View.OnClickListene
             n = rand.nextInt(2000) + 1;
             DatabaseReference mRef2 =  database.getReference().child("services").child(n+"");
             mRef2.child("name").setValue(Service);
-            DatabaseReference mRef3 =  database.getReference().child("services").child(n+"");
-            mRef3.child("price").setValue(price2);
             DatabaseReference mRef4 =  database.getReference().child("services").child(n+"");
             mRef4.child("maxNO").setValue(maxNO);
             DatabaseReference mRef =  database.getReference().child("services").child(n+"");
@@ -263,7 +256,7 @@ public class addService extends AppCompatActivity implements View.OnClickListene
                 }
             });
 
-            Toast.makeText(addService.this, "added successful", Toast.LENGTH_LONG).show();
+            Toast.makeText(addService.this, "added successfully", Toast.LENGTH_LONG).show();
           //  startActivity(new Intent(addService.this,mynav.class));
         }
 

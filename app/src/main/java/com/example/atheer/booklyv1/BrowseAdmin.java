@@ -132,7 +132,7 @@ public class BrowseAdmin extends AppCompatActivity  implements CategoryAdapter.O
 
                         if (id == R.id.settingsId) {
 
-                                 startActivity(new Intent(BrowseAdmin.this,settingsadmin.class));
+                            startActivity(new Intent(BrowseAdmin.this,settingsadmin.class));
 
                         } else if (id == R.id.logoutId){
 
@@ -142,13 +142,22 @@ public class BrowseAdmin extends AppCompatActivity  implements CategoryAdapter.O
                             startActivity(signOUT);
 
 
-                        } else if (id == R.id.homeId){
+                        }
+
+                        else if (id == R.id.OrgId){
+
+                            startActivity(new Intent(BrowseAdmin.this,approveOrgByadmin.class));}
+
+
+
+
+                        else if (id == R.id.homeId){
 
                             startActivity(new Intent(BrowseAdmin.this,dashboardAdmin.class));
 
                         } else if (id == R.id.CategoriesId){
 
-                            startActivity(new Intent(BrowseAdmin.this,CatView.class));
+                            startActivity(new Intent(BrowseAdmin.this,categoryView.class));
 
                         }else if (id == R.id.OrgId){
 
@@ -160,10 +169,9 @@ public class BrowseAdmin extends AppCompatActivity  implements CategoryAdapter.O
 
                         } else if (id == R.id.ReportsId){
 
-                            //       startActivity(new Intent(dashboardAdmin.this,CatView.class));
+                            startActivity(new Intent(BrowseAdmin.this,DeleteOrg2.class));
 
                         }
-
 
                         return true;
                     }

@@ -114,30 +114,30 @@ public class OffersImages extends AppCompatActivity implements ImageAdapter.OnIt
 
                         if (id == R.id.settingsId) {
 
-                            startActivity(new Intent(OffersImages.this, settingsorg.class));
-                        } else if (id == R.id.logoutId) {
+                            startActivity(new Intent(OffersImages.this,settingsorg.class));
+                        } else if (id == R.id.logoutId){
 
                             FirebaseAuth.getInstance().signOut();
                             finish();
-                            Intent signOUT = new Intent(OffersImages.this, loginActivity.class);
+                            Intent signOUT=new Intent(OffersImages.this,loginActivity.class);
                             startActivity(signOUT);
 
 
-                        } else if (id == R.id.homeId) {
+                        } else if (id == R.id.homeId){
 
-                            startActivity(new Intent(OffersImages.this, mynav.class));
+                            startActivity(new Intent(OffersImages.this,mynav.class));
 
-                        } else if (id == R.id.servicesId) {
+                        } else if (id == R.id.servicesId){
 
-                            startActivity(new Intent(OffersImages.this, orgServices.class));
+                            startActivity(new Intent(OffersImages.this,orgService.class));
 
                         } else if (id == R.id.ReservationsId) {
 
-                            //    startActivity(new Intent(mynav.this,orgServices.class));
+                            startActivity(new Intent(OffersImages.this,ApproveResrvation.class));
+                        }
+                        else if (id == R.id.OffersId){
 
-                        } else if (id == R.id.ReportsId) {
-
-                            //    startActivity(new Intent(mynav.this,orgServices.class));
+                            startActivity(new Intent(OffersImages.this,OffersImages.class));
 
                         }
 
@@ -159,7 +159,7 @@ public class OffersImages extends AppCompatActivity implements ImageAdapter.OnIt
             }
 
         });
-        imagev.setY(1500);
+        imagev.setY(1770);
         imagev.setX(800);
         //  imagev = (ImageView)findViewById(R.id.newbutton);
         list1 = new ArrayList<>();
@@ -179,6 +179,7 @@ public class OffersImages extends AppCompatActivity implements ImageAdapter.OnIt
         database = FirebaseDatabase.getInstance();
         user = mAuth.getCurrentUser();
         userId = user.getUid();
+        mDatabaseRef = FirebaseDatabase.getInstance().getReference();
 
         DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
         DatabaseReference itemsRef = rootRef.child("offer");

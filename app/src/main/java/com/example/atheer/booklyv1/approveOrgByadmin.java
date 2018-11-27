@@ -103,13 +103,22 @@ public class approveOrgByadmin extends AppCompatActivity {
                             startActivity(signOUT);
 
 
-                        } else if (id == R.id.homeId){
+                        }
+
+                        else if (id == R.id.OrgId){
+
+                            startActivity(new Intent(approveOrgByadmin.this,approveOrgByadmin.class));}
+
+
+
+
+                        else if (id == R.id.homeId){
 
                             startActivity(new Intent(approveOrgByadmin.this,dashboardAdmin.class));
 
                         } else if (id == R.id.CategoriesId){
 
-                            startActivity(new Intent(approveOrgByadmin.this,CatView.class));
+                            startActivity(new Intent(approveOrgByadmin.this,categoryView.class));
 
                         }else if (id == R.id.OrgId){
 
@@ -121,10 +130,9 @@ public class approveOrgByadmin extends AppCompatActivity {
 
                         } else if (id == R.id.ReportsId){
 
-                            //       startActivity(new Intent(dashboardAdmin.this,CatView.class));
+                            startActivity(new Intent(approveOrgByadmin.this,DeleteOrg2.class));
 
                         }
-
 
                         return true;
                     }

@@ -14,7 +14,7 @@
         android:layout_height="41dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="178dp"
+        android:layout_marginTop="231dp"
         android:backgroundTint="#D3D3D3"
         android:fontFamily="sans-serif"
         android:hint="Name"
@@ -29,7 +29,7 @@
         android:layout_height="41dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="232dp"
+        android:layout_marginTop="286dp"
         android:backgroundTint="#D3D3D3"
         android:fontFamily="sans-serif"
         android:hint="Email"
@@ -44,7 +44,7 @@
         android:layout_height="41dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="227dp"
+        android:layout_marginBottom="270dp"
         android:backgroundTint="#D3D3D3"
         android:fontFamily="sans-serif"
         android:hint="Password"
@@ -60,7 +60,7 @@
         android:layout_height="41dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="171dp"
+        android:layout_marginBottom="219dp"
         android:backgroundTint="#D3D3D3"
         android:fontFamily="sans-serif"
         android:hint="Confirm Password"
@@ -74,7 +74,7 @@
         android:layout_height="41dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="129dp"
+        android:layout_marginBottom="167dp"
         android:visibility="visible" />
 
     <ProgressBar
@@ -146,23 +146,21 @@
         tools:layout_editor_absoluteX="20dp"
         tools:layout_editor_absoluteY="267dp"
         android:layout_marginLeft="20dp" />
+
+
     <EditText
         android:id="@+id/Phone"
         android:layout_width="250dp"
         android:layout_height="41dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="280dp"
+        android:layout_marginBottom="321dp"
         android:backgroundTint="#D3D3D3"
         android:ems="10"
         android:hint="phone"
         android:inputType="number"
         android:textColor="#7c7a7a"
         android:textColorHint="#A9A9A9" />
-
-
-
-
     <ImageView
         android:layout_width="30dp"
         android:layout_height="38dp"
@@ -174,22 +172,20 @@
         tools:layout_editor_absoluteY="267dp"
         android:layout_marginLeft="20dp" />
 
-
-
-
     <EditText
         android:id="@+id/recordNO"
         android:layout_width="250dp"
         android:layout_height="41dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="287dp"
+        android:layout_marginTop="337dp"
         android:backgroundTint="#D3D3D3"
         android:ems="10"
-        android:hint="  Commercial number"
+        android:hint="Commercial number"
         android:inputType="number"
         android:textColor="#7c7a7a"
         android:textColorHint="#A9A9A9" />
+
 
 
     <ImageView
@@ -238,13 +234,14 @@
         android:layout_height="130dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="35dp"
+        android:layout_marginTop="55dp"
         android:paddingTop="13dp"
         android:src="@drawable/userdefault"
         app:border_color="@color/colorAccent"
         tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteX="140dp"
         tools:layout_editor_absoluteY="99dp" />
+
 
 
 </RelativeLayout>

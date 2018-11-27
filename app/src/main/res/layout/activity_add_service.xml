@@ -48,6 +48,7 @@
 
 
     </android.support.design.widget.NavigationView>
+
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
@@ -63,10 +64,10 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="204dp"
+            android:layout_marginTop="232dp"
             android:hint="Service name" />
 
-        <EditText
+    <!--    <EditText
             android:id="@+id/edit_text_file_price"
             android:layout_width="259dp"
             android:layout_height="wrap_content"
@@ -76,17 +77,18 @@
             android:clickable="true"
             android:hint="Price"
             android:inputType="number" />
+            -->
 
         <EditText
             android:id="@+id/edit_text_file_maxNO"
             android:layout_width="259dp"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
+            android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="326dp"
+            android:layout_marginTop="309dp"
             android:clickable="true"
-            android:hint="Maximum number services"
-            android:inputType="number"/>
+            android:hint="Number services"
+            android:inputType="number" />
 
         <ProgressBar
             android:id="@+id/progress_bar"
@@ -95,7 +97,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="272dp" />
+            android:layout_marginBottom="304dp" />
 
         <Button
             android:id="@+id/button_add"
@@ -103,7 +105,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="199dp"
+            android:layout_marginBottom="208dp"
             android:background="@drawable/edit_rouded"
             android:text=" Add service"
             android:textColor="@color/white" />

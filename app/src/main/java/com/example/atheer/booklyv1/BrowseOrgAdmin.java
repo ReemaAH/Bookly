@@ -108,7 +108,7 @@ public class BrowseOrgAdmin extends AppCompatActivity {
 
                         if (id == R.id.settingsId) {
 
-                                 startActivity(new Intent(BrowseOrgAdmin.this,settingsadmin.class));
+                            startActivity(new Intent(BrowseOrgAdmin.this,settingsadmin.class));
 
                         } else if (id == R.id.logoutId){
 
@@ -118,13 +118,22 @@ public class BrowseOrgAdmin extends AppCompatActivity {
                             startActivity(signOUT);
 
 
-                        } else if (id == R.id.homeId){
+                        }
+
+                        else if (id == R.id.OrgId){
+
+                            startActivity(new Intent(BrowseOrgAdmin.this,approveOrgByadmin.class));}
+
+
+
+
+                        else if (id == R.id.homeId){
 
                             startActivity(new Intent(BrowseOrgAdmin.this,dashboardAdmin.class));
 
                         } else if (id == R.id.CategoriesId){
 
-                            startActivity(new Intent(BrowseOrgAdmin.this,CatView.class));
+                            startActivity(new Intent(BrowseOrgAdmin.this,categoryView.class));
 
                         }else if (id == R.id.OrgId){
 
@@ -136,10 +145,9 @@ public class BrowseOrgAdmin extends AppCompatActivity {
 
                         } else if (id == R.id.ReportsId){
 
-                            //       startActivity(new Intent(dashboardAdmin.this,CatView.class));
+                            startActivity(new Intent(BrowseOrgAdmin.this,DeleteOrg2.class));
 
                         }
-
 
                         return true;
                     }

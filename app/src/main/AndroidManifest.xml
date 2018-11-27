@@ -43,7 +43,7 @@
         <activity android:name=".mynav" />
         <activity android:name=".mynav1" />
         <activity android:name=".mynav2" />
-        <activity android:name=".orgServices" />
+        <activity android:name=".Comments" />
         <activity android:name=".viewOrgnizations" />
         <activity android:name=".BrowseOrgAdmin" />
         <activity android:name=".EditPassword" />
@@ -75,7 +75,8 @@
         <activity android:name=".bookOffer" />
         <activity android:name=".BookForAFriend" />
         <activity android:name=".addService" />
-        <activity android:name=".orgService"></activity>
+        <activity android:name=".orgService" />
+        <activity android:name=".orgDeletemessage"></activity>
     </application>
 
 </manifest>

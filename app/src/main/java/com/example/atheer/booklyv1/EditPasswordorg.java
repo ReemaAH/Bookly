@@ -131,15 +131,15 @@ public class EditPasswordorg extends AppCompatActivity implements View.OnClickLi
 
                         } else if (id == R.id.servicesId){
 
-                            startActivity(new Intent(EditPasswordorg.this,orgServices.class));
+                            startActivity(new Intent(EditPasswordorg.this,orgService.class));
 
-                        } else if (id == R.id.ReservationsId){
+                        } else if (id == R.id.ReservationsId) {
 
-                            //    startActivity(new Intent(mynav.this,orgServices.class));
+                            startActivity(new Intent(EditPasswordorg.this,ApproveResrvation.class));
+                        }
+                        else if (id == R.id.OffersId){
 
-                        } else if (id == R.id.ReportsId){
-
-                            //    startActivity(new Intent(mynav.this,orgServices.class));
+                            startActivity(new Intent(EditPasswordorg.this,OffersImages.class));
 
                         }
 
@@ -182,18 +182,18 @@ public class EditPasswordorg extends AppCompatActivity implements View.OnClickLi
             return;
         }
 
-
+        if (newp.isEmpty()) {
+            newpass.setError("new password required");
+            newpass.requestFocus();
+            return;
+        }
         if (newp.length() < 6) {
             newpass.setError("Minimum length of password shoud be 6");
             newpass.requestFocus();
             return;
         }
 
-        if (newp.isEmpty()) {
-            newpass.setError("new password required");
-            newpass.requestFocus();
-            return;
-        }
+
 
         if (conpass.isEmpty()) {
             conEdit.setError("Password confirmation required");
@@ -302,8 +302,4 @@ public class EditPasswordorg extends AppCompatActivity implements View.OnClickLi
 
 
 }
-
-
-
-
 

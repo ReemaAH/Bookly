@@ -36,6 +36,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -57,6 +58,10 @@ public class Mynavigation extends AppCompatActivity  implements CategoryAdapter.
     ListView listView;
     Res ser;
 
+
+    String name;
+
+    private DatabaseReference mDatabase;
     ///////////////// getting current date////////////////////////////
     DateFormat dateFormat ;
     Date date ;
@@ -222,10 +227,22 @@ public class Mynavigation extends AppCompatActivity  implements CategoryAdapter.
         date = new Date();
         date1= dateFormat.format(date);
 
+        FirebaseUser user =  mAuth.getCurrentUser();
+        String userId = user.getUid();
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        name = mDatabase.child("client").child(userId).toString();
+        int index=name.lastIndexOf("/");
+        name=name.substring(index+1);
+        ref =  FirebaseDatabase.getInstance().getReference().child("reservaiton");
+        DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference itemsRef = rootRef.child("reservaiton");
+        Query query=itemsRef.orderByChild("clientID").equalTo(name);
+
+
 
 
         ref4= database.getReference().child("reservaiton").child(userId);
-        ref4.addValueEventListener(new ValueEventListener() {
+        query.addValueEventListener(new ValueEventListener() {
 
             @RequiresApi(api = Build.VERSION_CODES.O)
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -244,7 +261,7 @@ public class Mynavigation extends AppCompatActivity  implements CategoryAdapter.
                     clientDate = ser.getDate();
                     ///////// if the date is today and the reservation approved a notification will be send///////
                     if(ser!=null&& clientDate!=null){
-                    if( (clientDate.equals(date1)==true) && (ser.isApproved()==false) ){
+                    if( (clientDate.equals(date1)==true) && (ser.isApproved()==true) ){
                         clientTime=ser.getTime();
                         orgname=ser.getOrg();
                         showNotification(clientTime,orgname,id);

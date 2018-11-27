@@ -281,11 +281,57 @@ String name="Nora";
         user =  mAuth.getCurrentUser();
         userId = user.getUid();
 
+        FirebaseUser user =  mAuth.getCurrentUser();
+        String userId = user.getUid();
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        name = mDatabase.child("client").child(userId).toString();
+        int index=name.lastIndexOf("/");
+        name=name.substring(index+1);
         ref =  FirebaseDatabase.getInstance().getReference().child("reservaiton");
+        DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference itemsRef = rootRef.child("reservaiton");
+        Query query=itemsRef.orderByChild("clientID").equalTo(name);
 
 
 
-        ref.addValueEventListener(new ValueEventListener() {
+        query.addValueEventListener(new ValueEventListener() {
+
+
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                org1 = "";
+                approved1 = false;
+                date1 = "";
+                time1 = "";
+                service = "";
+                num = 0;
+
+
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+
+                    org2 = ds.getValue(Res.class);
+
+
+                    if (org2 != null) {
+                        String o = org2.getResNum().trim() + "";
+                        if (o.equals(resId)) {
+                            listdata.setText(org2.getOrg() + "");
+                            date.setText(org2.getDate() + "");
+                            time.setText(org2.getTime() + "");
+                            SerName.setText(org2.getService() + "");
+
+
+                        }
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError){
+
+
+            }
+        });
+
+    /*    ref.addValueEventListener(new ValueEventListener() {
 
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -301,29 +347,19 @@ String name="Nora";
 
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
 
-                    //   String key = ds.getKey();
                     org2 = ds.getValue(Res.class);
-                    //  org2.setResNum(key);
-//
-//
-//                        org1 = dataSnapshot.child("org").getValue(String.class);
-//                      //  date1 = dataSnapshot.child("date").getValue(String.class);
-//                     //    time1 = dataSnapshot.child("time").getValue(String.class);
-//                        service = dataSnapshot.child("service").getValue(String.class);
-//                    //    num = dataSnapshot.child("num").getValue(int.class);
 
 
-//
                     if(org2!=null){
                         String o = org2.getResNum().trim() + "";
-                        if(o.equals(resId)){
+                       if(o.equals(resId)){
                             listdata.setText(org2.getOrg()+"");
                             date.setText(org2.getDate()+"");
                             time.setText(org2.getTime()+"");
                             SerName.setText(org2.getService()+"");
 
 
-                        }
+                       }
                     }
 //
 //
@@ -339,6 +375,7 @@ String name="Nora";
 
             }
         });
+*/
 
 
 //        Query query = ref.orderByChild("resNum").equalTo("33");

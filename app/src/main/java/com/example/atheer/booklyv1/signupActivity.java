@@ -70,17 +70,11 @@ public class signupActivity extends AppCompatActivity implements View.OnClickLis
         email=editTextEmail.getText().toString().trim();
         password2=EditTextpasswordCon.getText().toString().trim();
         phoneNo=EditTextphone.getText().toString().trim();
-        if(phoneNo.isEmpty()){
-            EditTextphone.setError("Phone number is required");
-            EditTextphone.requestFocus();
-            return;}
 
-        if (phoneNo.length()<10 || phoneNo.length()>10){
-
-            EditTextphone.setError("Phone Minimum length is 10");
-            EditTextphone.requestFocus();
+        if(name.isEmpty()){
+            editTextUsername.setError("Username is required");
+            editTextUsername.requestFocus();
             return;
-
         }
         if(email.isEmpty()){
             editTextEmail.setError("Email is required");
@@ -92,6 +86,7 @@ public class signupActivity extends AppCompatActivity implements View.OnClickLis
             editTextEmail.requestFocus();
             return;
         }
+
 
         if(password.isEmpty()){
             editTextPassword.setError("Password is required");
@@ -105,21 +100,30 @@ public class signupActivity extends AppCompatActivity implements View.OnClickLis
         }
 
         if(password2.isEmpty()){
-            editTextPassword.setError("Password confirmation required");
-            editTextPassword.requestFocus();
+            EditTextpasswordCon.setError("Password confirmation required");
+            EditTextpasswordCon.requestFocus();
             return;
         }
 
-        if(name.isEmpty()){
-            editTextUsername.setError("Username is required");
-            editTextUsername.requestFocus();
-            return;
-        }
 
         if(password2.equals(password)==false)  {
             EditTextpasswordCon.setError("Password Not matching");
             EditTextpasswordCon.requestFocus();
             return;}
+
+        if(phoneNo.isEmpty()){
+            EditTextphone.setError("Phone number is required");
+            EditTextphone.requestFocus();
+            return;}
+
+        if (phoneNo.length()<10 || phoneNo.length()>10){
+
+            EditTextphone.setError("Phone Minimum length is 10");
+            EditTextphone.requestFocus();
+            return;
+
+        }
+
 
         DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
 

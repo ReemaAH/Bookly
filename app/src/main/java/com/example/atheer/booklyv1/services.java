@@ -5,7 +5,6 @@ package com.example.atheer.booklyv1;
 
 public class services {
 
-    private String price;
     private String name;
     private String maxNO;
     private String key;
@@ -19,9 +18,8 @@ public class services {
         this.orgName = orgName;
     }
 
-    public services(String price, String name, String maxNO, String key, String orgID, String orgName) {
+    public services( String name, String maxNO, String key, String orgID, String orgName) {
 
-        this.price = price;
         this.name = name;
         this.maxNO = maxNO;
         this.key = key;
@@ -39,21 +37,13 @@ public class services {
         this.orgID = orgID;
     }
 
-    public services(String price, String name, String maxNO, String key, String orgID) {
-
-        this.price = price;
-        this.name = name;
-        this.maxNO = maxNO;
-        this.key = key;
-        this.orgID = orgID;
-    }
 
     public services(){
 
     }
 
-    public services(String price, String name, String maxNO, String key) {
-        this.price = price;
+    public services(String name, String maxNO, String key) {
+
         this.name = name;
         this.maxNO = maxNO;
         this.key = key;
@@ -79,21 +69,6 @@ public class services {
         this.name=name;
     }
 
-    public services (String name, String price , String maxNO ){
-        this.name=name;
-        this.price=price;
-        this.maxNO=maxNO;
-
-
-    }
-
-    public String getPrice() {
-        return price;
-    }
-
-    public void setPrice(String price) {
-        this.price = price;
-    }
 
     public String getName() {
         return name;

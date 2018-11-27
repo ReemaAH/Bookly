@@ -104,6 +104,10 @@ public class settings extends AppCompatActivity implements View.OnClickListener{
 
                             startActivity(new Intent(settings.this,myServices.class));
 
+                        } else if (id == R.id.offer){
+
+                            startActivity(new Intent(settings.this,displayOffer.class));
+
                         }
 
 

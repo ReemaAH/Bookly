@@ -51,7 +51,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/servicename"
         android:layout_alignStart="@id/date"
-        android:id="@+id/date"
+        android:id="@+id/time"
         android:text="Third"
         android:paddingLeft="150dp"
         android:layout_gravity="center_vertical"

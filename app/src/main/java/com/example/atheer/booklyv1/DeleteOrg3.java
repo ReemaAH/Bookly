@@ -5,8 +5,10 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -26,7 +28,7 @@ public class DeleteOrg3 extends AppCompatActivity  implements View.OnClickListen
     private DatabaseReference ref,ref2;
     private String userId;
     private FirebaseUser user;
-
+    ImageView img;
     private DrawerLayout mDrawerLayout;
 
     @Override
@@ -41,7 +43,7 @@ public class DeleteOrg3 extends AppCompatActivity  implements View.OnClickListen
         orgname1 = (TextView) findViewById(R.id.orgname);
         orgcate1= (TextView) findViewById(R.id.orgcate);
         orgemail1= (TextView) findViewById(R.id.orgemail);
-
+        img = (ImageView) findViewById(R.id.userimage);
         // to add events in the buttons
         findViewById(R.id.dis).setOnClickListener(this);
 
@@ -54,6 +56,7 @@ public class DeleteOrg3 extends AppCompatActivity  implements View.OnClickListen
         orgphone1.setText(temp.getPhoneNO());
         orgcate1.setText(temp.getCat());
         orgemail1.setText(temp.getEmail());
+        Glide.with(getApplicationContext()).load(temp.getImage()).into(img);
 
 
     }
@@ -93,3 +96,6 @@ public class DeleteOrg3 extends AppCompatActivity  implements View.OnClickListen
 
 
 }
+
+
+// deleted

@@ -6,12 +6,40 @@ public class Res {
     public String date;
     public int  num;
     public String org;
-    public String orgID;
+    //public String orgID;
     public String resNum;
     public String service;
-    public String time;
+    public String time, clientID;
 
+    public String getClientID() {
+        return clientID;
+    }
 
+    public void setClientID(String clientID) {
+        this.clientID = clientID;
+    }
+
+   //public String getCoupon() {
+   //     return coupon;
+    //}
+
+    //public void setCoupon(String coupon) {
+    //    this.coupon = coupon;
+    //}
+
+    public Res(boolean approved, String date, int num, String org, String resNum, String service, String time, String clientID) {
+
+        this.approved = approved;
+        this.date = date;
+        this.num = num;
+        this.org = org;
+      //  this.orgID = orgID;
+        this.resNum = resNum;
+        this.service = service;
+        this.time = time;
+        this.clientID = clientID;
+        //this.coupon = coupon;
+    }
 
     public boolean isApproved() {
         return approved;
@@ -45,13 +73,13 @@ public class Res {
         this.org = org;
     }
 
-    public String getOrgID() {
-        return orgID;
-    }
+  //  public String getOrgID() {
+       // return orgID;
+   // }
 
-    public void setOrgID(String orgID) {
-        this.orgID = orgID;
-    }
+    //public void setOrgID(String orgID) {
+    //    this.orgID = orgID;
+  //  }
 
 
 
@@ -82,18 +110,6 @@ public class Res {
 
 
 
-    public Res(boolean approved, String date, int num, String org, String orgIDString, String resNum,  String service, String time) {
-        this.approved = approved;
-        this.date = date;
-        this.num = num;
-        this.org = org;
-        this.orgID = orgID;
-        this.service = service;
-        this.time = time;
-        this.resNum = resNum;
-
-
-    }
 
     public Res() {
     }

@@ -163,15 +163,15 @@ public class addOffer extends AppCompatActivity {
 
                         } else if (id == R.id.servicesId){
 
-                            startActivity(new Intent(addOffer.this,orgServices.class));
+                            startActivity(new Intent(addOffer.this,orgService.class));
 
-                        } else if (id == R.id.ReservationsId){
+                        } else if (id == R.id.ReservationsId) {
 
-                            //    startActivity(new Intent(mynav.this,orgServices.class));
+                            startActivity(new Intent(addOffer.this,ApproveResrvation.class));
+                        }
+                        else if (id == R.id.OffersId){
 
-                        } else if (id == R.id.ReportsId){
-
-                            //    startActivity(new Intent(mynav.this,orgServices.class));
+                            startActivity(new Intent(addOffer.this,OffersImages.class));
 
                         }
 
@@ -379,7 +379,7 @@ public class addOffer extends AppCompatActivity {
                                     mProgressBar.setProgress(0);
                                 }
                             },5000);
-                            Toast.makeText(addOffer.this, "Upload successful", Toast.LENGTH_LONG).show();
+                            Toast.makeText(addOffer.this, "Offer was added successfully", Toast.LENGTH_LONG).show();
                             uloadOffers upld=new uloadOffers(mEditTextFileName.getText().toString().trim(),taskSnapshot.getDownloadUrl().toString(),eDate,sDate,pre,coupon,userId);
                             String uploadId=mDatabaseRef.push().getKey();
                       //    String uploadId2=mDatabaseRef2.push().getKey();
@@ -406,7 +406,7 @@ public class addOffer extends AppCompatActivity {
                         }
                     });
         }else{
-            Toast.makeText(this, "NO file selected", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "No image selected", Toast.LENGTH_LONG).show();
         }
     }
 

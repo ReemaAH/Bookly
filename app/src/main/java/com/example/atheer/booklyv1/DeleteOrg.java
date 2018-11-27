@@ -104,7 +104,7 @@ public class DeleteOrg extends AppCompatActivity {
 
                         } else if (id == R.id.servicesId){
 
-                            startActivity(new Intent(DeleteOrg.this,orgServices.class));
+                            startActivity(new Intent(DeleteOrg.this,orgService.class));
 
                         } else if (id == R.id.ReservationsId){
 

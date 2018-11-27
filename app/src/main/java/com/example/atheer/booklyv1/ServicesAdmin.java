@@ -135,7 +135,7 @@ public class ServicesAdmin extends AppCompatActivity implements View.OnClickList
 
                         if (id == R.id.settingsId) {
 
-                                startActivity(new Intent(ServicesAdmin.this,settingsadmin.class));
+                            startActivity(new Intent(ServicesAdmin.this,settingsadmin.class));
 
                         } else if (id == R.id.logoutId){
 
@@ -145,13 +145,22 @@ public class ServicesAdmin extends AppCompatActivity implements View.OnClickList
                             startActivity(signOUT);
 
 
-                        } else if (id == R.id.homeId){
+                        }
+
+                        else if (id == R.id.OrgId){
+
+                            startActivity(new Intent(ServicesAdmin.this,approveOrgByadmin.class));}
+
+
+
+
+                        else if (id == R.id.homeId){
 
                             startActivity(new Intent(ServicesAdmin.this,dashboardAdmin.class));
 
                         } else if (id == R.id.CategoriesId){
 
-                            startActivity(new Intent(ServicesAdmin.this,CatView.class));
+                            startActivity(new Intent(ServicesAdmin.this,categoryView.class));
 
                         }else if (id == R.id.OrgId){
 
@@ -163,9 +172,11 @@ public class ServicesAdmin extends AppCompatActivity implements View.OnClickList
 
                         } else if (id == R.id.ReportsId){
 
-                            //       startActivity(new Intent(dashboardAdmin.this,CatView.class));
+                            startActivity(new Intent(ServicesAdmin.this,DeleteOrg2.class));
 
                         }
+
+
 
 
                         return true;

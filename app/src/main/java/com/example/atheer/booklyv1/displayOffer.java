@@ -111,23 +111,27 @@ public class displayOffer extends AppCompatActivity implements OfferAdapter.OnIt
 
                         if (id == R.id.settingsId) {
 
-                            startActivity(new Intent(displayOffer.this, settings.class));
+                            startActivity(new Intent(displayOffer.this,settings.class));
 
-                        } else if (id == R.id.logoutId) {
+                        } else if (id == R.id.logoutId){
 
                             FirebaseAuth.getInstance().signOut();
                             finish();
-                            Intent signOUT = new Intent(displayOffer.this, loginActivity.class);
+                            Intent signOUT=new Intent(displayOffer.this,loginActivity.class);
                             startActivity(signOUT);
 
 
-                        } else if (id == R.id.homeId) {
+                        } else if (id == R.id.homeId){
 
-                            startActivity(new Intent(displayOffer.this, Mynavigation.class));
+                            startActivity(new Intent(displayOffer.this,Mynavigation.class));
 
-                        } else if (id == R.id.myservicesId) {
+                        } else if (id == R.id.myservicesId){
 
-                            startActivity(new Intent(displayOffer.this, myServices.class));
+                            startActivity(new Intent(displayOffer.this,myServices.class));
+
+                        } else if (id == R.id.offer){
+
+                            startActivity(new Intent(displayOffer.this,displayOffer.class));
 
                         }
 
@@ -175,7 +179,7 @@ public class displayOffer extends AppCompatActivity implements OfferAdapter.OnIt
                             imageRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void aVoid) {
-                                    mDatabaseRef.child("offer").child(selectedKey).removeValue();
+                                    ref.child(selectedKey).removeValue();
                                 }
                             });
 

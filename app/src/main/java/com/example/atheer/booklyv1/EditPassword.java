@@ -130,6 +130,10 @@ public class EditPassword extends AppCompatActivity implements View.OnClickListe
 
                             startActivity(new Intent(EditPassword.this,myServices.class));
 
+                        } else if (id == R.id.offer){
+
+                            startActivity(new Intent(EditPassword.this,displayOffer.class));
+
                         }
 
 
@@ -172,14 +176,16 @@ public class EditPassword extends AppCompatActivity implements View.OnClickListe
         }
 
 
-        if (newp.length() < 6) {
-            newpass.setError("Minimum length of password shoud be 6");
+
+
+        if (newp.isEmpty()) {
+            newpass.setError("new password required");
             newpass.requestFocus();
             return;
         }
 
-        if (newp.isEmpty()) {
-            newpass.setError("new password required");
+        if (newp.length() < 6) {
+            newpass.setError("Minimum length of password shoud be 6");
             newpass.requestFocus();
             return;
         }

@@ -33,7 +33,7 @@ public class DeleteOrg2 extends AppCompatActivity {
     orguser org;
     String name1;
     String status;
-
+    private orguserAdapter orgAdapter;
     TextView navUsername, navUserponts;
     NavigationView navigationView;
     View headerView;
@@ -52,7 +52,7 @@ public class DeleteOrg2 extends AppCompatActivity {
         setContentView(R.layout.activity_delete_org2);
 
 
-        setTitle("Manage Organizations");
+        setTitle("Delete Organizations");
 
 
         navigationView = (NavigationView) findViewById(R.id.nav_view);
@@ -157,8 +157,8 @@ public class DeleteOrg2 extends AppCompatActivity {
                         }
                     }
                 }
-
-                ListView.setAdapter(adapter);
+                orgAdapter = new orguserAdapter(getApplicationContext(),list1);
+                ListView.setAdapter(orgAdapter);
                 ListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

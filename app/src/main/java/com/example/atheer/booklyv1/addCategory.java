@@ -122,7 +122,7 @@ public class addCategory extends AppCompatActivity {
 
                         if (id == R.id.settingsId) {
 
-                                startActivity(new Intent(addCategory.this,settingsadmin.class));
+                            startActivity(new Intent(addCategory.this,settingsadmin.class));
 
                         } else if (id == R.id.logoutId){
 
@@ -132,13 +132,22 @@ public class addCategory extends AppCompatActivity {
                             startActivity(signOUT);
 
 
-                        } else if (id == R.id.homeId){
+                        }
+
+                        else if (id == R.id.OrgId){
+
+                            startActivity(new Intent(addCategory.this,approveOrgByadmin.class));}
+
+
+
+
+                        else if (id == R.id.homeId){
 
                             startActivity(new Intent(addCategory.this,dashboardAdmin.class));
 
                         } else if (id == R.id.CategoriesId){
 
-                            startActivity(new Intent(addCategory.this,CatView.class));
+                            startActivity(new Intent(addCategory.this,categoryView.class));
 
                         }else if (id == R.id.OrgId){
 
@@ -146,13 +155,15 @@ public class addCategory extends AppCompatActivity {
 
                         }else if (id == R.id.Services1Id){
 
-                                  startActivity(new Intent(addCategory.this,BrowseAdmin.class));
+                            startActivity(new Intent(addCategory.this,BrowseAdmin.class));
 
                         } else if (id == R.id.ReportsId){
 
-                            //       startActivity(new Intent(dashboardAdmin.this,CatView.class));
+                            startActivity(new Intent(addCategory.this,DeleteOrg2.class));
 
                         }
+
+
 
 
                         return true;
@@ -242,7 +253,7 @@ public class addCategory extends AppCompatActivity {
                                     mProgressBar.setProgress(0);
                                 }
                             },5000);
-                            Toast.makeText(addCategory.this, "Upload successful", Toast.LENGTH_LONG).show();
+                            Toast.makeText(addCategory.this, "Added successfully", Toast.LENGTH_LONG).show();
                             upload upld=new upload(mEditTextFileName.getText().toString().trim(),taskSnapshot.getDownloadUrl().toString());
                             String uploadId=mDatabaseRef.push().getKey();
                             mDatabaseRef.child(uploadId).setValue(upld);
@@ -263,7 +274,7 @@ public class addCategory extends AppCompatActivity {
                         }
                     });
         }else{
-            Toast.makeText(this, "NO image selected", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "No image selected", Toast.LENGTH_LONG).show();
         }
     }
 

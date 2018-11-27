@@ -112,30 +112,30 @@ public class orgService extends AppCompatActivity implements serviceAdapter.OnIt
 
                         if (id == R.id.settingsId) {
 
-                            startActivity(new Intent(orgService.this, settingsorg.class));
-                        } else if (id == R.id.logoutId) {
+                            startActivity(new Intent(orgService.this,settingsorg.class));
+                        } else if (id == R.id.logoutId){
 
                             FirebaseAuth.getInstance().signOut();
                             finish();
-                            Intent signOUT = new Intent(orgService.this, loginActivity.class);
+                            Intent signOUT=new Intent(orgService.this,loginActivity.class);
                             startActivity(signOUT);
 
 
-                        } else if (id == R.id.homeId) {
+                        } else if (id == R.id.homeId){
 
-                            startActivity(new Intent(orgService.this, mynav.class));
+                            startActivity(new Intent(orgService.this,mynav.class));
 
-                        } else if (id == R.id.servicesId) {
+                        } else if (id == R.id.servicesId){
 
-                            startActivity(new Intent(orgService.this, orgServices.class));
+                            startActivity(new Intent(orgService.this,orgService.class));
 
                         } else if (id == R.id.ReservationsId) {
 
-                            //    startActivity(new Intent(mynav.this,orgServices.class));
+                            startActivity(new Intent(orgService.this,ApproveResrvation.class));
+                        }
+                        else if (id == R.id.OffersId){
 
-                        } else if (id == R.id.ReportsId) {
-
-                            //    startActivity(new Intent(mynav.this,orgServices.class));
+                            startActivity(new Intent(orgService.this,OffersImages.class));
 
                         }
 
@@ -157,7 +157,7 @@ public class orgService extends AppCompatActivity implements serviceAdapter.OnIt
             }
 
         });
-        imagev.setY(1500);
+        imagev.setY(1770);
         imagev.setX(800);
 
         list1 = new ArrayList<>();
@@ -198,7 +198,7 @@ public class orgService extends AppCompatActivity implements serviceAdapter.OnIt
 
                     ser = ds.getValue(services.class);
                     if(!ser.getName().equals(null)){
-                        str = ser.getName().toString()+" \n\n "+ ser.getPrice().toString()+ " " ;
+                        str = ser.getName().toString()+" \n\n "+ ser.getMaxNO().toString()+ " " ;
                         str2=ser.getName().toString();
                         ser.setKey(ds.getKey());
                         list1.add(ser);

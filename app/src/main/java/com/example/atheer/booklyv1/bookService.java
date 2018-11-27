@@ -32,6 +32,7 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.Transaction;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -54,6 +55,7 @@ ImageView img;
     private FirebaseUser user;
     Intent intent;
 int n=0;
+    private DatabaseReference mDatabase;
    // String counter;
     private DrawerLayout mDrawerLayout;
 
@@ -150,6 +152,10 @@ services s;
 
                             startActivity(new Intent(bookService.this,myServices.class));
 
+                        } else if (id == R.id.offer){
+
+                            startActivity(new Intent(bookService.this,displayOffer.class));
+
                         }
 
 
@@ -159,10 +165,12 @@ services s;
 
 
         findViewById(R.id.BookFriend).setOnClickListener(this);
+        findViewById(R.id.chat).setOnClickListener(this);
 
 
 
-            listdata = (TextView) findViewById(R.id.textlist);
+
+        listdata = (TextView) findViewById(R.id.textlist);
 
             sp = (Spinner) findViewById(R.id.spinner1);
           // numRes = (ElegantNumberButton) findViewById(R.id.numberRes);
@@ -193,6 +201,8 @@ setTitle(temp.getName());
                 for(DataSnapshot ds : dataSnapshot.getChildren()) {
                     s = ds.getValue(services.class);
                     // addition
+                    if (!s.getMaxNO().equals(null))
+                        if (!s.getName().equals(null))
                    data.add(s.getName().toString());
 
 
@@ -394,13 +404,23 @@ setTitle(temp.getName());
 
                 book();
                 break;
+            case R.id.chat: {
+             //   Intent commentpage =new Intent(bookService.this,Comments.class);
+              //  startActivity(commentpage);
+                mDatabase = FirebaseDatabase.getInstance().getReference();
+               String name = mDatabase.child("client").child(userId).toString();
+                int index=name.lastIndexOf("/");
+                name=name.substring(index+1);
+                Intent intent = new Intent(bookService.this, Comments.class);
+                intent.putExtra("org", name);
+                startActivity(intent);
+                break;
+            }
             case R.id.BookFriend:
                 date1= date.getText().toString().trim();;
                 time1= time.getText().toString().trim();
                 service1= service.toString();
 
-             //   String w =  SerNum.getText().toString();
-            //    num = Integer.parseInt(w);
 
                 if(date1.isEmpty()){
                     date.setError("Date is required");
@@ -463,14 +483,15 @@ setTitle(temp.getName());
         String userId = user.getUid();
         Random rand = new Random();
         int  n = rand.nextInt(2000) + 1;
+
         DatabaseReference mRef =  database.getReference().child("reservaiton").child(n+"");
         mRef.child("clientID").setValue(userId);
         mRef.child("date").setValue(date1);
         mRef.child("time").setValue(time1);
         mRef.child("service").setValue(service1);
         mRef.child("num").setValue(1);
-        mRef.child("org").setValue(intent.getStringExtra("name"));
-        mRef.child("orgID").setValue(intent.getStringExtra("name"));
+        mRef.child("org").setValue(temp.getName());
+        mRef.child("orgID").setValue(temp.getUid());
         mRef.child("resNum").setValue(n+"");
         mRef.child("approved").setValue(false);
             DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
@@ -492,7 +513,8 @@ setTitle(temp.getName());
                 @Override
                 public void onComplete(DatabaseError databaseError, boolean b, DataSnapshot dataSnapshot) {}
             });
-        startActivity(new Intent(bookService.this,Booked.class));}
+        startActivity(new Intent(bookService.this,myServices.class));
+            }
 
     }
 

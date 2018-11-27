@@ -113,15 +113,15 @@ public class ApproveResrvation extends AppCompatActivity {
 
                         } else if (id == R.id.servicesId){
 
-                            startActivity(new Intent(ApproveResrvation.this,orgServices.class));
+                            startActivity(new Intent(ApproveResrvation.this,orgService.class));
 
-                        } else if (id == R.id.ReservationsId){
+                        } else if (id == R.id.ReservationsId) {
 
-                            //    startActivity(new Intent(mynav.this,orgServices.class));
+                            startActivity(new Intent(ApproveResrvation.this,ApproveResrvation.class));
+                        }
+                        else if (id == R.id.OffersId){
 
-                        } else if (id == R.id.ReportsId){
-
-                            //    startActivity(new Intent(mynav.this,orgServices.class));
+                            startActivity(new Intent(ApproveResrvation.this,OffersImages.class));
 
                         }
 

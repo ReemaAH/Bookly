@@ -104,15 +104,15 @@ public class mynav extends AppCompatActivity implements View.OnClickListener  {
 
                         } else if (id == R.id.servicesId){
 
-                            startActivity(new Intent(mynav.this,orgServices.class));
+                            startActivity(new Intent(mynav.this,orgService.class));
 
                         } else if (id == R.id.ReservationsId) {
 
-                            //    startActivity(new Intent(mynav.this,orgServices.class));
+                                startActivity(new Intent(mynav.this,ApproveResrvation.class));
                         }
-                        else if (id == R.id.settingsId){
+                        else if (id == R.id.OffersId){
 
-                             startActivity(new Intent(mynav.this,settingsorg.class));
+                             startActivity(new Intent(mynav.this,OffersImages.class));
 
                         }
 

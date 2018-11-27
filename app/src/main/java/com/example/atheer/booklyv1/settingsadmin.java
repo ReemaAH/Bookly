@@ -97,13 +97,22 @@ public class settingsadmin extends AppCompatActivity implements View.OnClickList
                             startActivity(signOUT);
 
 
-                        } else if (id == R.id.homeId){
+                        }
+
+                        else if (id == R.id.OrgId){
+
+                            startActivity(new Intent(settingsadmin.this,approveOrgByadmin.class));}
+
+
+
+
+                        else if (id == R.id.homeId){
 
                             startActivity(new Intent(settingsadmin.this,dashboardAdmin.class));
 
                         } else if (id == R.id.CategoriesId){
 
-                            startActivity(new Intent(settingsadmin.this,CatView.class));
+                            startActivity(new Intent(settingsadmin.this,categoryView.class));
 
                         }else if (id == R.id.OrgId){
 
@@ -115,10 +124,9 @@ public class settingsadmin extends AppCompatActivity implements View.OnClickList
 
                         } else if (id == R.id.ReportsId){
 
-                            //       startActivity(new Intent(dashboardAdmin.this,CatView.class));
+                            startActivity(new Intent(settingsadmin.this,DeleteOrg2.class));
 
                         }
-
 
                         return true;
                     }

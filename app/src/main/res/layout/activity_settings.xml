@@ -119,7 +119,7 @@
             android:id="@+id/editphone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="text"
+            android:inputType="number"
             android:paddingBottom="15dp"
             android:textColorHint="#cac5f9" />
 

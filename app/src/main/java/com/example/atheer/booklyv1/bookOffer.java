@@ -139,6 +139,10 @@ public class bookOffer extends AppCompatActivity implements View.OnClickListener
 
                             startActivity(new Intent(bookOffer.this,myServices.class));
 
+                        } else if (id == R.id.offer){
+
+                            startActivity(new Intent(bookOffer.this,displayOffer.class));
+
                         }
 
 

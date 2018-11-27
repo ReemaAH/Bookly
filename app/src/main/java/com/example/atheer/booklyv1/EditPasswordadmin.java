@@ -128,13 +128,22 @@ public class EditPasswordadmin extends AppCompatActivity implements View.OnClick
                             startActivity(signOUT);
 
 
-                        } else if (id == R.id.homeId){
+                        }
+
+                        else if (id == R.id.OrgId){
+
+                            startActivity(new Intent(EditPasswordadmin.this,approveOrgByadmin.class));}
+
+
+
+
+                        else if (id == R.id.homeId){
 
                             startActivity(new Intent(EditPasswordadmin.this,dashboardAdmin.class));
 
                         } else if (id == R.id.CategoriesId){
 
-                            startActivity(new Intent(EditPasswordadmin.this,CatView.class));
+                            startActivity(new Intent(EditPasswordadmin.this,categoryView.class));
 
                         }else if (id == R.id.OrgId){
 
@@ -146,9 +155,12 @@ public class EditPasswordadmin extends AppCompatActivity implements View.OnClick
 
                         } else if (id == R.id.ReportsId){
 
-                            //       startActivity(new Intent(dashboardAdmin.this,CatView.class));
+                            startActivity(new Intent(EditPasswordadmin.this,DeleteOrg2.class));
 
                         }
+
+
+
 
                         return true;
                     }
@@ -189,14 +201,15 @@ public class EditPasswordadmin extends AppCompatActivity implements View.OnClick
         }
 
 
-        if (newp.length() < 6) {
-            newpass.setError("Minimum length of password shoud be 6");
+
+        if (newp.isEmpty()) {
+            newpass.setError("new password required");
             newpass.requestFocus();
             return;
         }
 
-        if (newp.isEmpty()) {
-            newpass.setError("new password required");
+        if (newp.length() < 6) {
+            newpass.setError("Minimum length of password shoud be 6");
             newpass.requestFocus();
             return;
         }

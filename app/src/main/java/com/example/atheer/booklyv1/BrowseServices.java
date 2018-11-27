@@ -130,6 +130,10 @@ public class BrowseServices extends AppCompatActivity {
 
                             startActivity(new Intent(BrowseServices.this,myServices.class));
 
+                        } else if (id == R.id.offer){
+
+                            startActivity(new Intent(BrowseServices.this,displayOffer.class));
+
                         }
 
 
@@ -178,7 +182,7 @@ public class BrowseServices extends AppCompatActivity {
                     orgz.add(org);
 
                 } orgAdapter = new OrgzAdapter(getApplicationContext(),orgz);
-        ListView.setAdapter(orgAdapter);
+           ListView.setAdapter(orgAdapter);
 
 
             }
@@ -196,7 +200,7 @@ public class BrowseServices extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-
+// to book
                 Intent intent = new Intent(BrowseServices.this, bookService.class);
                 intent.putExtra("org", (Serializable) orgz.get(position));
                 startActivity(intent);

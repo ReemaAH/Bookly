@@ -23,7 +23,7 @@
 
         <item
             android:id="@+id/OrgId"
-            android:title="Organizations"
+            android:title="Organization request"
             android:icon="@drawable/ic_store_black_24dp"
             />
         <item
@@ -34,7 +34,7 @@
 
         <item
             android:id="@+id/ReportsId"
-            android:title="Reports"
+            android:title="Manage organization"
             android:icon="@drawable/ic_insert_chart_black_24dp"
             />
 

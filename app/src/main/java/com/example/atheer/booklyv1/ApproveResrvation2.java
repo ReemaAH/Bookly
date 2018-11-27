@@ -45,8 +45,8 @@ public class ApproveResrvation2 extends AppCompatActivity  implements View.OnCli
         service.setText(temp.getService());
         date.setText(temp.getDate());
         time.setText(temp.getTime());
-        if (!temp.getCoupon().equals(null))
-        coupon.setText(" "+temp.getCoupon());
+     //   if (!temp.getCoupon().equals(null))
+   //     coupon.setText(" "+temp.getCoupon());
         resNum=temp.getResNum();
 
 

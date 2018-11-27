@@ -120,13 +120,22 @@ public class categoryView extends AppCompatActivity implements categoryViewAdapt
                             startActivity(signOUT);
 
 
-                        } else if (id == R.id.homeId){
+                        }
+
+                        else if (id == R.id.OrgId){
+
+                            startActivity(new Intent(categoryView.this,approveOrgByadmin.class));}
+
+
+
+
+                        else if (id == R.id.homeId){
 
                             startActivity(new Intent(categoryView.this,dashboardAdmin.class));
 
                         } else if (id == R.id.CategoriesId){
 
-                            startActivity(new Intent(categoryView.this,CatView.class));
+                            startActivity(new Intent(categoryView.this,categoryView.class));
 
                         }else if (id == R.id.OrgId){
 
@@ -138,9 +147,11 @@ public class categoryView extends AppCompatActivity implements categoryViewAdapt
 
                         } else if (id == R.id.ReportsId){
 
-                            //       startActivity(new Intent(dashboardAdmin.this,CatView.class));
+                            startActivity(new Intent(categoryView.this,DeleteOrg2.class));
 
                         }
+
+
 
 
                         return true;
@@ -278,7 +289,7 @@ public class categoryView extends AppCompatActivity implements categoryViewAdapt
             @Override
             public void onSuccess(Void aVoid) {
                 mDatabaseRef.child(selectedKey).removeValue();
-                Toast.makeText(categoryView.this,"Item deleted", Toast.LENGTH_LONG).show();
+                Toast.makeText(categoryView.this,"Category was deleted successfully", Toast.LENGTH_LONG).show();
 
             }
         });

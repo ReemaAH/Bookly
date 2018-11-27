@@ -123,7 +123,7 @@ public class dashboardAdmin extends AppCompatActivity implements View.OnClickLis
 
                         } else if (id == R.id.CategoriesId){
 
-                            startActivity(new Intent(dashboardAdmin.this,CatView.class));
+                            startActivity(new Intent(dashboardAdmin.this,categoryView.class));
 
                         }else if (id == R.id.OrgId){
 
@@ -135,7 +135,7 @@ public class dashboardAdmin extends AppCompatActivity implements View.OnClickLis
 
                         } else if (id == R.id.ReportsId){
 
-                            //       startActivity(new Intent(dashboardAdmin.this,CatView.class));
+                                  startActivity(new Intent(dashboardAdmin.this,DeleteOrg2.class));
 
                         }
 

@@ -112,6 +112,11 @@ public class loginActivity extends AppCompatActivity implements View.OnClickList
                                                                                                         Intent homepage = new Intent(loginActivity.this, disapprovemsg.class);
                                                                                                         startActivity(homepage);
 
+                                                                                                    } else if (status.equals("deleted"))
+                                                                                                    {
+                                                                                                        Intent homepage = new Intent(loginActivity.this, orgDeletemessage.class);
+                                                                                                        startActivity(homepage);
+
                                                                                                     }
 
                                                                                                   }

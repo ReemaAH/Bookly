@@ -127,6 +127,10 @@ public class myServices extends AppCompatActivity implements View.OnClickListene
 
                             startActivity(new Intent(myServices.this,myServices.class));
 
+                        } else if (id == R.id.offer){
+
+                            startActivity(new Intent(myServices.this,displayOffer.class));
+
                         }
 
 
@@ -161,7 +165,7 @@ public class myServices extends AppCompatActivity implements View.OnClickListene
                 int index=name.lastIndexOf("/");
                 name=name.substring(index+1);
                   //  setTitle(name);
-                Toast.makeText(getApplicationContext(), name, Toast.LENGTH_LONG).show();
+          //      Toast.makeText(getApplicationContext(), name, Toast.LENGTH_LONG).show();
 
                 DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
                 DatabaseReference itemsRef = rootRef.child("reservaiton");

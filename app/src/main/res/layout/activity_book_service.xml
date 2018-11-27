@@ -67,6 +67,24 @@
         tools:context=".bookService">
 
 
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:paddingTop="65dp">
+
+
+            <ImageView
+                android:id="@+id/chat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="344dp"
+                android:paddingTop="44dp"
+                android:src="@drawable/chat"/>
+
+
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -233,9 +251,6 @@
                 android:layout_margin="10dp"
                 android:background="@drawable/edit"
                 />
-
-
-
         </LinearLayout>
 
 
