@@ -4,7 +4,9 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -18,6 +20,7 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 //mport com.cepheuen.elegantnumberbutton.view.ElegantNumberButton;
 import com.bumptech.glide.Glide;
@@ -44,9 +47,9 @@ public class bookService extends AppCompatActivity implements View.OnClickListen
     TextView navUsername, navUserponts;
     NavigationView navigationView;
     View headerView;
-Orgz temp;
-services temp2;
-ImageView img;
+    Orgz temp;
+    services temp2;
+    ImageView img;
     private FirebaseAuth mAuth;
     private FirebaseDatabase database;
     private FirebaseAuth.AuthStateListener mAuthStateListener;
@@ -54,9 +57,9 @@ ImageView img;
     private String userId;
     private FirebaseUser user;
     Intent intent;
-int n=0;
+    int n=0;
     private DatabaseReference mDatabase;
-   // String counter;
+    // String counter;
     private DrawerLayout mDrawerLayout;
 
     TextView listdata;
@@ -64,7 +67,7 @@ int n=0;
     Spinner sp;
     ArrayList<String> data;
     String service = "";
-  // ElegantNumberButton numRes;
+    // ElegantNumberButton numRes;
     EditText date,SerNum;
     DatePickerDialog datePickerDialog;
     String dateval = "";
@@ -83,7 +86,7 @@ int n=0;
     String time1;
     int num;
 
-services s;
+    services s;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,21 +106,26 @@ services s;
         navUserponts = (TextView) headerView.findViewById(R.id.userpoints);
         SerNum = (EditText) headerView.findViewById(R.id.SerNum);
 
-        findViewById(R.id.buttonBook).setOnClickListener(this);
 
         loaduserinfo();
-
+        findViewById(R.id.buttonBook).setOnClickListener(this);
 
         mDrawerLayout = findViewById(R.id.drawerId);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        android.support.v7.app.ActionBar actionbar = getSupportActionBar();
+        ActionBar actionbar = getSupportActionBar();
         actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.setHomeAsUpIndicator(R.drawable.ic_menu_black_24dp);
 
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.bringToFront();
+
+
+
+
+
+
         navigationView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
                     @Override
@@ -172,10 +180,10 @@ services s;
 
         listdata = (TextView) findViewById(R.id.textlist);
 
-            sp = (Spinner) findViewById(R.id.spinner1);
-          // numRes = (ElegantNumberButton) findViewById(R.id.numberRes);
-            date = (EditText) findViewById(R.id.SerDate);
-            time = (EditText) findViewById(R.id.SerTime);
+        sp = (Spinner) findViewById(R.id.spinner1);
+        // numRes = (ElegantNumberButton) findViewById(R.id.numberRes);
+        date = (EditText) findViewById(R.id.SerDate);
+        time = (EditText) findViewById(R.id.SerTime);
 
 
 
@@ -189,11 +197,11 @@ services s;
 
 
 
-setTitle(temp.getName());
+        setTitle(temp.getName());
 
 
         ref2 =  FirebaseDatabase.getInstance().getReference().child("services");
-                final Query query = ref2.orderByChild("orgName").equalTo(temp.getName());
+        final Query query = ref2.orderByChild("orgName").equalTo(temp.getName());
         ValueEventListener valueEventListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -203,7 +211,7 @@ setTitle(temp.getName());
                     // addition
                     if (!s.getMaxNO().equals(null))
                         if (!s.getName().equals(null))
-                   data.add(s.getName().toString());
+                            data.add(s.getName().toString());
 
 
                 }
@@ -219,18 +227,18 @@ setTitle(temp.getName());
         query.addListenerForSingleValueEvent(valueEventListener);
 
 
-            sp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                @Override
-                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                    service=sp.getSelectedItem().toString();
-                    // displaytxt.setText(service);
-                }
+        sp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                service=sp.getSelectedItem().toString();
+                // displaytxt.setText(service);
+            }
 
-                @Override
-                public void onNothingSelected(AdapterView<?> parent) {
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
 
-                }
-            });
+            }
+        });
 
 
 //
@@ -296,37 +304,37 @@ setTitle(temp.getName());
 //
 //            });
 
-      //  datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
+        //  datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
 
-            time.setOnClickListener(new View.OnClickListener(){
+        time.setOnClickListener(new View.OnClickListener(){
 
-                @Override
-                public void onClick(View view){
+            @Override
+            public void onClick(View view){
 
-                    Calendar calander = Calendar.getInstance();
-                    hour = calander.get(Calendar.HOUR);
-                    minute = calander.get(Calendar.MINUTE);
+                Calendar calander = Calendar.getInstance();
+                hour = calander.get(Calendar.HOUR);
+                minute = calander.get(Calendar.MINUTE);
 
 
-                    timePickerDialog = new TimePickerDialog(bookService.this, new TimePickerDialog.OnTimeSetListener() {
-                        @Override
-                        public void onTimeSet(TimePicker timePicker, int i, int i1) {
+                timePickerDialog = new TimePickerDialog(bookService.this, new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker timePicker, int i, int i1) {
 
 //                    ]
 
-                            timeval = i + ":" + i1 + " ";
+                        timeval = i + ":" + i1 + " ";
 
-                            time.setText(timeval);
+                        time.setText(timeval);
 
 
-                        }
-                    },hour,minute,false);
+                    }
+                },hour,minute,false);
 
-                    timePickerDialog.show();
+                timePickerDialog.show();
 
-                }
+            }
 
-            });
+        });
 
 
 
@@ -339,7 +347,7 @@ setTitle(temp.getName());
         }
 
 
-        }
+    }
 
 
 //    public void dispalyResult(View view){
@@ -397,6 +405,28 @@ setTitle(temp.getName());
 
     }
 
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                mDrawerLayout.openDrawer(GravityCompat.START);
+                return true;
+
+
+
+
+
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+
+
+
+
+
     @Override
     public void onClick(View view) {
         switch (view.getId()){
@@ -405,16 +435,36 @@ setTitle(temp.getName());
                 book();
                 break;
             case R.id.chat: {
-             //   Intent commentpage =new Intent(bookService.this,Comments.class);
-              //  startActivity(commentpage);
-                mDatabase = FirebaseDatabase.getInstance().getReference();
-               String name = mDatabase.child("client").child(userId).toString();
-                int index=name.lastIndexOf("/");
-                name=name.substring(index+1);
+                //   Intent commentpage =new Intent(bookService.this,Comments.class);
+                //  startActivity(commentpage);
+                //   mDatabase = FirebaseDatabase.getInstance().getReference();
+                Intent i = getIntent();
+                temp = (Orgz) i.getSerializableExtra("org");
+                String name =temp.getName();
+//        DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
+                //      DatabaseReference itemsRef = rootRef.child("orgz");;
+                //      Query query=itemsRef.orderByChild("name").equalTo(name);
+
+                //   query.addValueEventListener(new ValueEventListener() {
+                //         Orgz name2;
+                //     @Override
+                //       public void onDataChange(DataSnapshot dataSnapshot) {
+                //         name2 = dataSnapshot.getValue(Orgz.class);
+                //         Intent intent = new Intent(bookService.this, Comments.class);
+                //       intent.putExtra("org", name2.getUid());
+                //          startActivity(intent);
+                //    }
+
+                //      @Override
+                //    public void onCancelled(DatabaseError databaseError) {
+                // Getting Post failed, log a message
+                //  }
+                // });
                 Intent intent = new Intent(bookService.this, Comments.class);
                 intent.putExtra("org", name);
                 startActivity(intent);
                 break;
+
             }
             case R.id.BookFriend:
                 date1= date.getText().toString().trim();;
@@ -454,13 +504,13 @@ setTitle(temp.getName());
         time1= time.getText().toString().trim();
         service1= service.toString();
         //String w =  SerNum.getText().toString().trim();
-       // num = Integer.parseInt(w);
+        // num = Integer.parseInt(w);
         if(date1.isEmpty()){
             date.setError("Date is required");
             date.requestFocus();
             return;}
 
-       else if(time1.isEmpty())  {
+        else if(time1.isEmpty())  {
             time.setError("Time is required");
             date.requestFocus();
             return;
@@ -478,22 +528,22 @@ setTitle(temp.getName());
             return;
         } else{
 
-        FirebaseDatabase database =  FirebaseDatabase.getInstance();
-        FirebaseUser user =  mAuth.getCurrentUser();
-        String userId = user.getUid();
-        Random rand = new Random();
-        int  n = rand.nextInt(2000) + 1;
+            FirebaseDatabase database =  FirebaseDatabase.getInstance();
+            FirebaseUser user =  mAuth.getCurrentUser();
+            String userId = user.getUid();
+            Random rand = new Random();
+            int  n = rand.nextInt(2000) + 1;
 
-        DatabaseReference mRef =  database.getReference().child("reservaiton").child(n+"");
-        mRef.child("clientID").setValue(userId);
-        mRef.child("date").setValue(date1);
-        mRef.child("time").setValue(time1);
-        mRef.child("service").setValue(service1);
-        mRef.child("num").setValue(1);
-        mRef.child("org").setValue(temp.getName());
-        mRef.child("orgID").setValue(temp.getUid());
-        mRef.child("resNum").setValue(n+"");
-        mRef.child("approved").setValue(false);
+            DatabaseReference mRef =  database.getReference().child("reservaiton").child(n+"");
+            mRef.child("clientID").setValue(userId);
+            mRef.child("date").setValue(date1);
+            mRef.child("time").setValue(time1);
+            mRef.child("service").setValue(service1);
+            mRef.child("num").setValue(1);
+            mRef.child("org").setValue(temp.getName());
+            mRef.child("orgID").setValue(temp.getUid());
+            mRef.child("resNum").setValue(n+"");
+            mRef.child("approved").setValue(false);
             DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
             DatabaseReference scoreRef = rootRef.child("client").child(userId).child("totalPoint");
             scoreRef.runTransaction(new Transaction.Handler() {
@@ -513,10 +563,13 @@ setTitle(temp.getName());
                 @Override
                 public void onComplete(DatabaseError databaseError, boolean b, DataSnapshot dataSnapshot) {}
             });
-        startActivity(new Intent(bookService.this,myServices.class));
-            }
+            Toast.makeText(bookService.this,"Service has been Booked successfully ",Toast.LENGTH_LONG).show();
+            startActivity(new Intent(bookService.this,Mynavigation.class));
+
+        }
 
     }
+
 
 
 }

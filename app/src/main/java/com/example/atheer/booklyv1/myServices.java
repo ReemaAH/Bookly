@@ -145,7 +145,7 @@ public class myServices extends AppCompatActivity implements View.OnClickListene
 //        if(reserv.isEmpty()){
 //            myLinearLayout.setVisibility(View.VISIBLE);
 //        }
-       // reserv.add(new Res("22/12/1417","02:00","book table",3,"Urth","33",true));
+        // reserv.add(new Res("22/12/1417","02:00","book table",3,"Urth","33",true));
 
         Log.d(TAG, "onCreate: Started");
 
@@ -155,60 +155,60 @@ public class myServices extends AppCompatActivity implements View.OnClickListene
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
-     //   mDatabase.addValueEventListener(new ValueEventListener() {
-       //     @Override
-         //   public void onDataChange(DataSnapshot dataSnapshot) {
-                FirebaseUser user =  mAuth.getCurrentUser();
-                String userId = user.getUid();
+        //   mDatabase.addValueEventListener(new ValueEventListener() {
+        //     @Override
+        //   public void onDataChange(DataSnapshot dataSnapshot) {
+        FirebaseUser user =  mAuth.getCurrentUser();
+        String userId = user.getUid();
 
-                name = mDatabase.child("client").child(userId).toString();
-                int index=name.lastIndexOf("/");
-                name=name.substring(index+1);
-                  //  setTitle(name);
-          //      Toast.makeText(getApplicationContext(), name, Toast.LENGTH_LONG).show();
+        name = mDatabase.child("client").child(userId).toString();
+        int index=name.lastIndexOf("/");
+        name=name.substring(index+1);
+        //  setTitle(name);
+        //      Toast.makeText(getApplicationContext(), name, Toast.LENGTH_LONG).show();
 
-                DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
-                DatabaseReference itemsRef = rootRef.child("reservaiton");
-                Query query=itemsRef.orderByChild("clientID").equalTo(name);
+        DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference itemsRef = rootRef.child("reservaiton");
+        Query query=itemsRef.orderByChild("clientID").equalTo(name);
 
-            //    Toast.makeText(getApplicationContext(), "loadbooking", Toast.LENGTH_LONG).show();
-
-
+        //    Toast.makeText(getApplicationContext(), "loadbooking", Toast.LENGTH_LONG).show();
 
 
-                query.addValueEventListener(new ValueEventListener() {
 
 
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        for (DataSnapshot ds : dataSnapshot.getChildren()) {
-
-                            res = ds.getValue(Res.class);
-                            if(res.getResNum() != null)
-                                reserv.add(res);
-
-                        }  resAdapter = new ResAdapter(getApplicationContext(),reserv);
-                        ListView.setAdapter(resAdapter);
-
-                    }
-                    @Override
-                    public void onCancelled(DatabaseError databaseError){
+        query.addValueEventListener(new ValueEventListener() {
 
 
-                    }
-                });
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+
+                    res = ds.getValue(Res.class);
+                    if(res.getResNum() != null)
+                        reserv.add(res);
+
+                }  resAdapter = new ResAdapter(getApplicationContext(),reserv);
+                ListView.setAdapter(resAdapter);
+
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError){
+
+
+            }
+        });
 
         ListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 Intent intent = new Intent(myServices.this,bookedService.class);
-                intent.putExtra("res", reserv.get(position).getResNum());
+                intent.putExtra("res",  (Serializable) reserv.get(position));
                 startActivity(intent);
 
 
             }
         });
-            }
+    }
 
 
 
@@ -296,5 +296,4 @@ public class myServices extends AppCompatActivity implements View.OnClickListene
 
 
 
-    }
-
+}

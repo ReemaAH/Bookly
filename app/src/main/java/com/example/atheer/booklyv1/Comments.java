@@ -72,7 +72,7 @@ String name2;
         DatabaseReference itemsRef = rootRef.child("comments");;
 
         // HERE
-        Query query=itemsRef.orderByChild("orgID").equalTo(name2);
+        Query query=itemsRef.orderByChild("orgName").equalTo(name2);
         query.addValueEventListener(new ValueEventListener() {
 
 
@@ -145,7 +145,7 @@ String name2;
 
                         Intent i = getIntent();
                      String   name = i.getStringExtra("org");
-//setTitle(temp.getUid());
+                     //setTitle(temp.getUid());
                         Toast.makeText(Comments.this, name, Toast.LENGTH_LONG).show();
                 dateFormat = new SimpleDateFormat("dd-MM-yyyy");
                 date = new Date();
@@ -160,11 +160,11 @@ String name2;
                 DatabaseReference ref = database.getReference().child("comments").child(n + "");
                 ref.setValue(obj);
                 DatabaseReference ref2 = database.getReference().child("comments").child(n + "");
-               ref2.child("value").setValue(comment1);
+                ref2.child("value").setValue(comment1);
                 DatabaseReference ref3 = database.getReference().child("comments").child(n + "");
                 ref3.child("date").setValue(date1);
                 DatabaseReference ref4 = database.getReference().child("comments").child(n + "");
-                ref4.child("orgID").setValue(name);
+                ref4.child("orgName").setValue(name);
                 DatabaseReference ref5 = database.getReference().child("comments").child(n + "");
                 ref5.child("writerEmail").setValue(tempuser.getEmail());
 

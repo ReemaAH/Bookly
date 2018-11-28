@@ -4,23 +4,23 @@ public class commentobject {
 String date;
 String value;
 String writerEmail;
-String orgID;
+String orgName;
 
     public commentobject(String date, String writerEmail, String value , String orgID) {
         this.date = date;
         this.value = value;
         this.writerEmail = writerEmail;
-        this.orgID = orgID;
+        this.orgName = orgID;
     }
 
     public commentobject(){}
 
     public String getOrgID() {
-        return orgID;
+        return orgName;
     }
 
     public void setOrgID(String orgID) {
-        this.orgID = orgID;
+        this.orgName = orgID;
     }
 
     public commentobject(String writerEmail, String value, String date ) {

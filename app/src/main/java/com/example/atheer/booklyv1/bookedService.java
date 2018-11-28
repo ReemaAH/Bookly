@@ -6,6 +6,7 @@ import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -60,7 +61,7 @@ public class bookedService extends AppCompatActivity implements View.OnClickList
     private List<Res> orgz2;
 
     private DatabaseReference mDatabase;
-String name="Nora";
+    String name="Nora";
 
     TextView listdata;
     TextView displaytxt;
@@ -80,7 +81,7 @@ String name="Nora";
     int year;
     int month;
     int day;
-
+    Res temp;
     String service1;
     String date1;
     String time1;
@@ -161,7 +162,9 @@ String name="Nora";
 
 
         intent2 = getIntent();
-        resId = intent2.getStringExtra("res").trim();
+        // temp = (orguser) i.getSerializableExtra("org");
+        temp= (Res) intent2.getSerializableExtra("res");
+        // resId = intent2.getStringExtra("res").trim();
         org2 = new Res();
         orgz2 = new ArrayList<>();
         findViewById(R.id.buttonBook).setOnClickListener(this);
@@ -311,9 +314,9 @@ String name="Nora";
                     org2 = ds.getValue(Res.class);
 
 
-                    if (org2 != null) {
+                    if (org2.getResNum() != null) {
                         String o = org2.getResNum().trim() + "";
-                        if (o.equals(resId)) {
+                        if (o.equals(temp.getResNum())) {
                             listdata.setText(org2.getOrg() + "");
                             date.setText(org2.getDate() + "");
                             time.setText(org2.getTime() + "");
@@ -531,8 +534,8 @@ String name="Nora";
     }
     private void updatebook() {
 
-          date1= date.getText().toString().trim();;
-         time1= time.getText().toString().trim();
+        date1= date.getText().toString().trim();;
+        time1= time.getText().toString().trim();
 //        service1= service.toString();
 //        num = 1;
         if(date1.isEmpty()){
@@ -560,14 +563,28 @@ String name="Nora";
 
         DatabaseReference mRef =  database.getReference().child("reservaiton").child(resId);
 
-       mRef.child("date").setValue(date1);
-       mRef.child("time").setValue(time1);
+        mRef.child("date").setValue(date1);
+        mRef.child("time").setValue(time1);
 
 
-       startActivity(new Intent(bookedService.this,myServices.class));
-       Toast.makeText(getApplicationContext(), "updated successfully", Toast.LENGTH_LONG).show();
+        startActivity(new Intent(bookedService.this,myServices.class));
+        Toast.makeText(getApplicationContext(), "updated successfully", Toast.LENGTH_LONG).show();
     }
 
 
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                mDrawerLayout.openDrawer(GravityCompat.START);
+                return true;
+
+
+
+
+
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }
